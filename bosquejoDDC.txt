@@ -1,0 +1,110 @@
+@startuml tpa
+
+TipoDoc -> Usuario
+Contacto "*" -- "*" Usuario
+
+enum TipoDoc {
+    - DNI
+    - LC
+    - LE
+    - CI
+}
+
+class Contacto {
+    - nombre: String
+    - apellido: String
+    - telefono: Integer
+    - email: String
+}
+
+abstract Usuario {
+    - nombre: String
+    - apellido: String
+    - nacimiento: Date
+    - tipo: TipoDNI
+    - nroDoc: Integer
+    - contacto: List<Contacto>
+}
+
+TipoMascota -> Mascota
+Sexo -> Mascota
+Foto "*" -- "1" Mascota
+Mascota -> Estado
+MascotaPerdida .up.> Estado
+MascotaRegistrada .up.> Estado
+
+enum TipoMascota {
+    - PERRO
+    - GATO
+}
+
+enum Sexo {
+    - MASCULINO
+    - FEMENINO
+}
+
+class Foto {
+    - url: String
+}
+
+abstract Mascota {
+    - tipo: TipoMascota
+    - nombre: String
+    - apodo: String
+    - edad: Integer
+    - sexo: Sexo
+    - descripcionFisica: String
+    - fotos: List<Foto>
+    - caracteristicas: List<Caracteristica>
+    - estado: Estado
+    - dueño: Usuario
+}
+
+interface Estado {
+    + alternarEstado()
+}
+
+class MascotaPerdida {
+    - descripcionDeEncuentro: String
+    - lugarDeEncuentro: String
+    - fecha: Date
+    + alternarEstado()
+}
+
+class MascotaRegistrada {
+    +alternarEstado()
+}
+
+UsuarioNormal -up-|> Usuario
+Rescatista -up-|> Usuario
+Administrador -up-|> Usuario
+Voluntario -up-|> Usuario
+
+class UsuarioNormal {
+    - mascotas: List<Mascota>
+    + cargarMascota(mascota)
+}
+
+class Rescatista {
+    - direccion: String
+    + notificarMascotaEncontrada(mascota)
+}
+
+class CentroDeRescate {
+    - mascotasRegistradas: List<Mascota>
+    - mascotasPerdidas: List<Mascota>
+    
+    + avisoMascotaEncontrada(mascota)
+    + registrarMascota(mascota)
+    + confirmarMascotaEncontrada()
+}
+
+class Administrador {
+    + configurarParametrosSistema()
+}
+
+class Voluntario {
+    + notificarDueño(mascota)
+}
+
+@enduml
