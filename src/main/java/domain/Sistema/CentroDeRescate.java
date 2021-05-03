@@ -12,7 +12,10 @@ public class CentroDeRescate {
   private List<String> caracteristicasActivadas;
 
   public List<EstadoMascotaEncontrada> mascotasEncontradasUltimos10Dias() {
-    return mascotasEncontradas.stream().filter(encuentroMascota -> encuentroMascota.encontradaHaceMenosDe10Dias()).collect(Collectors.toList());
+    return mascotasEncontradas
+                    .stream()
+                    .filter(encuentroMascota -> encuentroMascota.encontradaHaceMenosDe10Dias())
+                    .collect(Collectors.toList());
   }
 
   public void avisoMascotaEncontrada(EstadoMascotaEncontrada unaMascotaEncontrada) {
