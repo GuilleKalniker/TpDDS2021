@@ -40,9 +40,11 @@ public class Rescatista {
       CentroDeRescate.getInstance().validarQR(unQR);
       EstadoMascotaPerdida estadoMascota = new EstadoMascotaPerdida(this, unaDescripcion, unasFotos, unLugar, unaFecha, unQR);
       CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(estadoMascota);
-      CentroDeRescate.getInstance().notificarMascotaEncontrada(estadoMascota);
+      // El enunciado dice que se avisa a las mascotas de los ultimos 10 dias y aca se estaria haciendo automaticamente
+      //CentroDeRescate.getInstance().notificarMascotaEncontrada(estadoMascota);
     }
     catch (Exception qrInvalido) {
+      //Deberia ser throw new exception o algo asi
       System.out.println("Se leyo un QR invalido.");
     }
   }

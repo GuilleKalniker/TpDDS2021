@@ -36,10 +36,14 @@ public class CentroDeRescate {
     return this.mascotasRegistradas.stream().map(unaMascota -> unaMascota.getQr()).collect(Collectors.toList());
   }
 
+  public Caracteristicas getCaracteristicas() {
+    return caracteristicas;
+  }
+
   /*
-  otorgarQR()
-  Otorga un nuevo QR aleatorio no repetido.
-  */
+    otorgarQR()
+    Otorga un nuevo QR aleatorio no repetido.
+    */
   public Integer otorgarQR() {
     while(true) { // Ciclo infinito hasta obtener un QR valido
       Integer QR = new Random().nextInt(10000); // QRs hasta 10000
@@ -54,8 +58,18 @@ public class CentroDeRescate {
   Obtiene una mascota a partir del QR registrado en el estado y luego notifica al duenio.
    */
   public void notificarMascotaEncontrada(EstadoMascotaPerdida unEstado) { // No deberia ser inmediato (no entiendo por que no), por ahora lo es
+
     MascotaRegistrada mascota = this.identificarMascota(unEstado.getQrMascotaPerdida());
     mascota.getDuenio().seEncontro(mascota); // Nefasto, pero no se me ocurrio nada mejor - Nico
+    this.estadosMascotasPerdidas.remove(mascota); // No lo dice el enunciado, pero sino lo sacamos se llamaría durante 10 dias seguidos al dueño
+
+  }
+
+  /*
+  Filtra la lista de estadoMascotaPerdida y le notifica a sus dueños que fueron encontradas
+  */
+ public void notificarMascotasDeLosUltimos10Dias(){
+    this.listarMascotasPerdidasEnUltimosDiezDias().stream().forEach(m -> this.notificarMascotaEncontrada(m));
   }
 
   /*
@@ -66,11 +80,18 @@ public class CentroDeRescate {
     return this.mascotasRegistradas.stream().filter(unaMascota -> unaMascota.getQr().equals(unQR)).findFirst().get();
   }
 
+  // Devuelve la lista de las mascotas perdidas de los ultimos 10 dias
+  public List<EstadoMascotaPerdida> listarMascotasPerdidasEnUltimosDiezDias() {
+
+    return this.estadosMascotasPerdidas.stream().filter(unEstado -> this.pasoEntreUltimosDiezDias(unEstado.getFechaEncuentro())).collect(Collectors.toList());
+  }
+
   /*
   listarMascotasEncontradasEnUltimosDiezDias()
   Filtra lista de estados a partir de las fechas para luego mappear la mascota correspondiente al estado para generar la lista final. Dicha lista no es printeable.
    */
   public List<MascotaRegistrada> listarMascotasEncontradasEnUltimosDiezDias() {
+
     return this.estadosMascotasPerdidas.stream().filter(unEstado -> this.pasoEntreUltimosDiezDias(unEstado.getFechaEncuentro())).map(unEstado -> identificarMascota(unEstado.getQrMascotaPerdida())).collect(Collectors.toList());
   }
 
