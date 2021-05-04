@@ -1,13 +1,9 @@
 package domain;
 
 import domain.Mascota.Foto;
-import domain.Mascota.Mascota;
 import domain.Mascota.Sexo;
 import domain.Mascota.TipoMascota;
-import domain.Persona.UsuarioDuenio;
-import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
