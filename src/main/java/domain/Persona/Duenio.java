@@ -33,6 +33,11 @@ public class Duenio {
     this.contacto = contacto;
   }
 
+  /*
+  registrarMascota(7)
+  Consigue del centro un QR nuevo para la mascota que se va a registrar, luego crea el objeto mascota con todos los parametros de la funcion + this, para que mascota conozca a su duenio
+  Posteriormente agrega a la mascota recien registrada a la lista de mascotas del duenio y del centro de rescate.
+   */
   public void registrarMascota(TipoMascota unTipo, String unNombre, String unApodo, Integer unaEdad, Sexo unSexo, String unaDescripcion, ArrayList<Foto> unasFotos) {
     Integer QRMascota = CentroDeRescate.getInstance().otorgarQR();
     MascotaRegistrada mascota = new MascotaRegistrada(unTipo, unNombre, unApodo, unaEdad, unSexo, unaDescripcion, unasFotos, QRMascota, this);
@@ -40,6 +45,10 @@ public class Duenio {
     CentroDeRescate.getInstance().agregarMascotaRegistrada(mascota);
   }
 
+  /*
+  seEncontro(1)
+  Notifica al duenio de que se encontro una de sus mascotas (tal vez deberia verificarse que mascota pertenezca al duenio)
+   */
   public void seEncontro(MascotaRegistrada unaMascota) {
     //TODO que esto haga algo, no se aclara que pasa cuando se notifica
   }

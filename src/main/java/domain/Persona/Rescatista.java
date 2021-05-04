@@ -7,6 +7,7 @@ import domain.Sistema.CentroDeRescate;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class Rescatista {
   private String nombre;
@@ -27,9 +28,22 @@ public class Rescatista {
     this.contacto = contacto;
   }
 
+  /*
+  notificarMascotaEncontrada(5)
+  Valida el QR a traves del centro, quien devuelve una excepcion en caso de que este no se encuentre en el listado.
+  Si es invalido, se notifica.
+  Si es valido, se crea un EstadoMascotaPerdida a partir de los parametros de la funcion, y se lo agrega a la lista de estados del centro.
+  Tambien solicita que se notifique la mascota al duenio, funcionalidad que puede ser erronea al ser inmediata.
+   */
   public void notificarMascotaEncontrada(String unaDescripcion, List<Foto> unasFotos, String unLugar, LocalDate unaFecha, Integer unQR){
-    EstadoMascotaPerdida estadoMascota = new EstadoMascotaPerdida(this, unaDescripcion, unasFotos, unLugar, unaFecha, unQR);
-    CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(estadoMascota);
-    CentroDeRescate.getInstance().notificarMascotaEncontrada(estadoMascota);
+    try {
+      CentroDeRescate.getInstance().validarQR(unQR);
+      EstadoMascotaPerdida estadoMascota = new EstadoMascotaPerdida(this, unaDescripcion, unasFotos, unLugar, unaFecha, unQR);
+      CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(estadoMascota);
+      CentroDeRescate.getInstance().notificarMascotaEncontrada(estadoMascota);
+    }
+    catch (Exception qrInvalido) {
+      System.out.println("Se leyo un QR invalido.");
+    }
   }
 }
