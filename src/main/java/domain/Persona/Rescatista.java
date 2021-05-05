@@ -5,9 +5,8 @@ import domain.Mascota.Foto;
 import domain.Sistema.CentroDeRescate;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+
 
 public class Rescatista {
   private String nombre;

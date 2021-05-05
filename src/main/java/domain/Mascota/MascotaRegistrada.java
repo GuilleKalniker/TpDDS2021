@@ -2,7 +2,6 @@ package domain.Mascota;
 
 import domain.Persona.Duenio;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MascotaRegistrada {

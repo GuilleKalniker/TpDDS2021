@@ -33,6 +33,10 @@ public class CentroDeRescate {
     return mascotasRegistradas;
   }
 
+  public List<EstadoMascotaPerdida> getEstadosMascotasPerdidas() {
+    return estadosMascotasPerdidas;
+  }
+
   public Caracteristicas getCaracteristicas() {
     return caracteristicas;
   }

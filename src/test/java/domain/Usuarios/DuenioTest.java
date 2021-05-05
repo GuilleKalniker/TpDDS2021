@@ -1,13 +1,11 @@
-package domain;
+package domain.Usuarios;
 
 import domain.Mascota.Foto;
-import domain.Mascota.MascotaRegistrada;
 import domain.Mascota.Sexo;
 import domain.Mascota.TipoMascota;
 import domain.Persona.Contacto;
 import domain.Persona.Duenio;
 import domain.Persona.TipoDocumento;
-import domain.Sistema.CentroDeRescate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -48,7 +46,7 @@ public class DuenioTest {
     unDuenio.registrarMascota(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>());
   }
   public void registrarleOtraMascotaADuenio(Duenio unDuenio) {
-    unDuenio.registrarMascota(TipoMascota.PERRO, "Jorgito", "asdfsdaf", 10, Sexo.MASCULINO, "Perro labrador muy lindo", new ArrayList<Foto>());
+    unDuenio.registrarMascota(TipoMascota.PERRO, "Jorgito", "Alfajor", 10, Sexo.MASCULINO, "Perro labrador muy lindo", new ArrayList<Foto>());
   }
 
   private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido, Integer telefono, String email){

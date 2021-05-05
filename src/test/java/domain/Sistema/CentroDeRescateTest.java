@@ -1,11 +1,10 @@
-package domain;
+package domain.Sistema;
 
 import domain.Mascota.*;
 import domain.Persona.Contacto;
 import domain.Persona.Duenio;
 import domain.Persona.Rescatista;
 import domain.Persona.TipoDocumento;
-import domain.Sistema.CentroDeRescate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,8 +38,8 @@ public class CentroDeRescateTest {
   @Test
   public void seIdentificaCorrectamenteMascota() {
     CentroDeRescate.getInstance().getMascotasRegistradas().clear();
-    CentroDeRescate.getInstance().agregarMascotaRegistrada(mascotaPerdidaDePrueba);
-    assertEquals(CentroDeRescate.getInstance().identificarMascota(1), mascotaPerdidaDePrueba);
+    CentroDeRescate.getInstance().agregarMascotaRegistrada(pepita);
+    assertEquals(CentroDeRescate.getInstance().identificarMascota(1), pepita);
   }
 
   @Test
@@ -53,7 +52,11 @@ public class CentroDeRescateTest {
 
   @Test
   public void despuesDeNotificarUnaMascotaPerdidaLaListaQuedaVacia() {
-
+    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
+    CentroDeRescate.getInstance().agregarMascotaRegistrada(pepita);
+    CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(pepitaPerdida);
+    CentroDeRescate.getInstance().notificarMascotaEncontrada(pepitaPerdida);
+    assert(CentroDeRescate.getInstance().getEstadosMascotasPerdidas().isEmpty());
   }
 
   private Duenio duenioDePruebaUno = new Duenio("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
@@ -77,7 +80,7 @@ public class CentroDeRescateTest {
 
   private EstadoMascotaPerdida chinchulinPerdido = new EstadoMascotaPerdida(rescatistaDePrueba, "Bastante saludable", new ArrayList<Foto>(), "Medrano 754", LocalDate.now().minusDays(11), 2);
 
-  private MascotaRegistrada mascotaPerdidaDePrueba = new MascotaRegistrada(TipoMascota.PERRO, "Pepita", "Pepisauria", 9, Sexo.FEMENINO, "Perra corgi muy linda", new ArrayList<Foto>(), 1, duenioDePruebaDos);
+  private MascotaRegistrada pepita = new MascotaRegistrada(TipoMascota.PERRO, "Pepita", "Pepisauria", 9, Sexo.FEMENINO, "Perra corgi muy linda", new ArrayList<Foto>(), 1, duenioDePruebaDos);
 
-  private MascotaRegistrada otraMascotaPerdidaDePrueba = new MascotaRegistrada(TipoMascota.PERRO, "Chinchulin", "Asadito", 9, Sexo.MASCULINO, "Perro shiba muy lindo", new ArrayList<Foto>(), 2, duenioDePruebaDos);
+  private MascotaRegistrada chinchulin = new MascotaRegistrada(TipoMascota.PERRO, "Chinchulin", "Asadito", 9, Sexo.MASCULINO, "Perro shiba muy lindo", new ArrayList<Foto>(), 2, duenioDePruebaDos);
 }
