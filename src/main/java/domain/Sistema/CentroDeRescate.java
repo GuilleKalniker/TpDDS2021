@@ -33,7 +33,7 @@ public class CentroDeRescate {
   obtenerListaDeQRs()
   Obtiene todos los QRs de las mascotas ya registradas.
    */
-  private List<Integer> obtenerListaDeQRs() {
+  public List<Integer> obtenerListaDeQRs() {
     return this.mascotasRegistradas.stream().map(unaMascota -> unaMascota.getQr()).collect(Collectors.toList());
   }
 
@@ -77,7 +77,7 @@ public class CentroDeRescate {
   identificarMascota(1)
   Obtiene una mascota de la lista de mascotas registradas a partir de un QR.
    */
-  MascotaRegistrada identificarMascota(Integer unQR) { // Podria llevar mas parametros del estado, pero con la key QR no hace falta
+  public MascotaRegistrada identificarMascota(Integer unQR) { // Podria llevar mas parametros del estado, pero con la key QR no hace falta
     return this.mascotasRegistradas.stream()
         .filter(unaMascota -> unaMascota.getQr().equals(unQR)).findFirst().get();
   }
@@ -87,6 +87,10 @@ public class CentroDeRescate {
 
     return this.estadosMascotasPerdidas.stream()
         .filter(unEstado -> this.pasoEntreUltimosDiezDias(unEstado.getFechaEncuentro())).collect(Collectors.toList());
+  }
+
+  public List<MascotaRegistrada> getMascotasRegistradas() {
+    return mascotasRegistradas;
   }
 
   /*
