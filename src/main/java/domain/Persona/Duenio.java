@@ -46,8 +46,8 @@ public class Duenio {
   }
 
   /*
-  seEncontro(1)
-  Notifica al duenio de que se encontro una de sus mascotas (tal vez deberia verificarse que mascota pertenezca al duenio)
+  * seEncontro(1)
+  * Notifica al duenio de que se encontro una de sus mascotas (tal vez deberia verificarse que mascota pertenezca al duenio)
   */
   public void seEncontro(MascotaRegistrada unaMascota) {
     //TODO que esto haga algo, no se aclara que pasa cuando se notifica
