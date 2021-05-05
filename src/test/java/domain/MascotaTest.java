@@ -1,3 +1,4 @@
+/*
 package domain;
 
 import domain.Mascota.Foto;
@@ -24,3 +25,4 @@ public class MascotaTest {
     return mascota;
   }
 }
+*/

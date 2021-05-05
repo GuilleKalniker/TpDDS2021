@@ -14,6 +14,7 @@ public class Caracteristicas {
   public ArrayList<String> obtenerValoresPosibles(String nombreCaracteristica){
     return this.DiccionarioCaracteristicas.get(nombreCaracteristica);
   }
+
   public void agregarValorA(String nombreCaracteristica, String valor){
     ArrayList<String> list;
     if(DiccionarioCaracteristicas.containsKey(nombreCaracteristica)){

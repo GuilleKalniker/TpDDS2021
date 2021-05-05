@@ -4,6 +4,7 @@ import domain.Mascota.EstadoMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -77,13 +78,15 @@ public class CentroDeRescate {
   Obtiene una mascota de la lista de mascotas registradas a partir de un QR.
    */
   MascotaRegistrada identificarMascota(Integer unQR) { // Podria llevar mas parametros del estado, pero con la key QR no hace falta
-    return this.mascotasRegistradas.stream().filter(unaMascota -> unaMascota.getQr().equals(unQR)).findFirst().get();
+    return this.mascotasRegistradas.stream()
+        .filter(unaMascota -> unaMascota.getQr().equals(unQR)).findFirst().get();
   }
 
   // Devuelve la lista de las mascotas perdidas de los ultimos 10 dias
   public List<EstadoMascotaPerdida> listarMascotasPerdidasEnUltimosDiezDias() {
 
-    return this.estadosMascotasPerdidas.stream().filter(unEstado -> this.pasoEntreUltimosDiezDias(unEstado.getFechaEncuentro())).collect(Collectors.toList());
+    return this.estadosMascotasPerdidas.stream()
+        .filter(unEstado -> this.pasoEntreUltimosDiezDias(unEstado.getFechaEncuentro())).collect(Collectors.toList());
   }
 
   /*
@@ -92,7 +95,8 @@ public class CentroDeRescate {
    */
   public List<MascotaRegistrada> listarMascotasEncontradasEnUltimosDiezDias() {
 
-    return this.estadosMascotasPerdidas.stream().filter(unEstado -> this.pasoEntreUltimosDiezDias(unEstado.getFechaEncuentro())).map(unEstado -> identificarMascota(unEstado.getQrMascotaPerdida())).collect(Collectors.toList());
+    return listarMascotasPerdidasEnUltimosDiezDias().stream()
+        .map(unEstado -> identificarMascota(unEstado.getQrMascotaPerdida())).collect(Collectors.toList());
   }
 
   /*
@@ -101,7 +105,8 @@ public class CentroDeRescate {
   compareTo devuelve negativo porque (unaFecha < now) (o deberia, primera validacion evita errores), entonces se fija si mayor a -10 para entrar en los ultimos 10 dias.
    */
   private boolean pasoEntreUltimosDiezDias(LocalDate unaFecha) {
-    return unaFecha.compareTo(LocalDate.now()) < 0 && unaFecha.compareTo(LocalDate.now()) > -10;
+    //return unaFecha.compareTo(LocalDate.now()) < 0 && unaFecha.compareTo(LocalDate.now()) > -10;
+    return ChronoUnit.DAYS.between(unaFecha, LocalDate.now()) <= 10;
   }
 
   /*
