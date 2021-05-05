@@ -17,7 +17,7 @@ public class Caracteristicas {
 
   public void agregarValorA(String nombreCaracteristica, String valor){
     ArrayList<String> list;
-    if(DiccionarioCaracteristicas.containsKey(nombreCaracteristica)){
+    if (DiccionarioCaracteristicas.containsKey(nombreCaracteristica)) {
       list = DiccionarioCaracteristicas.get(nombreCaracteristica);
       list.add(valor);
     } else {
