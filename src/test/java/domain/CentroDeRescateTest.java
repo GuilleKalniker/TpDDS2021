@@ -51,6 +51,11 @@ public class CentroDeRescateTest {
     assertEquals(CentroDeRescate.getInstance().listarMascotasPerdidasEnUltimosDiezDias().size(), 1);
   }
 
+  @Test
+  public void despuesDeNotificarUnaMascotaPerdidaLaListaQuedaVacia() {
+
+  }
+
   private Duenio duenioDePruebaUno = new Duenio("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
 
   private Duenio duenioDePruebaDos = new Duenio("Pedro", "Martinez", LocalDate.now(), TipoDocumento.DNI, 20123457, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
