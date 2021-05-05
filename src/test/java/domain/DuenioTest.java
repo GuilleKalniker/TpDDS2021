@@ -7,6 +7,7 @@ import domain.Mascota.TipoMascota;
 import domain.Persona.Contacto;
 import domain.Persona.Duenio;
 import domain.Persona.TipoDocumento;
+import domain.Sistema.CentroDeRescate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

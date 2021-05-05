@@ -19,6 +19,7 @@ public class CentroDeRescateTest {
 
   @Test
   public void seRegistroUnaMascotaCorrectamente() {
+    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
     this.registrarleMascotaADuenio(duenioDePruebaUno);
     assertEquals(CentroDeRescate.getInstance().getMascotasRegistradas().size(), 1, 0);
   }
@@ -30,18 +31,21 @@ public class CentroDeRescateTest {
 
   @Test
   public void listaDeQRFuncionaAlTenerUnaMascotaRegistrada() {
+    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
     this.registrarleMascotaADuenio(duenioDePruebaUno);
     assertEquals(CentroDeRescate.getInstance().obtenerListaDeQRs().size(), 1, 0);
   }
 
   @Test
   public void seIdentificaCorrectamenteMascota() {
+    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
     CentroDeRescate.getInstance().agregarMascotaRegistrada(mascotaPerdidaDePrueba);
     assertEquals(CentroDeRescate.getInstance().identificarMascota(1), mascotaPerdidaDePrueba);
   }
 
   @Test
   public void siSePerdieronDosMascotasPeroUnaHaceMasDeDiezDiasNoApareceEnLaLista() {
+    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
     CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(pepitaPerdida);
     CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(chinchulinPerdido);
     assertEquals(CentroDeRescate.getInstance().listarMascotasPerdidasEnUltimosDiezDias().size(), 1);

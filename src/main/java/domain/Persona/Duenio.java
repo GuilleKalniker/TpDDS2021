@@ -1,6 +1,5 @@
 package domain.Persona;
 
-import com.sun.istack.internal.NotNull;
 import domain.Mascota.Foto;
 import domain.Mascota.MascotaRegistrada;
 import domain.Mascota.Sexo;
@@ -25,7 +24,7 @@ public class Duenio {
   private String usuario;
   private String contrasenia;
 
-  public Duenio(String nombre, String apellido, LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, @NotNull List<Contacto> contactos) throws Exception {
+  public Duenio(String nombre, String apellido, LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, List<Contacto> contactos) throws Exception {
     this.nombre = nombre;
     this.apellido = apellido;
     this.fechaNacimiento = fechaNacimiento;
