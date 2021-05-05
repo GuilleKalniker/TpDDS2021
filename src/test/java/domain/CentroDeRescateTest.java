@@ -48,7 +48,7 @@ public class CentroDeRescateTest {
     CentroDeRescate.getInstance().getMascotasRegistradas().clear();
     CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(pepitaPerdida);
     CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(chinchulinPerdido);
-    assertEquals(CentroDeRescate.getInstance().listarMascotasPerdidasEnUltimosDiezDias().size(), 1);
+    assertEquals(CentroDeRescate.getInstance().listarEstadosDeMascotasPerdidasEnUltimosDiezDias().size(), 1);
   }
 
   @Test

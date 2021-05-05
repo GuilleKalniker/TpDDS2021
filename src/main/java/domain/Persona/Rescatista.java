@@ -45,7 +45,7 @@ public class Rescatista {
       CentroDeRescate.getInstance().validarQR(unQR);
       EstadoMascotaPerdida estadoMascota = new EstadoMascotaPerdida(this, unaDescripcion, unasFotos, unLugar, unaFecha, unQR);
       CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(estadoMascota);
-      // El enunciado dice que se avisa a las mascotas de los ultimos 10 dias y aca se estaria haciendo automaticamente:
+      // El enunciado dice que se avisa a las mascotas de los ultimos 10 dias, no muy especificado, de hacerse automaticamente, descomentar siguiente linea:
       //CentroDeRescate.getInstance().notificarMascotaEncontrada(estadoMascota);
     }
     catch (Exception qrInvalido) {

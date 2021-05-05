@@ -37,4 +37,8 @@ public class MascotaRegistrada {
   public Duenio getDuenio() {
     return duenio;
   }
+
+  public String getNombre() {
+    return nombre;
+  }
 }

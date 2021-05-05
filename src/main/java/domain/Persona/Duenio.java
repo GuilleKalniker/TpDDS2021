@@ -18,7 +18,7 @@ public class Duenio {
   private TipoDocumento tipoDocumento;
   private Integer nroDocumento;
   private List<Contacto> contactos;
-  private List<MascotaRegistrada> mascotas = new ArrayList<>(); // Deberia ser Set pero tendriamos que codearlo, Set de Java es Abstract
+  private List<MascotaRegistrada> mascotas = new ArrayList<>();
 
   //TODO
   private String usuario;
@@ -57,7 +57,8 @@ public class Duenio {
   * Notifica al duenio de que se encontro una de sus mascotas (tal vez deberia verificarse que mascota pertenezca al duenio)
   */
   public void seEncontro(MascotaRegistrada unaMascota) {
-    //TODO que esto haga algo, no se aclara que pasa cuando se notifica
+    //TODO Comportamiento no definido, se hace "notificacion".
+    System.out.println("Se encontro a " + unaMascota.getNombre());
   }
 
 }
