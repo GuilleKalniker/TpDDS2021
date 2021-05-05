@@ -62,8 +62,7 @@ public class CentroDeRescate {
 
     MascotaRegistrada mascota = this.identificarMascota(unEstado.getQrMascotaPerdida());
     mascota.getDuenio().seEncontro(mascota); // Nefasto, pero no se me ocurrio nada mejor - Nico
-    this.estadosMascotasPerdidas.remove(mascota); // No lo dice el enunciado, pero sino lo sacamos se llamaría durante 10 dias seguidos al dueño
-
+    this.estadosMascotasPerdidas.remove(unEstado); // No lo dice el enunciado, pero sino lo sacamos se llamaría durante 10 dias seguidos al dueño
   }
 
   /*
