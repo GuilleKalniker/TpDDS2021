@@ -7,18 +7,47 @@ import domain.Mascota.TipoMascota;
 import domain.Persona.Contacto;
 import domain.Persona.Duenio;
 import domain.Persona.TipoDocumento;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DuenioTest {
 
-  // Test 1: Un duenio puede tener más de una mascota registrada
+  public DuenioTest() throws Exception {
+  }
 
-  private Duenio duenioDePruebaUno = duenioDePrueba("Juan", "Gomez", 1532498392, "gomezj@gmail.com", LocalDate.of(1968,1,1), TipoDocumento.DNI, 20123456);
+  @Test
+  public void duenioInicialNoTieneMascotas() {
+    assert(duenioDePruebaUno.getMascotas().isEmpty());
+  }
 
-  private Duenio duenioDePrueba(String nombre, String apellido, Integer telefono, String email, LocalDate fechaNacimiento, TipoDocumento tipoDoc, Integer nroDoc) {
-    return new Duenio(nombre, apellido, fechaNacimiento, tipoDoc, nroDoc, this.contactoDePrueba(nombre, apellido, telefono, email));
+  @Test
+  public void alAgregarleUnaMascotaAUnDuenioSuListaPoseeUnaMascota() {
+    registrarleMascotaADuenio(duenioDePruebaUno);
+    assertEquals(duenioDePruebaUno.getMascotas().size(), 1, 0);
+  }
+
+  @Test
+  public void unDuenioPuedeRegistrarMasDeUnaMascota() {
+    registrarleMascotaADuenio(duenioDePruebaUno);
+    registrarleOtraMascotaADuenio(duenioDePruebaUno);
+    assertEquals(duenioDePruebaUno.getMascotas().size(), 2,0);
+  }
+
+  @Test
+  public void unDuenioLanzaExcepcionCuandoNoTieneContactos() {
+    assertThrows(Exception.class, () -> {new Duenio("Roberto", "Lagarto", LocalDate.now(), TipoDocumento.DNI, 12345342, new ArrayList<Contacto>());});
+  }
+
+  public Duenio duenioDePruebaUno = new Duenio("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com"));
+
+  public void registrarleMascotaADuenio(Duenio unDuenio) {
+    unDuenio.registrarMascota(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>());
+  }
+  public void registrarleOtraMascotaADuenio(Duenio unDuenio) {
+    unDuenio.registrarMascota(TipoMascota.PERRO, "Jorgito", "asdfsdaf", 10, Sexo.MASCULINO, "Perro labrador muy lindo", new ArrayList<Foto>());
   }
 
   private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido, Integer telefono, String email){
@@ -26,9 +55,5 @@ public class DuenioTest {
     Contacto contacto = new Contacto(nombre, apellido, telefono, email);
     contactos.add(contacto);
     return contactos;
-  }
-
-  private MascotaRegistrada mascotaDePrueba(TipoMascota tipoMascota, String nombre, String apodo, Integer edad, Sexo sexo, String descripcion, ArrayList<Foto> fotos, Duenio duenio) {
-
   }
 }

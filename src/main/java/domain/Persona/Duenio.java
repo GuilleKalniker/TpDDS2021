@@ -1,5 +1,6 @@
 package domain.Persona;
 
+import com.sun.istack.internal.NotNull;
 import domain.Mascota.Foto;
 import domain.Mascota.MascotaRegistrada;
 import domain.Mascota.Sexo;
@@ -17,20 +18,23 @@ public class Duenio {
   private LocalDate fechaNacimiento;
   private TipoDocumento tipoDocumento;
   private Integer nroDocumento;
-  private List<Contacto> contacto;
+  private List<Contacto> contactos;
   private List<MascotaRegistrada> mascotas = new ArrayList<>(); // Deberia ser Set pero tendriamos que codearlo, Set de Java es Abstract
 
   //TODO
   private String usuario;
   private String contrasenia;
 
-  public Duenio(String nombre, String apellido, LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, List<Contacto> contacto) {
+  public Duenio(String nombre, String apellido, LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, @NotNull List<Contacto> contactos) throws Exception {
     this.nombre = nombre;
     this.apellido = apellido;
     this.fechaNacimiento = fechaNacimiento;
     this.tipoDocumento = tipoDocumento;
     this.nroDocumento = nroDocumento;
-    this.contacto = contacto;
+    this.contactos = contactos;
+    if (contactos.isEmpty()) {
+      throw new Exception();
+    }
   }
 
   /*
@@ -43,6 +47,10 @@ public class Duenio {
     MascotaRegistrada mascota = new MascotaRegistrada(unTipo, unNombre, unApodo, unaEdad, unSexo, unaDescripcion, unasFotos, QRMascota, this);
     this.mascotas.add(mascota);
     CentroDeRescate.getInstance().agregarMascotaRegistrada(mascota);
+  }
+
+  public List<MascotaRegistrada> getMascotas() {
+    return mascotas;
   }
 
   /*

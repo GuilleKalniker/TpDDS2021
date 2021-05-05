@@ -1,5 +1,6 @@
 package domain.Persona;
 
+import com.sun.istack.internal.NotNull;
 import domain.Mascota.EstadoMascotaPerdida;
 import domain.Mascota.Foto;
 import domain.Sistema.CentroDeRescate;
@@ -16,16 +17,21 @@ public class Rescatista {
   private TipoDocumento tipoDocumento;
   private Integer nroDocumento;
   private String direccion;
-  private List<Contacto> contacto;
+  private List<Contacto> contactos;
 
-  public Rescatista(String nombre, String apellido, LocalDate fechaDeNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, String direccion, List<Contacto> contacto) {
+  public Rescatista(String nombre, String apellido, LocalDate fechaDeNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, String direccion, @NotNull List<Contacto> contactos) throws Exception {
     this.nombre = nombre;
     this.apellido = apellido;
     this.fechaDeNacimiento = fechaDeNacimiento;
     this.tipoDocumento = tipoDocumento;
     this.nroDocumento = nroDocumento;
     this.direccion = direccion;
-    this.contacto = contacto;
+
+    if (contactos.isEmpty()) {
+      throw new Exception();
+    }
+
+    this.contactos = contactos;
   }
 
   /*
