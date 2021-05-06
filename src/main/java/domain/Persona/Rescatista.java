@@ -32,6 +32,8 @@ public class Rescatista {
     this.contactos = contactos;
   }
 
+
+
   /*
   * notificarMascotaEncontrada(5)
   * Valida el QR a traves del centro, quien devuelve una excepcion en caso de que este no se encuentre en el listado.

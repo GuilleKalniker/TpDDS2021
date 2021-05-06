@@ -9,7 +9,7 @@ public class AltaUsuariosTest {
   public void existeUsuarioYaRegistrado() throws Exception {
     AltaUsuarios altaUsuarios = new AltaUsuarios();
     altaUsuarios.registrarse("willian","sdhasuhpfdsdhfp");
-    Assertions.assertTrue(altaUsuarios.existeUsuario("willian"));
+    Assertions.assertThrows(Exception.class, () -> altaUsuarios.existeUsuario("willian"));
   }
 
   @Test

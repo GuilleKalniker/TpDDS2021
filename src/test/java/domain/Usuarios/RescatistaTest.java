@@ -36,7 +36,7 @@ public class RescatistaTest {
     return contactos;
   }
 
-  private Duenio duenioDePrueba = new Duenio("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
+  private Duenio duenioDePrueba = new Duenio("juan", "juan555431","Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
 
   private MascotaRegistrada mascotaDePrueba = new MascotaRegistrada(TipoMascota.PERRO, "Chinchulin", "Asadito", 9, Sexo.MASCULINO, "Perro shiba muy lindo", new ArrayList<Foto>(), 3, duenioDePrueba);
 

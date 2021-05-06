@@ -6,6 +6,7 @@ import domain.Mascota.TipoMascota;
 import domain.Persona.Contacto;
 import domain.Persona.Duenio;
 import domain.Persona.TipoDocumento;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,10 +38,20 @@ public class DuenioTest {
 
   @Test
   public void unDuenioLanzaExcepcionCuandoNoTieneContactos() {
-    assertThrows(Exception.class, () -> {new Duenio("Roberto", "Lagarto", LocalDate.now(), TipoDocumento.DNI, 12345342, new ArrayList<Contacto>());});
+    assertThrows(Exception.class, () -> {new Duenio("robertoLagarto", "robertito5432","Roberto", "Lagarto", LocalDate.now(), TipoDocumento.DNI, 12345342, new ArrayList<Contacto>());});
   }
 
-  public Duenio duenioDePruebaUno = new Duenio("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com"));
+  @Test
+  public void unDuenioSeCreaBien() {
+    assertEquals(duenioDePruebaUno.getClass(), Duenio.class);
+  }
+
+  @Test
+  public void unDuenioNoSePuedeCrearConContraseniasYUsuarioInvalido() throws Exception {
+    Assertions.assertThrows(Exception.class, () -> {new Duenio("moreeee", "12345", "morena", "Sisro", LocalDate.now(), TipoDocumento.DNI, 123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com"));});
+  }
+
+  public Duenio duenioDePruebaUno = new Duenio("juancitoGomez", "matuTesterkpo","Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com"));
 
   public void registrarleMascotaADuenio(Duenio unDuenio) {
     unDuenio.registrarMascota(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>());

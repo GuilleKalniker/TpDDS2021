@@ -6,4 +6,8 @@ public class Foto {
   public Foto(String URL) {
     this.URL = URL;
   }
+
+  public String getURL() {
+    return URL;
+  }
 }

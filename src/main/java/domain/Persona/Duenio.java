@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Duenio {
+public class Duenio extends Usuario{
   private String nombre;
   private String apellido;
   private LocalDate fechaNacimiento;
@@ -19,11 +19,12 @@ public class Duenio {
   private List<Contacto> contactos;
   private List<MascotaRegistrada> mascotas = new ArrayList<>();
 
-  //TODO
-  private String usuario;
-  private String contrasenia;
+  public Duenio(String usuario, String contrasenia, String nombre, String apellido, LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, List<Contacto> contactos) throws Exception {
+    this.nombreDeUsuario = usuario;
+    this.contrasenia = contrasenia;
 
-  public Duenio(String nombre, String apellido, LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, List<Contacto> contactos) throws Exception {
+    this.registrarse();
+
     this.nombre = nombre;
     this.apellido = apellido;
     this.fechaNacimiento = fechaNacimiento;
@@ -34,6 +35,8 @@ public class Duenio {
       throw new Exception();
     }
   }
+
+
 
   /*
   * registrarMascota(7)

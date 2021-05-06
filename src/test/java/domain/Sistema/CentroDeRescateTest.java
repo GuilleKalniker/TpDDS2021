@@ -56,12 +56,12 @@ public class CentroDeRescateTest {
     CentroDeRescate.getInstance().agregarMascotaRegistrada(pepita);
     CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(pepitaPerdida);
     CentroDeRescate.getInstance().notificarMascotaEncontrada(pepitaPerdida);
-    assert(CentroDeRescate.getInstance().getEstadosMascotasPerdidas().isEmpty());
+    assertTrue(CentroDeRescate.getInstance().getEstadosMascotasPerdidas().isEmpty());
   }
 
-  private Duenio duenioDePruebaUno = new Duenio("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
+  private Duenio duenioDePruebaUno = new Duenio("juanito123", "guilloteelmaskpo","Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
 
-  private Duenio duenioDePruebaDos = new Duenio("Pedro", "Martinez", LocalDate.now(), TipoDocumento.DNI, 20123457, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
+  private Duenio duenioDePruebaDos = new Duenio("pedritokpo1", "willirex777","Pedro", "Martinez", LocalDate.now(), TipoDocumento.DNI, 20123457, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
 
   void registrarleMascotaADuenio(Duenio unDuenio) {
     unDuenio.registrarMascota(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>());

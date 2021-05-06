@@ -3,6 +3,7 @@ package domain.Mascota;
 import domain.Persona.Duenio;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MascotaRegistrada {
   private TipoMascota tipo;
@@ -16,6 +17,7 @@ public class MascotaRegistrada {
   private Duenio duenio;
 
   //TODO caracteristica mascota
+  //private HashMap<String, String> caracteristicas;
 
   public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos, Integer qr, Duenio duenio) {
     this.tipo = tipo;
