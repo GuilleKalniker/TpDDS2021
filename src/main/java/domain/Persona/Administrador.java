@@ -14,7 +14,7 @@ public class Administrador extends Usuario{
     CentroDeRescate.getInstance().getCaracteristicas().agregarValorA(caracteristica, valor);
   }
 
-  public Administrador(String usuario, String contrasenia) throws Exception {
+  public Administrador(String usuario, String contrasenia) {
     this.nombreDeUsuario = usuario;
     this.contrasenia = contrasenia;
 
