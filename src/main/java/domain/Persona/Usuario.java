@@ -6,7 +6,7 @@ abstract class Usuario {
   protected String nombreDeUsuario;
   protected String contrasenia;
 
-  public void registrarse() throws Exception {
+  public void registrarse() {
     AltaUsuarios altaUsuarios = new AltaUsuarios();
     altaUsuarios.registrarse(this.nombreDeUsuario, this.contrasenia);
   }

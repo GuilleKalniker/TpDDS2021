@@ -1,5 +1,8 @@
 package domain.Sistema;
 
+import domain.Exceptions.ContraseniaInvalidaException;
+import domain.Exceptions.UsuarioYaRegistradoException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -23,16 +26,16 @@ public class AltaUsuarios {
     return this.usuariosRegistrados.containsKey(nombreUsuario);
   } */
 
-  public Boolean existeUsuario(String nombreUsuario) throws Exception {
+  public Boolean existeUsuario(String nombreUsuario){
     Boolean resultado = this.usuariosRegistrados.containsKey(nombreUsuario);
     if(resultado){
-      throw new Exception("Ya existe un usuario con ese nombre");
+      throw new UsuarioYaRegistradoException();
     }
     return false;
   }
 
   //TODO modelar el comportamiento en caso de no poder registrar a un usuario
-  public void registrarse(String usuario, String contrasenia) throws Exception {
+  public void registrarse(String usuario, String contrasenia) {
     if(!existeUsuario(usuario) && esUnaContraseniaValida(contrasenia)) {
       this.usuariosRegistrados.put(usuario, contrasenia);
     }
@@ -47,10 +50,10 @@ public class AltaUsuarios {
   } */
 
 
-  public Boolean esUnaContraseniaValida(String contrasenia) throws Exception {
+  public Boolean esUnaContraseniaValida(String contrasenia) {
     Boolean resultado = cumpleLongitudMinima(contrasenia) && !existeContraseniaEnListaContraseniasNoSeguras(contrasenia);
     if(!resultado){
-      throw new Exception("contraseña invalida");
+      throw new ContraseniaInvalidaException();
     }
     return true;
   }
@@ -59,27 +62,29 @@ public class AltaUsuarios {
     return contrasenia.length() >= this.longitudMinimaContrasenia;
   }
 
-  public Boolean existeContraseniaEnListaContraseniasNoSeguras(String contrasenia) throws Exception {
+  public Boolean existeContraseniaEnListaContraseniasNoSeguras(String contrasenia) {
 
     File archivoListaContrasenias = new File(path);
+    try {
+      FileReader fr = new FileReader(archivoListaContrasenias);
+      BufferedReader br = new BufferedReader(fr);
 
-    FileReader fr = new FileReader(archivoListaContrasenias);
-    BufferedReader br = new BufferedReader(fr);
+      String contraseniaEnLista;
 
-    String contraseniaEnLista;
+      while((contraseniaEnLista=br.readLine()) != null) {
+        if (contrasenia.equals(contraseniaEnLista)) {
 
-    while((contraseniaEnLista=br.readLine()) != null) {
-      if (contrasenia.equals(contraseniaEnLista)) {
-
-        fr.close();
-        br.close();
-        return true;
+          fr.close();
+          br.close();
+          return true;
+        }
       }
+      fr.close();
+      br.close();
+      return false;
     }
-
-    fr.close();
-    br.close();
-    return false;
+    catch (Exception e) {
+      throw new ContraseniaInvalidaException();
+    }
   }
-
 }

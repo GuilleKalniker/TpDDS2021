@@ -1,5 +1,6 @@
 package domain.Persona;
 
+import domain.Exceptions.SinContactosException;
 import domain.Mascota.Foto;
 import domain.Mascota.MascotaRegistrada;
 import domain.Mascota.Sexo;
@@ -19,7 +20,7 @@ public class Duenio extends Usuario{
   private List<Contacto> contactos;
   private List<MascotaRegistrada> mascotas = new ArrayList<>();
 
-  public Duenio(String usuario, String contrasenia, String nombre, String apellido, LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, List<Contacto> contactos) throws Exception {
+  public Duenio(String usuario, String contrasenia, String nombre, String apellido, LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, List<Contacto> contactos) {
     this.nombreDeUsuario = usuario;
     this.contrasenia = contrasenia;
 
@@ -32,7 +33,7 @@ public class Duenio extends Usuario{
     this.nroDocumento = nroDocumento;
     this.contactos = contactos;
     if (contactos.isEmpty()) {
-      throw new Exception();
+      throw new SinContactosException();
     }
   }
 

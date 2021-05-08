@@ -1,5 +1,6 @@
 package domain.Usuarios;
 
+import domain.Exceptions.QRInexistenteException;
 import domain.Mascota.Foto;
 import domain.Mascota.MascotaRegistrada;
 import domain.Mascota.Sexo;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 public class RescatistaTest {
 
-  public RescatistaTest() throws Exception {
+  public RescatistaTest() {
   }
 
   @Test
@@ -27,6 +28,13 @@ public class RescatistaTest {
     CentroDeRescate.getInstance().agregarMascotaRegistrada(mascotaDePrueba);
     rescatistaDePrueba.notificarMascotaEncontrada("Patita cortada :(", new ArrayList<>(), "Lugano 3431", LocalDate.now(), 3);
     assertEquals(1, CentroDeRescate.getInstance().getEstadosMascotasPerdidas().size(), 0);
+  }
+
+  @Test
+  public void noSePuedeEncontrarMascotaConUnQRInexistente() {
+    CentroDeRescate.getInstance().getEstadosMascotasPerdidas().clear();
+    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
+    assertThrows( QRInexistenteException.class, () -> {rescatistaDePrueba.notificarMascotaEncontrada("adfasdfad", new ArrayList<>(), "dagsdgasdg", LocalDate.now(), 666);});
   }
 
   private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido, Integer telefono, String email){

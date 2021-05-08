@@ -1,5 +1,6 @@
 package domain.Sistema;
 
+import domain.Exceptions.QRInexistenteException;
 import domain.Mascota.EstadoMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 
@@ -119,9 +120,9 @@ public class CentroDeRescate {
   * validarQR(1)
   * Recibe un QR y verifica si pertenece al centro, de no pertenecer lanza una excepcion.
   */
-  public void validarQR(Integer unQR) throws Exception {
+  public void validarQR(Integer unQR) {
     if (!this.obtenerListaDeQRs().contains(unQR)) {
-      throw new Exception();
+      throw new QRInexistenteException();
     }
   }
 }

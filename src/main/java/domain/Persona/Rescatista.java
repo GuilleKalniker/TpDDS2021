@@ -1,5 +1,7 @@
 package domain.Persona;
 
+import domain.Exceptions.QRInexistenteException;
+import domain.Exceptions.SinContactosException;
 import domain.Mascota.EstadoMascotaPerdida;
 import domain.Mascota.Foto;
 import domain.Sistema.CentroDeRescate;
@@ -17,7 +19,7 @@ public class Rescatista {
   private String direccion;
   private List<Contacto> contactos;
 
-  public Rescatista(String nombre, String apellido, LocalDate fechaDeNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, String direccion, List<Contacto> contactos) throws Exception {
+  public Rescatista(String nombre, String apellido, LocalDate fechaDeNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, String direccion, List<Contacto> contactos) {
     this.nombre = nombre;
     this.apellido = apellido;
     this.fechaDeNacimiento = fechaDeNacimiento;
@@ -26,7 +28,7 @@ public class Rescatista {
     this.direccion = direccion;
 
     if (contactos.isEmpty()) {
-      throw new Exception();
+      throw new SinContactosException();
     }
 
     this.contactos = contactos;
@@ -42,15 +44,10 @@ public class Rescatista {
   * Tambien solicita que se notifique la mascota al duenio, funcionalidad que puede ser erronea al ser inmediata.
   */
   public void notificarMascotaEncontrada(String unaDescripcion, List<Foto> unasFotos, String unLugar, LocalDate unaFecha, Integer unQR){
-    try {
-      CentroDeRescate.getInstance().validarQR(unQR);
-      EstadoMascotaPerdida estadoMascota = new EstadoMascotaPerdida(this, unaDescripcion, unasFotos, unLugar, unaFecha, unQR);
-      CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(estadoMascota);
-      // El enunciado dice que se avisa a las mascotas de los ultimos 10 dias, no muy especificado, de hacerse automaticamente, descomentar siguiente linea:
-      //CentroDeRescate.getInstance().notificarMascotaEncontrada(estadoMascota);
-    }
-    catch (Exception qrInvalido) {
-      System.out.println("Se leyo un QR invalido.");
-    }
+    CentroDeRescate.getInstance().validarQR(unQR);
+    EstadoMascotaPerdida estadoMascota = new EstadoMascotaPerdida(this, unaDescripcion, unasFotos, unLugar, unaFecha, unQR);
+    CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(estadoMascota);
+    // El enunciado dice que se avisa a las mascotas de los ultimos 10 dias, no muy especificado, de hacerse automaticamente, descomentar siguiente linea:
+    //CentroDeRescate.getInstance().notificarMascotaEncontrada(estadoMascota);
   }
 }
