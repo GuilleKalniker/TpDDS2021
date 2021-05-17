@@ -1,37 +1,11 @@
 @startuml tpa
 
-TipoDoc -> Usuario
-Contacto "*" -- "*" Usuario
-
 enum TipoDoc {
     - DNI
     - LC
     - LE
     - CI
 }
-
-class Contacto {
-    - nombre: String
-    - apellido: String
-    - telefono: Integer
-    - email: String
-}
-
-abstract Usuario {
-    - nombre: String
-    - apellido: String
-    - nacimiento: Date
-    - tipo: TipoDNI
-    - nroDoc: Integer
-    - contacto: List<Contacto>
-}
-
-TipoMascota -> Mascota
-Sexo -> Mascota
-Foto "*" -- "1" Mascota
-Mascota -> Estado
-MascotaPerdida .up.> Estado
-MascotaRegistrada .up.> Estado
 
 enum TipoMascota {
     - PERRO
@@ -47,7 +21,26 @@ class Foto {
     - url: String
 }
 
-abstract Mascota {
+class Contacto {
+    - nombre: String
+    - apellido: String
+    - telefono: Integer
+    - email: String
+}
+
+class Duenio {
+    - nombre: String
+    - apellido: String
+    - fechaNacimiento: Date
+    - tipoDocumento: TipoDNI
+    - nroDocumento: Integer
+    - contacto: List<Contacto>
+    - mascotas: List<MascotaRegistrada>
+
+    +registrarMascota()
+}
+
+class MascotaRegistrada {
     - tipo: TipoMascota
     - nombre: String
     - apodo: String
@@ -55,56 +48,75 @@ abstract Mascota {
     - sexo: Sexo
     - descripcionFisica: String
     - fotos: List<Foto>
-    - caracteristicas: List<Caracteristica>
-    - estado: Estado
-    - dueño: Usuario
+    - qr: Integer
+    - duenio: Duenio
 }
 
-interface Estado {
-    + alternarEstado()
-}
-
-class MascotaPerdida {
-    - descripcionDeEncuentro: String
-    - lugarDeEncuentro: String
-    - fecha: Date
-    + alternarEstado()
-}
-
-class MascotaRegistrada {
-    +alternarEstado()
-}
-
-UsuarioNormal -up-|> Usuario
-Rescatista -up-|> Usuario
-Administrador -up-|> Usuario
-Voluntario -up-|> Usuario
-
-class UsuarioNormal {
-    - mascotas: List<Mascota>
-    + cargarMascota(mascota)
+class EstadoMascotaPerdida {
+    - rescatistaDeEncuentro: Rescatista
+    - descripcionEstado: String
+    - lugarEncuentro: String
+    - fechaEncuentro: Date
+    - qrMascotaPerdida: Integer
 }
 
 class Rescatista {
+    - nombre: String
+    - apellido: String
+    - fechaDeNacimiento: Date
+    - tipoDocumento: TipoDocumento
+    - nroDocumento: Integer
     - direccion: String
+    - contacto: List<Contacto>
+
     + notificarMascotaEncontrada(mascota)
 }
 
-class CentroDeRescate {
-    - mascotasRegistradas: List<Mascota>
-    - mascotasPerdidas: List<Mascota>
-    
-    + avisoMascotaEncontrada(mascota)
-    + registrarMascota(mascota)
-    + confirmarMascotaEncontrada()
+abstract class Usuario {
+    - nombreDeUsuario: String
+    - contrasenia: String
+
+    + registrarse()
 }
+
+Duenio -up-|> Usuario
+Administrador -up-|> Usuario
 
 class Administrador {
-    + configurarParametrosSistema()
+    + agregarCaracteristica()
+    + agregarValorACaracteristica()
 }
 
-class Voluntario {
-    + notificarDueño(mascota)
+class CentroDeRescate {
+    - mascotasRegistradas: List<MascotaRegistrada>
+    - estadosMascotasPerdidas: List<EstadoMascotaPerdida>
+    - caracteristicas: Caracteristicas
+
+    + otorgarQR()
+    + notificarMascotaEncontrada(mascota)
+    + agregarMascotaRegistrada(mascota)
+    + agregarEstadoMascotaPerdida()
 }
+
+class Caracteristicas {
+    - DiccionarioCaracteristicas: HashMap
+}
+
+TipoDoc -> Duenio
+TipoDoc -> Rescatista
+Contacto "*" -- "*" Duenio
+Contacto "*" -- "*" Rescatista
+TipoMascota -> MascotaRegistrada
+Sexo -> MascotaRegistrada
+Foto "*" -- "1" MascotaRegistrada
+Duenio "1" -- "*" MascotaRegistrada
+Caracteristicas -> CentroDeRescate
+EstadoMascotaPerdida -> CentroDeRescate
+MascotaRegistrada -> CentroDeRescate
+Rescatista -> EstadoMascotaPerdida
+Administrador ..> CentroDeRescate
+Administrador ..> Caracteristicas
 
 @enduml
+
+

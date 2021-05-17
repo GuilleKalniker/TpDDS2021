@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Caracteristicas {
-
   private HashMap<String, ArrayList<String>> DiccionarioCaracteristicas = new HashMap<>();
 
   public void agregarCaracteristicas(String nombreCaracteristica, ArrayList<String> valorsPosibles){
@@ -14,9 +13,10 @@ public class Caracteristicas {
   public ArrayList<String> obtenerValoresPosibles(String nombreCaracteristica){
     return this.DiccionarioCaracteristicas.get(nombreCaracteristica);
   }
+
   public void agregarValorA(String nombreCaracteristica, String valor){
     ArrayList<String> list;
-    if(DiccionarioCaracteristicas.containsKey(nombreCaracteristica)){
+    if (DiccionarioCaracteristicas.containsKey(nombreCaracteristica)) {
       list = DiccionarioCaracteristicas.get(nombreCaracteristica);
       list.add(valor);
     } else {

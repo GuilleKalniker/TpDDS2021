@@ -1,5 +1,6 @@
 package domain.Persona;
 
+import domain.Exceptions.SinContactosException;
 import domain.Mascota.Foto;
 import domain.Mascota.MascotaRegistrada;
 import domain.Mascota.Sexo;
@@ -9,35 +10,40 @@ import domain.Sistema.CentroDeRescate;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-public class Duenio {
+public class Duenio extends Usuario{
   private String nombre;
   private String apellido;
   private LocalDate fechaNacimiento;
   private TipoDocumento tipoDocumento;
   private Integer nroDocumento;
-  private List<Contacto> contacto;
-  private List<MascotaRegistrada> mascotas = new ArrayList<>(); // Deberia ser Set pero tendriamos que codearlo, Set de Java es Abstract
+  private List<Contacto> contactos;
+  private List<MascotaRegistrada> mascotas = new ArrayList<>();
 
-  //TODO
-  private String usuario;
-  private String contrasenia;
+  public Duenio(String usuario, String contrasenia, String nombre, String apellido, LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, List<Contacto> contactos) {
+    this.nombreDeUsuario = usuario;
+    this.contrasenia = contrasenia;
 
-  public Duenio(String nombre, String apellido, LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, List<Contacto> contacto) {
+    this.registrarse();
+
     this.nombre = nombre;
     this.apellido = apellido;
     this.fechaNacimiento = fechaNacimiento;
     this.tipoDocumento = tipoDocumento;
     this.nroDocumento = nroDocumento;
-    this.contacto = contacto;
+    this.contactos = contactos;
+    if (contactos.isEmpty()) {
+      throw new SinContactosException();
+    }
   }
 
-  /*
-  registrarMascota(7)
-  Consigue del centro un QR nuevo para la mascota que se va a registrar, luego crea el objeto mascota con todos los parametros de la funcion + this, para que mascota conozca a su duenio
-  Posteriormente agrega a la mascota recien registrada a la lista de mascotas del duenio y del centro de rescate.
-   */
+
+
+  /**
+  * registrarMascota(7)
+  * Consigue del centro un QR nuevo para la mascota que se va a registrar, luego crea el objeto mascota con todos los parametros de la funcion + this, para que mascota conozca a su duenio
+  * Posteriormente agrega a la mascota recien registrada a la lista de mascotas del duenio y del centro de rescate.
+  */
   public void registrarMascota(TipoMascota unTipo, String unNombre, String unApodo, Integer unaEdad, Sexo unSexo, String unaDescripcion, ArrayList<Foto> unasFotos) {
     Integer QRMascota = CentroDeRescate.getInstance().otorgarQR();
     MascotaRegistrada mascota = new MascotaRegistrada(unTipo, unNombre, unApodo, unaEdad, unSexo, unaDescripcion, unasFotos, QRMascota, this);
@@ -45,12 +51,17 @@ public class Duenio {
     CentroDeRescate.getInstance().agregarMascotaRegistrada(mascota);
   }
 
-  /*
-  seEncontro(1)
-  Notifica al duenio de que se encontro una de sus mascotas (tal vez deberia verificarse que mascota pertenezca al duenio)
-   */
+  public List<MascotaRegistrada> getMascotas() {
+    return mascotas;
+  }
+
+  /**
+  * seEncontro(1)
+  * Notifica al duenio de que se encontro una de sus mascotas (tal vez deberia verificarse que mascota pertenezca al duenio)
+  */
   public void seEncontro(MascotaRegistrada unaMascota) {
-    //TODO que esto haga algo, no se aclara que pasa cuando se notifica
+    //TODO Comportamiento no definido, se hace "notificacion".
+    System.out.println("Se encontro a " + unaMascota.getNombre());
   }
 
 }
