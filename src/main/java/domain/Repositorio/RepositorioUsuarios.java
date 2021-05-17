@@ -14,22 +14,22 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.HashMap;
 
-public class AltaUsuarios {
+public class RepositorioUsuarios {
 
   private HashMap<String, String> usuariosRegistrados;
-  private AltaUsuarios instance = null;
+  private RepositorioUsuarios instance = null;
 
   //TODO evitar que este harcodeado
   private static final String path = "src/lista_contraseñas_no_seguras/lista_contraseñas_no_seguras.txt";
   private Integer longitudMinimaContrasenia = 8;
 
-  public AltaUsuarios() {
+  public RepositorioUsuarios() {
     this.usuariosRegistrados = new HashMap<String, String>();
   }
 
-  public AltaUsuarios getInstance() {
+  public RepositorioUsuarios getInstance() {
     if(this.instance == null){
-      this.instance = new AltaUsuarios();
+      this.instance = new RepositorioUsuarios();
     }
     return this.instance;
   }

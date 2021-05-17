@@ -11,27 +11,14 @@ import java.util.List;
 
 
 public class Rescatista {
-  private String nombre;
-  private String apellido;
-  private LocalDate fechaDeNacimiento;
-  private TipoDocumento tipoDocumento;
-  private Integer nroDocumento;
-  private String direccion;
-  private List<Contacto> contactos;
 
-  public Rescatista(String nombre, String apellido, LocalDate fechaDeNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, String direccion, List<Contacto> contactos) {
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.fechaDeNacimiento = fechaDeNacimiento;
-    this.tipoDocumento = tipoDocumento;
-    this.nroDocumento = nroDocumento;
+private DatosPersonales datosPersonales;
+private String direccion;
+
+  public Rescatista(DatosPersonales datosPersonales , String direccion) {
+    this.datosPersonales = datosPersonales;
     this.direccion = direccion;
 
-    if (contactos.isEmpty()) {
-      throw new SinContactosException();
-    }
-
-    this.contactos = contactos;
   }
 
 

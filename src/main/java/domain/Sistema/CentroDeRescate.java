@@ -13,7 +13,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class CentroDeRescate {
-  private List<MascotaRegistrada> mascotasRegistradas = new ArrayList<>(); // Inicializo listas, que si no no funcionan
+  //TODO: Ver si metemos esta lista en RepositorioMascotas o si creamos un nuevo repo para ellas
   private List<EstadoMascotaPerdida> estadosMascotasPerdidas = new ArrayList<>();
   private Caracteristicas caracteristicas;
 

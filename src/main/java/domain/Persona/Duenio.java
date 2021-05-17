@@ -12,26 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Duenio extends Usuario{
-  private String nombre;
-  private String apellido;
-  private LocalDate fechaNacimiento;
-  private TipoDocumento tipoDocumento;
-  private Integer nroDocumento;
-  private List<Contacto> contactos;
+  DatosPersonales datosPersonales;
   private List<MascotaRegistrada> mascotas = new ArrayList<>();
 
-  public Duenio(String usuario, String contrasenia, String nombre, String apellido, LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, List<Contacto> contactos) {
+  public Duenio(String usuario, String contrasenia,DatosPersonales datosPersonales) {
     super(usuario,contrasenia);
-
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.fechaNacimiento = fechaNacimiento;
-    this.tipoDocumento = tipoDocumento;
-    this.nroDocumento = nroDocumento;
-    this.contactos = contactos;
-    if (contactos.isEmpty()) {
-      throw new SinContactosException();
-    }
+    this.datosPersonales = datosPersonales;
   }
 
 

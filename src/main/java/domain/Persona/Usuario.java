@@ -1,6 +1,6 @@
 package domain.Persona;
 
-import domain.Repositorio.AltaUsuarios;
+import domain.Repositorio.RepositorioUsuarios;
 
 public class Usuario {
   public Usuario(String nombreDeUsuario, String contrasenia) {
@@ -14,7 +14,7 @@ public class Usuario {
   protected String contrasenia;
 
   public void registrarse() {
-    AltaUsuarios altaUsuarios = new AltaUsuarios();
-    altaUsuarios.registrarse(this.nombreDeUsuario, this.contrasenia);
+    RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
+    repositorioUsuarios.registrarse(this.nombreDeUsuario, this.contrasenia);
   }
 }

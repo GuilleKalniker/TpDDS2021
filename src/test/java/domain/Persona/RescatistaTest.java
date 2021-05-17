@@ -41,10 +41,10 @@ public class RescatistaTest {
     return contactos;
   }
 
-  private Duenio duenioDePrueba = new Duenio("juan", "juan555431","Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
+  private Duenio duenioDePrueba = new Duenio("juan", "juan555431",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com")));
 
   private MascotaRegistrada mascotaDePrueba = new MascotaRegistrada(TipoMascota.PERRO, "Chinchulin", "Asadito", 9, Sexo.MASCULINO, "Perro shiba muy lindo", new ArrayList<Foto>(), 3, duenioDePrueba);
 
-  private Rescatista rescatistaDePrueba = new Rescatista("Guillermo", "Francella", LocalDate.now(), TipoDocumento.DNI, 14235653, "Ituzaingo 1532", contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
+  private Rescatista rescatistaDePrueba = new Rescatista(new DatosPersonales("Guillermo", "Francella", LocalDate.now(), TipoDocumento.DNI, 14235653,contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com")),"Ituzaingo 1532");
 
 }

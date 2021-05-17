@@ -1,10 +1,7 @@
 package domain.Sistema;
 
 import domain.Mascota.*;
-import domain.Persona.Contacto;
-import domain.Persona.Duenio;
-import domain.Persona.Rescatista;
-import domain.Persona.TipoDocumento;
+import domain.Persona.*;
 import domain.Repositorio.RepositorioMascotas;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,9 +58,9 @@ public class CentroDeRescateTest {
     assertTrue(CentroDeRescate.getInstance().getEstadosMascotasPerdidas().isEmpty());
   }
 
-  private Duenio duenioDePruebaUno = new Duenio("juanito123", "guilloteelmaskpo","Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
+  private Duenio duenioDePruebaUno = new Duenio("juanito123", "guilloteelmaskpo",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com")));
 
-  private Duenio duenioDePruebaDos = new Duenio("pedritokpo1", "willirex777","Pedro", "Martinez", LocalDate.now(), TipoDocumento.DNI, 20123457, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
+  private Duenio duenioDePruebaDos = new Duenio("pedritokpo1", "willirex777",new DatosPersonales("Pedro", "Martinez", LocalDate.now(), TipoDocumento.DNI, 20123457, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com")));
 
   void registrarleMascotaADuenio(Duenio unDuenio) {
     unDuenio.registrarMascota(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>());
@@ -76,7 +73,7 @@ public class CentroDeRescateTest {
     return contactos;
   }
 
-  private Rescatista rescatistaDePrueba = new Rescatista("Guillermo", "Francella", LocalDate.now(), TipoDocumento.DNI, 14235653, "Ituzaingo 1532", contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
+  private Rescatista rescatistaDePrueba = new Rescatista(new DatosPersonales("Guillermo", "Francella", LocalDate.now(), TipoDocumento.DNI, 14235653, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com")), "Ituizango 3843");
 
   private EstadoMascotaPerdida pepitaPerdida = new EstadoMascotaPerdida(rescatistaDePrueba, "Bastante saludable", new ArrayList<Foto>(), "Medrano 754", LocalDate.now(), 1);
 
