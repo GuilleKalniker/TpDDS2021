@@ -13,6 +13,6 @@ public class Administrador {
   }
   //TODO
   //USUARIO Y CONTRASEÑA TANTO PARA ADMIN COMO PARA DUEÑOS
-  //TESTS
+  //TEST S
 
 }
