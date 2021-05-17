@@ -42,4 +42,8 @@ public class MascotaRegistrada {
   public String getNombre() {
     return nombre;
   }
+
+  public Boolean coincideQR(Integer QR){
+    return this.getQr() == QR;
+  }
 }

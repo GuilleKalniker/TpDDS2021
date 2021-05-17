@@ -1,6 +1,6 @@
 package domain.Persona;
 
-import domain.Sistema.AltaUsuarios;
+import domain.Repositorio.AltaUsuarios;
 
 public class Usuario {
   public Usuario(String nombreDeUsuario, String contrasenia) {

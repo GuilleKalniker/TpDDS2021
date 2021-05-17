@@ -1,6 +1,6 @@
 package domain.Sistema;
 
-import domain.Exceptions.ContraseniaInvalidaException;
+import domain.Repositorio.AltaUsuarios;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -3,6 +3,7 @@ package domain.Sistema;
 import domain.Exceptions.QRInexistenteException;
 import domain.Mascota.EstadoMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
+import domain.Repositorio.RepositorioMascotas;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -23,16 +24,13 @@ public class CentroDeRescate {
   }
 
   public void agregarMascotaRegistrada(MascotaRegistrada unaMascota) {
-    this.mascotasRegistradas.add(unaMascota);
+    RepositorioMascotas.getInstance().registrarMascota(unaMascota);
   }
 
   public void agregarEstadoMascotaPerdida(EstadoMascotaPerdida unEstado) {
     this.estadosMascotasPerdidas.add(unEstado);
   }
 
-  public List<MascotaRegistrada> getMascotasRegistradas() {
-    return mascotasRegistradas;
-  }
 
   public List<EstadoMascotaPerdida> getEstadosMascotasPerdidas() {
     return estadosMascotasPerdidas;
@@ -46,8 +44,9 @@ public class CentroDeRescate {
   * obtenerListaDeQRs()
   * Obtiene todos los QRs de las mascotas ya registradas.
   */
-  public List<Integer> obtenerListaDeQRs() {
-    return this.mascotasRegistradas.stream().map(unaMascota -> unaMascota.getQr()).collect(Collectors.toList());
+  //TODO: VER SI LA LOGICA VA ACA O EN REPOSITORIOMASCOTAS
+   public List<Integer> obtenerListaDeQRs() {
+    return RepositorioMascotas.getInstance().getMascotasRegistradas().stream().map(unaMascota -> unaMascota.getQr()).collect(Collectors.toList());
   }
 
   /**
@@ -86,8 +85,8 @@ public class CentroDeRescate {
   * Obtiene una mascota de la lista de mascotas registradas a partir de un QR.
   */
   public MascotaRegistrada identificarMascota(Integer unQR) { // Podria llevar mas parametros del estado, pero con la key QR no hace falta
-    return this.mascotasRegistradas.stream()
-        .filter(unaMascota -> unaMascota.getQr().equals(unQR)).findFirst().get();
+    return RepositorioMascotas.getInstance().getMascotasRegistradas().stream()
+        .filter(unaMascota -> unaMascota.coincideQR(unQR)).findFirst().get();
   }
 
   /**

@@ -1,4 +1,4 @@
-package domain.Sistema;
+package domain.Repositorio;
 
 import domain.Exceptions.ContraseniaInvalidaException;
 import domain.Exceptions.UsuarioYaRegistradoException;

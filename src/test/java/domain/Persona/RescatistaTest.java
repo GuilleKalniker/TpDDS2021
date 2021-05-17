@@ -5,7 +5,9 @@ import domain.Mascota.Foto;
 import domain.Mascota.MascotaRegistrada;
 import domain.Mascota.Sexo;
 import domain.Mascota.TipoMascota;
+import domain.Repositorio.RepositorioMascotas;
 import domain.Sistema.CentroDeRescate;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,13 +16,14 @@ import java.util.ArrayList;
 
 public class RescatistaTest {
 
-  public RescatistaTest() {
+  @BeforeEach
+  void init() {
+    CentroDeRescate.getInstance().getEstadosMascotasPerdidas().clear();
+   RepositorioMascotas.getInstance().getMascotasRegistradas().clear();
   }
 
   @Test
   public void llegaLaNotificacionDeMascotaEncontradaAlCentro() {
-    CentroDeRescate.getInstance().getEstadosMascotasPerdidas().clear();
-    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
     CentroDeRescate.getInstance().agregarMascotaRegistrada(mascotaDePrueba);
     rescatistaDePrueba.notificarMascotaEncontrada("Patita cortada :(", new ArrayList<>(), "Lugano 3431", LocalDate.now(), 3);
     assertEquals(1, CentroDeRescate.getInstance().getEstadosMascotasPerdidas().size(), 0);
@@ -28,8 +31,6 @@ public class RescatistaTest {
 
   @Test
   public void noSePuedeEncontrarMascotaConUnQRInexistente() {
-    CentroDeRescate.getInstance().getEstadosMascotasPerdidas().clear();
-    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
     assertThrows( QRInexistenteException.class, () -> {rescatistaDePrueba.notificarMascotaEncontrada("adfasdfad", new ArrayList<>(), "dagsdgasdg", LocalDate.now(), 666);});
   }
 

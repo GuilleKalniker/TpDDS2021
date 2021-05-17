@@ -5,6 +5,8 @@ import domain.Persona.Contacto;
 import domain.Persona.Duenio;
 import domain.Persona.Rescatista;
 import domain.Persona.TipoDocumento;
+import domain.Repositorio.RepositorioMascotas;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,14 +15,16 @@ import java.util.ArrayList;
 
 public class CentroDeRescateTest {
 
-  public CentroDeRescateTest() throws Exception {
+  @BeforeEach
+  void init() {
+    RepositorioMascotas.getInstance().getMascotasRegistradas().clear();
   }
 
   @Test
   public void seRegistroUnaMascotaCorrectamente() {
-    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
+
     this.registrarleMascotaADuenio(duenioDePruebaUno);
-    assertEquals(CentroDeRescate.getInstance().getMascotasRegistradas().size(), 1, 0);
+    assertEquals(RepositorioMascotas.getInstance().getMascotasRegistradas().size(), 1, 0);
   }
 
   @Test
@@ -30,21 +34,20 @@ public class CentroDeRescateTest {
 
   @Test
   public void listaDeQRFuncionaAlTenerUnaMascotaRegistrada() {
-    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
+
     this.registrarleMascotaADuenio(duenioDePruebaUno);
     assertEquals(CentroDeRescate.getInstance().obtenerListaDeQRs().size(), 1, 0);
   }
 
   @Test
   public void seIdentificaCorrectamenteMascota() {
-    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
+
     CentroDeRescate.getInstance().agregarMascotaRegistrada(pepita);
     assertEquals(CentroDeRescate.getInstance().identificarMascota(1), pepita);
   }
 
   @Test
   public void siSePerdieronDosMascotasPeroUnaHaceMasDeDiezDiasNoApareceEnLaLista() {
-    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
     CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(pepitaPerdida);
     CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(chinchulinPerdido);
     assertEquals(CentroDeRescate.getInstance().listarEstadosDeMascotasPerdidasEnUltimosDiezDias().size(), 1);
@@ -52,7 +55,6 @@ public class CentroDeRescateTest {
 
   @Test
   public void despuesDeNotificarUnaMascotaPerdidaLaListaQuedaVacia() {
-    CentroDeRescate.getInstance().getMascotasRegistradas().clear();
     CentroDeRescate.getInstance().agregarMascotaRegistrada(pepita);
     CentroDeRescate.getInstance().agregarEstadoMascotaPerdida(pepitaPerdida);
     CentroDeRescate.getInstance().notificarMascotaEncontrada(pepitaPerdida);
