@@ -1,14 +1,10 @@
-package domain.Usuarios;
+package domain.Persona;
 
 import domain.Exceptions.QRInexistenteException;
 import domain.Mascota.Foto;
 import domain.Mascota.MascotaRegistrada;
 import domain.Mascota.Sexo;
 import domain.Mascota.TipoMascota;
-import domain.Persona.Contacto;
-import domain.Persona.Duenio;
-import domain.Persona.Rescatista;
-import domain.Persona.TipoDocumento;
 import domain.Sistema.CentroDeRescate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

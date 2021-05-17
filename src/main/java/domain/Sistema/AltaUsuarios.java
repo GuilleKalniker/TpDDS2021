@@ -34,25 +34,25 @@ public class AltaUsuarios {
     return this.instance;
   }
 
-  public Boolean existeUsuario(String nombreUsuario){
+  public void existeUsuario(String nombreUsuario){
     if(this.usuariosRegistrados.containsKey(nombreUsuario)){
       throw new UsuarioYaRegistradoException();
     }
-    return false;
   }
 
   //TODO modelar el comportamiento en caso de no poder registrar a un usuario
   public void registrarse(String usuario, String contrasenia) {
-    if(!existeUsuario(usuario) && esUnaContraseniaValida(contrasenia)) {
-      this.usuariosRegistrados.put(usuario, passwordToHash(contrasenia));
-    }
+    this.esUnaContraseniaValida(contrasenia);
+    this.existeUsuario(usuario);
+
+    this.usuariosRegistrados.put(usuario, passwordToHash(contrasenia));
+
   }
 
-  public Boolean esUnaContraseniaValida(String contrasenia) {
-    if(!cumpleLongitudMinima(contrasenia) && !existeContraseniaEnListaContraseniasNoSeguras(contrasenia)){
+  public void esUnaContraseniaValida(String contrasenia) {
+    if(!cumpleLongitudMinima(contrasenia) && existeContraseniaEnListaContraseniasNoSeguras(contrasenia)){
       throw new ContraseniaInvalidaException();
     }
-    return true;
   }
 
   public Boolean cumpleLongitudMinima(String contrasenia){

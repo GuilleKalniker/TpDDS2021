@@ -21,10 +21,7 @@ public class Duenio extends Usuario{
   private List<MascotaRegistrada> mascotas = new ArrayList<>();
 
   public Duenio(String usuario, String contrasenia, String nombre, String apellido, LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, List<Contacto> contactos) {
-    this.nombreDeUsuario = usuario;
-    this.contrasenia = contrasenia;
-
-    this.registrarse();
+    super(usuario,contrasenia);
 
     this.nombre = nombre;
     this.apellido = apellido;

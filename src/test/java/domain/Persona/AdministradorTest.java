@@ -1,6 +1,5 @@
-package domain.Usuarios;
+package domain.Persona;
 
-import domain.Persona.Administrador;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

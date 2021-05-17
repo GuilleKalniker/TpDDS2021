@@ -15,9 +15,6 @@ public class Administrador extends Usuario{
   }
 
   public Administrador(String usuario, String contrasenia) {
-    this.nombreDeUsuario = usuario;
-    this.contrasenia = contrasenia;
-
-    this.registrarse();
+   super(usuario,contrasenia);
   }
 }

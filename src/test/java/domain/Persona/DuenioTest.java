@@ -1,11 +1,9 @@
-package domain.Usuarios;
+package domain.Persona;
 
+import domain.Exceptions.ContraseniaInvalidaException;
 import domain.Mascota.Foto;
 import domain.Mascota.Sexo;
 import domain.Mascota.TipoMascota;
-import domain.Persona.Contacto;
-import domain.Persona.Duenio;
-import domain.Persona.TipoDocumento;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,8 +45,8 @@ public class DuenioTest {
   }
 
   @Test
-  public void unDuenioNoSePuedeCrearConContraseniasYUsuarioInvalido() throws Exception {
-    Assertions.assertThrows(Exception.class, () -> {new Duenio("moreeee", "12345", "morena", "Sisro", LocalDate.now(), TipoDocumento.DNI, 123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com"));});
+  public void unDuenioNoSePuedeCrearConContraseniasYUsuarioInvalido() {
+    Assertions.assertThrows(ContraseniaInvalidaException.class, () -> {new Duenio("moreeee", "12345", "morena", "Sisro", LocalDate.now(), TipoDocumento.DNI, 123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com"));});
   }
 
   public Duenio duenioDePruebaUno = new Duenio("juancitoGomez", "matuTesterkpo","Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com"));

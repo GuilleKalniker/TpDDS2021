@@ -2,7 +2,14 @@ package domain.Persona;
 
 import domain.Sistema.AltaUsuarios;
 
-abstract class Usuario {
+public class Usuario {
+  public Usuario(String nombreDeUsuario, String contrasenia) {
+    this.nombreDeUsuario = nombreDeUsuario;
+    this.contrasenia = contrasenia;
+
+    this.registrarse();
+  }
+
   protected String nombreDeUsuario;
   protected String contrasenia;
 
