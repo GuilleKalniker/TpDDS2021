@@ -30,6 +30,7 @@ public class RescatistaTest {
   }
 
   @Test
+
   public void noSePuedeEncontrarMascotaConUnQRInexistente() {
     assertThrows( QRInexistenteException.class, () -> {rescatistaDePrueba.notificarMascotaEncontrada("adfasdfad", new ArrayList<>(), "dagsdgasdg", LocalDate.now(), 666);});
   }
