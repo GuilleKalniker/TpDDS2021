@@ -47,4 +47,5 @@ public class RescatistaTest {
 
   private Rescatista rescatistaDePrueba = new Rescatista(new DatosPersonales("Guillermo", "Francella", LocalDate.now(), TipoDocumento.DNI, 14235653,contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com")),"Ituzaingo 1532");
 
+
 }
