@@ -35,7 +35,7 @@ public class RescatistaTest {
     assertThrows( QRInexistenteException.class, () -> {rescatistaDePrueba.notificarMascotaEncontrada("adfasdfad", new ArrayList<>(), "dagsdgasdg", LocalDate.now(), 666);});
   }
 
-  //comentario
+  //coment ario
   private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido, Integer telefono, String email){
     ArrayList<Contacto> contactos = new ArrayList<>();
     Contacto contacto = new Contacto(nombre, apellido, telefono, email);
