@@ -14,12 +14,12 @@ public class MascotaRegistrada {
   private String descripcionFisica;
   private ArrayList<Foto> fotos;
   private Integer qr;
-  private Duenio duenio;
+
 
   //TODO caracteristica mascota
   //private HashMap<String, String> caracteristicas;
 
-  public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos, Integer qr, Duenio duenio) {
+  public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos, Integer qr) {
     this.tipo = tipo;
     this.nombre = nombre;
     this.apodo = apodo;
@@ -28,15 +28,11 @@ public class MascotaRegistrada {
     this.descripcionFisica = descripcionFisica;
     this.fotos = fotos;
     this.qr = qr;
-    this.duenio = duenio;
+
   }
 
   public Integer getQr() {
     return qr;
-  }
-
-  public Duenio getDuenio() {
-    return duenio;
   }
 
   public String getNombre() {

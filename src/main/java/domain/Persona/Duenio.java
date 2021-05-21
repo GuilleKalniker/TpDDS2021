@@ -18,9 +18,8 @@ public class Duenio extends Usuario{
   public Duenio(String usuario, String contrasenia,DatosPersonales datosPersonales) {
     super(usuario,contrasenia);
     this.datosPersonales = datosPersonales;
+    CentroDeRescate.getInstance().agregarDuenioRegistrado(this);
   }
-
-
 
   /**
   * registrarMascota(7)
@@ -29,7 +28,7 @@ public class Duenio extends Usuario{
   */
   public void registrarMascota(TipoMascota unTipo, String unNombre, String unApodo, Integer unaEdad, Sexo unSexo, String unaDescripcion, ArrayList<Foto> unasFotos) {
     Integer QRMascota = CentroDeRescate.getInstance().otorgarQR();
-    MascotaRegistrada mascota = new MascotaRegistrada(unTipo, unNombre, unApodo, unaEdad, unSexo, unaDescripcion, unasFotos, QRMascota, this);
+    MascotaRegistrada mascota = new MascotaRegistrada(unTipo, unNombre, unApodo, unaEdad, unSexo, unaDescripcion, unasFotos, QRMascota);
     this.mascotas.add(mascota);
     CentroDeRescate.getInstance().agregarMascotaRegistrada(mascota);
   }
@@ -37,7 +36,9 @@ public class Duenio extends Usuario{
   public List<MascotaRegistrada> getMascotas() {
     return mascotas;
   }
-
+  public boolean tieneA(MascotaRegistrada mascota){
+    return this.getMascotas().contains(mascota);
+  }
   /**
   * seEncontro(1)
   * Notifica al duenio de que se encontro una de sus mascotas (tal vez deberia verificarse que mascota pertenezca al duenio)

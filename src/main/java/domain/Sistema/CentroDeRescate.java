@@ -3,6 +3,8 @@ package domain.Sistema;
 import domain.Exceptions.QRInexistenteException;
 import domain.Mascota.EstadoMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
+import domain.Persona.Duenio;
+import domain.Repositorio.RepositorioDuenios;
 import domain.Repositorio.RepositorioMascotas;
 
 import java.time.LocalDate;
@@ -16,6 +18,7 @@ public class CentroDeRescate {
   //TODO: Ver si metemos esta lista en RepositorioMascotas o si creamos un nuevo repo para ellas
   private List<EstadoMascotaPerdida> estadosMascotasPerdidas = new ArrayList<>();
   private Caracteristicas caracteristicas;
+  private List<Duenio> listaDuenios = new ArrayList<>();
 
   private static final CentroDeRescate INSTANCE = new CentroDeRescate();
 
@@ -26,7 +29,9 @@ public class CentroDeRescate {
   public void agregarMascotaRegistrada(MascotaRegistrada unaMascota) {
     RepositorioMascotas.getInstance().registrarMascota(unaMascota);
   }
-
+  public void agregarDuenioRegistrado(Duenio duenio) {
+    RepositorioDuenios.getInstance().registrarDuenio(duenio);
+  }
   public void agregarEstadoMascotaPerdida(EstadoMascotaPerdida unEstado) {
     this.estadosMascotasPerdidas.add(unEstado);
   }
@@ -68,7 +73,7 @@ public class CentroDeRescate {
   */
   public void notificarMascotaEncontrada(EstadoMascotaPerdida unEstado) {
     MascotaRegistrada mascota = this.identificarMascota(unEstado.getQrMascotaPerdida());
-    mascota.getDuenio().seEncontro(mascota);
+    RepositorioDuenios.getInstance().getDueniosRegistrados().stream().filter(d -> d.tieneA(mascota)).collect(Collectors.toList()).get(0).seEncontro(mascota);
     this.estadosMascotasPerdidas.remove(unEstado);
   }
 
