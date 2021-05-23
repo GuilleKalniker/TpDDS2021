@@ -3,7 +3,6 @@ package domain.Repositorio;
 import domain.Exceptions.ContraseniaInvalidaException;
 import domain.Exceptions.UsuarioYaRegistradoException;
 import domain.Persona.DatosPersonales;
-import domain.Persona.Duenio;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -18,42 +17,64 @@ import java.util.HashMap;
 
 public class RepositorioUsuarios {
 
+  private String path;
+  private Integer longitudMinimaContrasenia;
   private HashMap<String, String> usuariosRegistrados;
-  private RepositorioUsuarios instance = null;
+  private static RepositorioUsuarios instance = null;
 
-  //TODO evitar que este harcodeado
-  private static final String path = "src/lista_contraseñas_no_seguras/lista_contraseñas_no_seguras.txt";
-  private Integer longitudMinimaContrasenia = 8;
-
-  public RepositorioUsuarios() {
-    this.usuariosRegistrados = new HashMap<String, String>();
+  private RepositorioUsuarios() {
+    this.usuariosRegistrados = new HashMap<>();
+    this.path = "src/lista_contraseñas_no_seguras/lista_contraseñas_no_seguras.txt";
+    this.longitudMinimaContrasenia = 8;
   }
 
-  public RepositorioUsuarios getInstance() {
-    if(this.instance == null){
-      this.instance = new RepositorioUsuarios();
+  public static RepositorioUsuarios getInstance() {
+    if (instance == null) {
+      instance = new RepositorioUsuarios();
     }
-    return this.instance;
+    return instance;
   }
+
+  public void clear() {
+    this.usuariosRegistrados.clear();
+  }
+
+  public void registrarse(String usuario, String contrasenia) {
+    this.existeUsuario(usuario);
+    this.esUnaContraseniaValida(contrasenia);
+    this.usuariosRegistrados.put(usuario, passwordToHash(contrasenia));
+  }
+
+  public void registrarDuenio(String usuario, String contrasenia, DatosPersonales datos) {
+    //validamso usuario
+    //validamos contrasenia
+    // new duenio(usuario, contrasenia, datos)?
+    // add duenio
+    // return duenio
+  }
+
+  public void registrarAdmin(String usuario, String contrasenia) {
+    //validamso usuario
+    //validamos contrasenia
+    // new admin(usuario, contrasenia)
+    // add admin
+    // return admin
+  }
+
+
+  /**
+   * Metodos de validaciones sobre nombre de usuario y contraseña
+   */
 
   public void existeUsuario(String nombreUsuario){
     if(this.usuariosRegistrados.containsKey(nombreUsuario)){
-      throw new UsuarioYaRegistradoException();
+      throw new UsuarioYaRegistradoException("nombre usuario no es valido");
     }
-  }
-
-  //TODO modelar el comportamiento en caso de no poder registrar a un usuario
-  public void registrarse(String usuario, String contrasenia) {
-    this.esUnaContraseniaValida(contrasenia);
-    this.existeUsuario(usuario);
-
-    this.usuariosRegistrados.put(usuario, passwordToHash(contrasenia));
-
   }
 
   public void esUnaContraseniaValida(String contrasenia) {
     if(!cumpleLongitudMinima(contrasenia) && existeContraseniaEnListaContraseniasNoSeguras(contrasenia)){
-      throw new ContraseniaInvalidaException("holi");
+      throw new ContraseniaInvalidaException("contrasenia no es valida");
     }
   }
 
@@ -80,7 +101,7 @@ public class RepositorioUsuarios {
       br.close();
     }
     catch (Exception e) {
-      throw new ContraseniaInvalidaException("holi");
+      throw new ContraseniaInvalidaException("Error al cargar el archivo de contrasenias");
     }
     return resultadoBusqueda;
   }
@@ -104,20 +125,5 @@ public class RepositorioUsuarios {
       return null;
     }
   }
-
-
-/*//  public Duenio registrarse(String usuario, String contrasenia, Usuario usaurio){
-//    validaciones sobre usuario y contrasenia
-    //instancias al objeto -> new Duenio(ususario, contrasnia, datos)
-    //repoDuenios.add(duenio)
-    // return duenio
-    return null;
-  }
-
-  public Usuario iniciarSesion()
-
-    Usuario objeto = iniciarSesion()
-    if(ususario.class == Duenio.class)
-*/
 
 }

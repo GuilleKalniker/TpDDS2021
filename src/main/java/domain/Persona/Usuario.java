@@ -14,7 +14,7 @@ public class Usuario {
   }
 
   public void registrarse() {
-    RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
+    RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
     repositorioUsuarios.registrarse(this.nombreDeUsuario, this.contrasenia);
   }
 }
