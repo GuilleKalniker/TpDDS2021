@@ -2,6 +2,8 @@ package domain.Repositorio;
 
 import domain.Exceptions.ContraseniaInvalidaException;
 import domain.Exceptions.UsuarioYaRegistradoException;
+import domain.Persona.DatosPersonales;
+import domain.Persona.Duenio;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -51,7 +53,7 @@ public class RepositorioUsuarios {
 
   public void esUnaContraseniaValida(String contrasenia) {
     if(!cumpleLongitudMinima(contrasenia) && existeContraseniaEnListaContraseniasNoSeguras(contrasenia)){
-      throw new ContraseniaInvalidaException();
+      throw new ContraseniaInvalidaException("holi");
     }
   }
 
@@ -78,7 +80,7 @@ public class RepositorioUsuarios {
       br.close();
     }
     catch (Exception e) {
-      throw new ContraseniaInvalidaException();
+      throw new ContraseniaInvalidaException("holi");
     }
     return resultadoBusqueda;
   }
@@ -102,4 +104,20 @@ public class RepositorioUsuarios {
       return null;
     }
   }
+
+
+/*//  public Duenio registrarse(String usuario, String contrasenia, Usuario usaurio){
+//    validaciones sobre usuario y contrasenia
+    //instancias al objeto -> new Duenio(ususario, contrasnia, datos)
+    //repoDuenios.add(duenio)
+    // return duenio
+    return null;
+  }
+
+  public Usuario iniciarSesion()
+
+    Usuario objeto = iniciarSesion()
+    if(ususario.class == Duenio.class)
+*/
+
 }

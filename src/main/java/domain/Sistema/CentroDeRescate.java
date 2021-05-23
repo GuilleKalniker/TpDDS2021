@@ -4,6 +4,7 @@ import domain.Exceptions.QRInexistenteException;
 import domain.Mascota.EstadoMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.Duenio;
+import domain.Repositorio.RepositorioCaracteristicas;
 import domain.Repositorio.RepositorioDuenios;
 import domain.Repositorio.RepositorioMascotas;
 
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class CentroDeRescate {
   //TODO: Ver si metemos esta lista en RepositorioMascotas o si creamos un nuevo repo para ellas
   private List<EstadoMascotaPerdida> estadosMascotasPerdidas = new ArrayList<>();
-  private Caracteristicas caracteristicas;
+  private RepositorioCaracteristicas repositorioCaracteristicas;
   private List<Duenio> listaDuenios = new ArrayList<>();
 
   private static final CentroDeRescate INSTANCE = new CentroDeRescate();
@@ -41,8 +42,8 @@ public class CentroDeRescate {
     return estadosMascotasPerdidas;
   }
 
-  public Caracteristicas getCaracteristicas() {
-    return caracteristicas;
+  public RepositorioCaracteristicas getCaracteristicas() {
+    return repositorioCaracteristicas;
   }
 
   /**
