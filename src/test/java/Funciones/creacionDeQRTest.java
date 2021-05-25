@@ -1,6 +1,5 @@
-package Sistema;
+package Funciones;
 
-import Funciones.manejoQR;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package domain.Servicios;
+package domain.Servicios.ClasesParaLaConsulta;
 
 import java.util.ArrayList;
 

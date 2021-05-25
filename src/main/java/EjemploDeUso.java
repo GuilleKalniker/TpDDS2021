@@ -1,20 +1,18 @@
-import domain.Servicios.ServicioHogaresTransito;
-import domain.Servicios.UsuariosResponse;
-
-import java.io.IOException;
-
+/*
 public class EjemploDeUso {
+
+
   public static void main(String[] args) throws IOException {
-    ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.instancia();
+    //ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.instancia();
 
-    UsuariosResponse usuariosResponse = servicioHogaresTransito.tokenUsuario();
-    System.out.println(usuariosResponse);
+    //UsuariosResponse usuariosResponse = servicioHogaresTransito.tokenUsuario();
+    //System.out.println(usuariosResponse);
 
-
+    }
   }
 
 
-}
+}*/
 /*
 public class EjemploDeUso {
 
