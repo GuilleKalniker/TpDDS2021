@@ -2,6 +2,7 @@ package domain.Persona;
 
 
 import domain.Mascota.MascotaRegistrada;
+import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Repositorio.RepositorioDuenios;
 import domain.Repositorio.RepositorioMascotas;
 

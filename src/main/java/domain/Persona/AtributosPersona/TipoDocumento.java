@@ -1,4 +1,4 @@
-package domain.Persona;
+package domain.Persona.AtributosPersona;
 
 public enum TipoDocumento {
   DNI,

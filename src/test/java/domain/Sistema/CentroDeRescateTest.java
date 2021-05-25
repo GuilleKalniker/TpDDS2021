@@ -1,12 +1,16 @@
 package domain.Sistema;
 
 import domain.Mascota.*;
+import domain.Mascota.AtributosMascota.Foto;
+import domain.Mascota.AtributosMascota.Sexo;
+import domain.Mascota.AtributosMascota.TipoMascota;
 import domain.Persona.*;
+import domain.Persona.AtributosPersona.Contacto;
+import domain.Persona.AtributosPersona.DatosPersonales;
+import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Repositorio.RepositorioDuenios;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

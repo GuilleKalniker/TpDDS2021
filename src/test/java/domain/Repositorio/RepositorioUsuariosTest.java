@@ -1,6 +1,8 @@
 package domain.Repositorio;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import Funciones.ValidadorContrasenias;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,17 +22,19 @@ public class RepositorioUsuariosTest {
 
   @Test
   public void NoEsValidaUnaContraseñaConLongitudMenosA8() {
-    assertFalse(RepositorioUsuarios.getInstance().cumpleLongitudMinima("willi"));
+    assertFalse(validador.cumpleLongitudMinima("willi"));
   }
 
   @Test
   public void contraseñaEsInvalidaPorPertenecerAListaContraseñas() {
-    assertTrue(RepositorioUsuarios.getInstance().existeContraseniaEnListaContraseniasNoSeguras("123456789"));
+    assertTrue(validador.existeContraseniaEnListaContraseniasNoSeguras("123456789"));
   }
 
   @Test
   public void contraseñaEsvalidaPorNoPertenecerAListaContraseñas() {
-    assertFalse(RepositorioUsuarios.getInstance().existeContraseniaEnListaContraseniasNoSeguras("tpanual2021"));
+    assertFalse(validador.existeContraseniaEnListaContraseniasNoSeguras("tpanual2021"));
   }
+
+  private ValidadorContrasenias validador = new ValidadorContrasenias(8);
 
 }

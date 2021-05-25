@@ -6,14 +6,13 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.HashMap;
 
-public class creacionDeQR {
+public class manejoQR {
 
   public static String generarQR(String data, String fileName, Integer weidth, Integer height) {
 
@@ -42,7 +41,7 @@ public class creacionDeQR {
     LuminanceSource source;
     BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(ImageIO.read(new FileInputStream(path)))));
     return new MultiFormatReader().decode(binaryBitmap).getText();
-  } catch (Exception e){
+    } catch (Exception e){
       throw new RuntimeException("No se puedo leer el QR");
     }
   }

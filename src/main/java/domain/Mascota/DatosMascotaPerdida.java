@@ -1,6 +1,7 @@
 package domain.Mascota;
 
-import domain.Persona.DatosPersonales;
+import domain.Mascota.AtributosMascota.Foto;
+import domain.Persona.AtributosPersona.DatosPersonales;
 
 import java.time.LocalDate;
 import java.util.List;

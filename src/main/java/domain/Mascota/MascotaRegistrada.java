@@ -1,10 +1,11 @@
 package domain.Mascota;
 
-import domain.Persona.Duenio;
+import Funciones.manejoQR;
+import domain.Mascota.AtributosMascota.Foto;
+import domain.Mascota.AtributosMascota.Sexo;
+import domain.Mascota.AtributosMascota.TipoMascota;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MascotaRegistrada {
   private TipoMascota tipo;
@@ -44,15 +45,16 @@ public class MascotaRegistrada {
     return this.ID == ID;
   }
 
-  //TODO
-  public void generarQR(){
-    // generamos un QR en base al id de una mascota
-    // return generarQR(this.ID);
+
+  public String generarQR() {
+    return manejoQR.generarQR(this.getID(), this.getNombre(), 500, 500);
   }
-  //TODO
-  public String esMiQR(){
-    // leemos el QR para obtener el ID que guardado en el
-    // return leer(QR) == this.ID
-    return null;
+
+  public String leerQR(String pathQR) {
+    return manejoQR.leerQR(pathQR);
+  }
+
+  public Boolean esMiQR(String pathQR){
+    return this.leerQR(pathQR) == this.getID();
   }
 }

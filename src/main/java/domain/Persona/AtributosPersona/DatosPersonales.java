@@ -1,4 +1,4 @@
-package domain.Persona;
+package domain.Persona.AtributosPersona;
 
 import domain.Exceptions.SinContactosException;
 

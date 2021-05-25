@@ -1,18 +1,19 @@
 package domain.Persona;
 
 import domain.Exceptions.ContraseniaInvalidaException;
-import domain.Mascota.Foto;
+import domain.Mascota.AtributosMascota.Foto;
 import domain.Mascota.MascotaRegistrada;
-import domain.Mascota.Sexo;
-import domain.Mascota.TipoMascota;
+import domain.Mascota.AtributosMascota.Sexo;
+import domain.Mascota.AtributosMascota.TipoMascota;
+import domain.Persona.AtributosPersona.Contacto;
+import domain.Persona.AtributosPersona.DatosPersonales;
+import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Repositorio.RepositorioDuenios;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import javax.swing.text.MaskFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
