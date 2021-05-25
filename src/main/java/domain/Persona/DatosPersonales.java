@@ -13,6 +13,7 @@ public class DatosPersonales {
   private TipoDocumento tipoDocumento;
   private Integer nroDocumento;
   private List<Contacto> contactos;
+  private String direccion;
 
   public DatosPersonales(String nombre, String apellido, LocalDate fechaDeNacimiento, TipoDocumento tipoDocumento, Integer nroDocumento, List<Contacto> contactos) {
     this.nombre = nombre;
@@ -27,4 +28,7 @@ public class DatosPersonales {
     this.contactos = contactos;
   }
 
+  public void setDireccion(String direccion) {
+    this.direccion = direccion;
+  }
 }

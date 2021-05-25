@@ -17,4 +17,12 @@ public class Usuario {
     RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
     repositorioUsuarios.registrarse(this.nombreDeUsuario, this.contrasenia);
   }
+
+  public String getNombreDeUsuario() {
+    return nombreDeUsuario;
+  }
+
+  public String getContrasenia() {
+    return contrasenia;
+  }
 }

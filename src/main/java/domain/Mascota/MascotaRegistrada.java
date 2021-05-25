@@ -14,14 +14,11 @@ public class MascotaRegistrada {
   private Sexo sexo;
   private String descripcionFisica;
   private ArrayList<Foto> fotos;
-  private Integer qr;
   private String ID;
   //TODO caracteristica mascota
   //private HashMap<String, String> caracteristicas;
 
-
-
-  public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos, Integer qr) {
+  public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos) {
     this.tipo = tipo;
     this.nombre = nombre;
     this.apodo = apodo;
@@ -29,21 +26,11 @@ public class MascotaRegistrada {
     this.sexo = sexo;
     this.descripcionFisica = descripcionFisica;
     this.fotos = fotos;
-    this.qr = qr;
-  }
-
-  public Integer getQr() {
-    return qr;
   }
 
   public String getNombre() {
     return nombre;
   }
-
-  public Boolean coincideQR(Integer QR){
-    return this.getQr() == QR;
-  }
-
 
   public void setID(String ID) {
     this.ID = ID;
@@ -51,6 +38,10 @@ public class MascotaRegistrada {
 
   public String getID(){
     return this.ID;
+  }
+
+  public Boolean coincideID(String ID) {
+    return this.ID == ID;
   }
 
   //TODO

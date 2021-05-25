@@ -2,7 +2,6 @@ package domain.Repositorio;
 
 import domain.Exceptions.ContraseniaInvalidaException;
 import domain.Exceptions.UsuarioYaRegistradoException;
-import domain.Persona.DatosPersonales;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -45,21 +44,21 @@ public class RepositorioUsuarios {
     this.usuariosRegistrados.put(usuario, passwordToHash(contrasenia));
   }
 
-  public void registrarDuenio(String usuario, String contrasenia, DatosPersonales datos) {
+  //public Deunio registrarDuenio(String usuario, String contrasenia, DatosPersonales datos) {
     //validamso usuario
     //validamos contrasenia
     // new duenio(usuario, contrasenia, datos)?
-    // add duenio
+    // add duenio a usuariosResgistrados/Duenio(?
     // return duenio
-  }
+  //}
 
-  public void registrarAdmin(String usuario, String contrasenia) {
+  //public Admin registrarAdmin(String usuario, String contrasenia) {
     //validamso usuario
     //validamos contrasenia
     // new admin(usuario, contrasenia)
-    // add admin
+    // add admin a usuariosResgistrados/Admin(?
     // return admin
-  }
+  //}
 
 
   /**
