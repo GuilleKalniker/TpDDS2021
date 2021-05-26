@@ -13,6 +13,7 @@ public class RepositorioUsuarios {
   private HashMap<String, String> usuariosRegistrados;
   private HashMap<String, Duenio> dueniosResgistrados;
   private HashMap<String, Administrador> administradoresRegistrados;
+  private HashMap<String, Object> usuarios;
   private static RepositorioUsuarios INSTANCE = null;
 
   private RepositorioUsuarios() {
