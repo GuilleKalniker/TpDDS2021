@@ -1,11 +1,13 @@
 package domain.Sistema;
 
+import domain.Adapters.AdapterRepoMascotas;
 import domain.Mascota.DatosMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.Duenio;
 import domain.Repositorio.RepositorioDuenios;
 import domain.Repositorio.RepositorioMascotas;
 
+import javax.swing.text.MaskFormatter;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -17,6 +19,22 @@ public class CentroDeRescate {
   private List<DatosMascotaPerdida> datosMascotasPerdidas = new ArrayList<>();
   private List<Duenio> listaDuenios = new ArrayList<>();
 
+  /** FUNCIONES PARA MASCOTAS REGISTRADAS */
+
+  public String registrarMascota(MascotaRegistrada mascota){
+    return new AdapterRepoMascotas().registrarMascota(mascota);
+  }
+
+  public MascotaRegistrada buscasMascota(String ID){
+    return new AdapterRepoMascotas().buscarMascotaPorID(ID);
+  }
+
+  public Boolean existeMascota(String ID) {
+    return new AdapterRepoMascotas().existeMascota(ID);
+  }
+
+  /** FUNCIONES PARA MASCOTAS PERDIDAS*/
+
   public void agregarDatosMascotaPerdida(DatosMascotaPerdida datosMascotaPerdida) {
     this.datosMascotasPerdidas.add(datosMascotaPerdida);
   }
@@ -25,20 +43,18 @@ public class CentroDeRescate {
     return datosMascotasPerdidas;
   }
 
-  /**
-  * obtenerListaDeQRs()
-  * Obtiene todos los IDs de las mascotas ya registradas.
-  */
-   public List<String> obtenerListaDeIDs() {
-    return RepositorioMascotas.getInstance().getMascotasRegistradas().stream().map(unaMascota -> unaMascota.getID()).collect(Collectors.toList());
-  }
+  /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
+
+
+
+
 
   /**
   * notificarMascotaEncontrada(1)
   * Obtiene una mascota a partir del ID registrado en el estado y luego notifica al duenio.
   */
   public void notificarMascotaEncontrada(DatosMascotaPerdida datosMascotaPerdida) {
-    MascotaRegistrada mascota = this.identificarMascota(datosMascotaPerdida.getQrMascotaPerdida());
+    MascotaRegistrada mascota = this.buscasMascota(datosMascotaPerdida.getIDMascotaPerdida());
     Duenio duenioMascota = buscarDuenioApartirMascota(mascota);
     duenioMascota.seEncontro(mascota);
 
@@ -50,11 +66,9 @@ public class CentroDeRescate {
     return RepositorioDuenios.getInstance().getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(mascota.getID())).findFirst().get();
   }
 
-/*
-  public void notificarAlDuenio(Duenio duenio, MascotaRegistrada mascota){
-    //TODO armar un mensaje y enviarselo a algun dato de contacto del dueño
-  }
-*/
+  //TODO armar un mensaje y enviarselo a algun dato de contacto del dueño
+  //public void notificarAlDuenio(Duenio duenio, MascotaRegistrada mascota);
+
 
   /**
   * notificarMascotasDeLosUltimos10Dias()
@@ -62,18 +76,6 @@ public class CentroDeRescate {
   */
   public void notificarMascotasDeLosUltimos10Dias(){
     this.listarEstadosDeMascotasPerdidasEnUltimosDiezDias().stream().forEach(unEstado -> this.notificarMascotaEncontrada(unEstado));
-  }
-
-  /**
-  * identificarMascota(1)
-  * Obtiene una mascota de la lista de mascotas registradas a partir de un ID.
-  */
-  public MascotaRegistrada identificarMascota(String ID) {
-    return RepositorioMascotas.getInstance()
-        .getMascotasRegistradas().stream()
-        .filter(unaMascota -> unaMascota.coincideID(ID))
-        .findFirst()
-        .get();
   }
 
   /**

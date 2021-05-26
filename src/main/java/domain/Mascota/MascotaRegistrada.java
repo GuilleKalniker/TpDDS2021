@@ -45,7 +45,6 @@ public class MascotaRegistrada {
     return this.ID == ID;
   }
 
-
   public String generarQR() {
     return manejoQR.generarQR(this.getID(), this.getNombre(), 500, 500);
   }

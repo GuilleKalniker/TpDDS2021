@@ -15,17 +15,11 @@ public class RepositorioMascotas {
     return INSTANCE;
   }
 
-  public String registrarMascota(MascotaRegistrada mascota){
-    mascota.setID(this.generarId());
+  public void registrarMascota(MascotaRegistrada mascota){
     this.mascotasRegistradas.add(mascota);
-    return mascota.getID();
   }
 
   public List<MascotaRegistrada> getMascotasRegistradas() {
     return this.mascotasRegistradas;
-  }
-
-  public String generarId(){
-    return UUID.randomUUID().toString().replace("-", "");
   }
 }

@@ -22,12 +22,10 @@ public class DatosMascotaPerdida {
     this.fotosEncuentro = fotosEncuentro;
     this.lugarEncuentro = lugarEncuentro;
     this.fechaEncuentro = fechaEncuentro;
-    //this.qrMascotaPerdida = qrMascotaPerdida;
-    this.ID = ID;
+    this.ID = ID; //TODO recibimos el qr por el contructor y lo transformamos a un ID
   }
 
-  public String getQrMascotaPerdida() {
-    // hacer la lectura del qr y pasarlo como id
+  public String getIDMascotaPerdida() {
     return this.ID;
   }
 
@@ -38,5 +36,4 @@ public class DatosMascotaPerdida {
   public LocalDate getFechaEncuentro() {
     return fechaEncuentro;
   }
-
 }

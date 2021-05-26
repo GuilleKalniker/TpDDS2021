@@ -11,6 +11,7 @@ import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Repositorio.RepositorioDuenios;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
+import domain.Sistema.CentroDeRescate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -73,12 +74,12 @@ public class DuenioTest {
 
   public void registrarleMascotaADuenio(Duenio unDuenio) {
     MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>());
-    unDuenio.registrarMascota(mascota);
+    unDuenio.registrarMascota(mascota, new CentroDeRescate());
   }
 
   public void registrarleOtraMascotaADuenio(Duenio unDuenio) {
     MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Jorgito", "Alfajor", 10, Sexo.MASCULINO, "Perro labrador muy lindo", new ArrayList<Foto>());
-    unDuenio.registrarMascota(mascota);
+    unDuenio.registrarMascota(mascota, new CentroDeRescate());
   }
 
   private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido, Integer telefono, String email){
