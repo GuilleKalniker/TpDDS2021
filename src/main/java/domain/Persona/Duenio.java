@@ -20,6 +20,14 @@ public class Duenio extends Usuario{
     RepositorioDuenios.getInstance().registrarDuenio(this);
   }
 
+  public DatosPersonales getDatosPersonales() {
+    return datosPersonales;
+  }
+
+  public List<String> getMascotasID() {
+    return mascotasID;
+  }
+
   /**
   * registrarMascota(1)
   * Consigue del centro un ID nuevo para la mascota que se va a registrar, luego crea el objeto mascota con todos los parametros de la funcion + this, para que mascota conozca a su duenio
@@ -29,14 +37,9 @@ public class Duenio extends Usuario{
     this.mascotasID.add(centroDeRescate.registrarMascota(mascota));
   }
 
-  public List<String> getMascotasID() {
-    return mascotasID;
-  }
-
   public boolean tieneA(String IDMascota){
     return this.getMascotasID().contains(IDMascota);
   }
-
 
   /**
   * seEncontro(1)
@@ -46,5 +49,6 @@ public class Duenio extends Usuario{
     //TODO Comportamiento no definido, se hace "notificacion".
 
   }
+
 
 }

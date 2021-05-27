@@ -5,10 +5,14 @@ import domain.Mascota.DatosMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.Duenio;
 import domain.Repositorio.RepositorioDuenios;
+import domain.Servicios.JavaMailApi;
 
 import java.util.List;
 
 public class CentroDeRescate {
+
+  private String correoDelCentro = "centrodemascotasdds@gmail.com";
+  private String contrasenia_correo = "tpdds2021";
 
   private AdapterRepoMascotas adapterRepoMascotas = new AdapterRepoMascotas();
 
@@ -30,6 +34,15 @@ public class CentroDeRescate {
 
   public void agregarDatosMascotaPerdida(DatosMascotaPerdida datosMascotaPerdida) {
     this.adapterRepoMascotas.agregarDatosMascotaPerdida(datosMascotaPerdida);
+    /*
+    this.notificar(
+        this.buscarDuenioApartirIDMascota(datosMascotaPerdida.getIDMascotaPerdida()),
+        datosMascotaPerdida,
+        new JavaMailApi(this.correoDelCentro, this.contrasenia_correo));*/
+  }
+
+  public void notificar(Duenio duenio, DatosMascotaPerdida datosMascotaPerdida, JavaMailApi api){
+    api.notificar(duenio, datosMascotaPerdida);
   }
 
 
@@ -41,15 +54,15 @@ public class CentroDeRescate {
   */
   public void notificarMascotaEncontrada(DatosMascotaPerdida datosMascotaPerdida) {
     MascotaRegistrada mascota = this.buscasMascota(datosMascotaPerdida.getIDMascotaPerdida());
-    Duenio duenioMascota = buscarDuenioApartirMascota(mascota);
+    Duenio duenioMascota = buscarDuenioApartirIDMascota(mascota.getID());
     duenioMascota.seEncontro(mascota);
 
     //TODO esta bien que al notificar se elimine los datos de la mascota perdida?
     this.adapterRepoMascotas.eliminarDatosMascotaPerdida(datosMascotaPerdida.getIDMascotaPerdida());
   }
 
-  public Duenio buscarDuenioApartirMascota(MascotaRegistrada mascota){
-    return RepositorioDuenios.getInstance().getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(mascota.getID())).findFirst().get();
+  public Duenio buscarDuenioApartirIDMascota(String ID){
+    return RepositorioDuenios.getInstance().getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID)).findFirst().get();
   }
 
   //TODO armar un mensaje y enviarselo a algun dato de contacto del dueño

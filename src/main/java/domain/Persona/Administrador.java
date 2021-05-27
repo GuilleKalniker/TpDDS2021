@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Administrador extends Usuario{
 
-  public void agregarCaracteristica(String caracteristica, ArrayList<String> valorsPosibles) {
-    RepositorioCaracteristicas.getInstance().agregarCaracteristicas(caracteristica, valorsPosibles);
+  public void agregarCaracteristica(String caracteristica, ArrayList<String> valoresPosibles) {
+    RepositorioCaracteristicas.getInstance().agregarCaracteristicas(caracteristica, valoresPosibles);
   }
 
   public void agregarValorACaracteristica(String caracteristica, String valor) {

@@ -42,7 +42,7 @@ public class CentroDeRescateTest {
   public void BuscamosElDueñoApartirDeUnaMascotaRegistrada(){
     Duenio duenioDePrueba = new Duenio("juan4321", "guilloteelmaskpox2",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com")));
     duenioDePrueba.registrarMascota(pepita, new CentroDeRescate());
-    assertTrue(this.centro.buscarDuenioApartirMascota(pepita).getNombreDeUsuario().equals(duenioDePrueba.getNombreDeUsuario()));
+    assertTrue(this.centro.buscarDuenioApartirIDMascota(pepita.getID()).getNombreDeUsuario().equals(duenioDePrueba.getNombreDeUsuario()));
   }
 
   @Test
@@ -114,9 +114,9 @@ public class CentroDeRescateTest {
 
   private DatosPersonales datosRescastista = new DatosPersonales("Guillermo", "Francella", LocalDate.now(), TipoDocumento.DNI, 14235653, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
 
-  private DatosMascotaPerdida pepitaPerdida = new DatosMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<Foto>(), "Medrano 754", LocalDate.now(), null);
+  private DatosMascotaPerdida pepitaPerdida = new DatosMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<Foto>(), "Medrano 754", LocalDate.now(), "saasdasdasd");
 
-  private DatosMascotaPerdida chinchulinPerdido = new DatosMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<Foto>(), "Medrano 754", LocalDate.now().minusDays(11), null);
+  private DatosMascotaPerdida chinchulinPerdido = new DatosMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<Foto>(), "Medrano 754", LocalDate.now().minusDays(11), "asdsadadsaads");
 
   private MascotaRegistrada pepita = new MascotaRegistrada(TipoMascota.PERRO, "Pepita", "Pepisauria", 9, Sexo.FEMENINO, "Perra corgi muy linda", new ArrayList<Foto>());
 

@@ -31,4 +31,16 @@ public class DatosPersonales {
   public void setDireccion(String direccion) {
     this.direccion = direccion;
   }
+
+  public List<Contacto> getContactos() {
+    return contactos;
+  }
+
+  public String getNombre() {
+    return nombre;
+  }
+
+  public String getApellido() {
+    return apellido;
+  }
 }
