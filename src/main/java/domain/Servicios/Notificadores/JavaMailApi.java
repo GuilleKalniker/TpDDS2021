@@ -1,4 +1,4 @@
-package domain.Servicios;
+package domain.Servicios.Notificadores;
 
 import domain.Mascota.DatosMascotaPerdida;
 import domain.Persona.Duenio;
@@ -10,7 +10,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-public class JavaMailApi {
+public class JavaMailApi implements Notificador{
 
   private String correo_envio;
   private String contraseña;

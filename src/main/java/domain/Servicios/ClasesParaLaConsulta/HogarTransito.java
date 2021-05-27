@@ -1,6 +1,5 @@
 package domain.Servicios.ClasesParaLaConsulta;
 
-
 import java.util.ArrayList;
 
 public class HogarTransito {

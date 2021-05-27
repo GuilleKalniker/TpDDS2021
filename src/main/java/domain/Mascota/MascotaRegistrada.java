@@ -16,8 +16,7 @@ public class MascotaRegistrada {
   private String descripcionFisica;
   private ArrayList<Foto> fotos;
   private String ID;
-  //TODO caracteristica mascota
-  //private HashMap<String, String> caracteristicas;
+  //private HashMap<String, String> caracteristicas; TODO caracteristica mascota
 
   public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos) {
     this.tipo = tipo;

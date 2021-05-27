@@ -6,6 +6,7 @@ import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Persona.Duenio;
+import domain.Servicios.Notificadores.JavaMailApi;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -4,7 +4,6 @@ package domain.Persona;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Repositorio.RepositorioDuenios;
-import domain.Repositorio.RepositorioMascotas;
 import domain.Sistema.CentroDeRescate;
 
 import java.util.ArrayList;

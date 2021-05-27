@@ -14,15 +14,13 @@ public class DatosMascotaPerdida {
   private LocalDate fechaEncuentro;
   private String ID;
 
-
-  //TODO: Manejamos el qr como id para no sobre diseñar :D atte:willy ;)
-  public DatosMascotaPerdida(DatosPersonales rescatistaDeEncuentro, String descripcionEstado, List<Foto> fotosEncuentro, String lugarEncuentro, LocalDate fechaEncuentro, String ID) {
-    this.datosRescastista = rescatistaDeEncuentro;
+  public DatosMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<Foto> fotosEncuentro, String lugarEncuentro, LocalDate fechaEncuentro, String ID) {
+    this.datosRescastista = datosRescastista;
     this.descripcionEstado = descripcionEstado;
     this.fotosEncuentro = fotosEncuentro;
     this.lugarEncuentro = lugarEncuentro;
     this.fechaEncuentro = fechaEncuentro;
-    this.ID = ID; //TODO recibimos el qr por el contructor y lo transformamos a un ID
+    this.ID = ID; //TODO recibimos el qr por el contructor y lo leemos para obtener el ID
   }
 
   public String getIDMascotaPerdida() {
