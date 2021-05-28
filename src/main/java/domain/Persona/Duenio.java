@@ -37,7 +37,7 @@ public class Duenio {
 
   /*
   * registrarMascota(7)
-  * Consigue del centro un QR nuevo para la mascota que se va a registrar, luego crea el objeto mascota con todos los parametros de la funcion + this, para que mascota conozca a su duenio
+  * Consigue del centro un QR nuevo para la mascota que se va a registrtar, luego crea el objeto mascota con todos los parametros de la funcion + this, para que mascota conozca a su duenio
   * Posteriormente agrega a la mascota recien registrada a la lista de mascotas del duenio y del centro de rescate.
   */
   public void registrarMascota(TipoMascota unTipo, String unNombre, String unApodo, Integer unaEdad, Sexo unSexo, String unaDescripcion, ArrayList<Foto> unasFotos) {
