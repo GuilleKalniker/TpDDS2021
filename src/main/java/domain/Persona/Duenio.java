@@ -25,9 +25,8 @@ public class Duenio extends Usuario{
 
 
   /*
-  * registrarMascota(1)
+  * registrarMascota(2)
   * Consigue del centro un ID nuevo para la mascota que se va a registrar, luego crea el objeto mascota con todos los parametros de la funcion + this, para que mascota conozca a su duenio
->>>>>>> 8fb96c99e1caa4af178dd2d9d982b0b670947cb5
   * Posteriormente agrega a la mascota recien registrada a la lista de mascotas del duenio y del centro de rescate.
   */
   public void registrarMascota(MascotaRegistrada mascota, CentroDeRescate centroDeRescate){
@@ -44,7 +43,6 @@ public class Duenio extends Usuario{
   */
   public void seEncontro(MascotaRegistrada unaMascota) {
     //TODO Comportamiento no definido, se hace "notificacion".
-
   }
 
 

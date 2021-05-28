@@ -10,22 +10,22 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-public class JavaMailApi implements Notificador{
+public class JavaMailApi implements Notificador {
 
-  private String correo_envio;
+  private String correoEnvio;
   private String contraseña;
   private Properties props;
   private Session session;
 
-  public JavaMailApi(String correo_envio, String contraseña) {
-    this.correo_envio = correo_envio;
+  public JavaMailApi(String correoEnvio, String contraseña) {
+    this.correoEnvio = correoEnvio;
     this.contraseña = contraseña;
 
     this.props = new Properties();
     props.setProperty("mail.smtp.host", "smtp.gmail.com");
     props.setProperty("mail.smtp.starttls.enable", "true");
     props.setProperty("mail.smtp.port","587");
-    props.setProperty("mail.smtp.user", this.correo_envio);
+    props.setProperty("mail.smtp.user", this.correoEnvio);
     props.setProperty("mail.smtp.auth", "true");
 
     this.session = Session.getDefaultInstance(this.props);
@@ -36,19 +36,19 @@ public class JavaMailApi implements Notificador{
 
     try {
       Transport t = session.getTransport("smtp");;
-      t.connect(this.correo_envio, this.contraseña);
+      t.connect(this.correoEnvio, this.contraseña);
       t.sendMessage(message, message.getAllRecipients());
       t.close();
     }
     catch (Exception e) {
-      throw new RuntimeException("no se pudo armar al Transport");
+      throw new RuntimeException("No se pudo armar al Transport");
     }
   }
 
   public MimeMessage armarMensaje(Duenio duenio, DatosMascotaPerdida datosMascotaPerdida){
     try {
       MimeMessage message = new MimeMessage(this.session);
-      message.setFrom(new InternetAddress(this.correo_envio));
+      message.setFrom(new InternetAddress(this.correoEnvio));
 
       duenio.getDatosPersonales().getContactos().stream()
           .forEach(contacto -> this.agregarDestinatarioAlMensaje(message, contacto.getEmail()));

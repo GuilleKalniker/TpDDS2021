@@ -12,8 +12,9 @@ import java.util.List;
 
 public class CentroDeRescate {
 
-  private String correoDelCentro = "centrodemascotasdds@gmail.com";
-  private String contrasenia_correo = "tpdds2021";
+  private String correoDelCentro = "centrodemascotasdds@gmail.com"; // Hay varios centros, no deberia estar hardcodead
+  private String contraseniaCorreo = "tpdds2021"; // Same arriba
+  private Notificador notificadorActual = new JavaMailApi(this.correoDelCentro, this.contraseniaCorreo); // Paso a hacerlo Strategy, queda harcodeado
 
   /** FUNCIONES PARA MASCOTAS REGISTRADAS */
 
@@ -21,7 +22,7 @@ public class CentroDeRescate {
     return RepositorioMascotas.getInstance().registrarMascota(mascota);
   }
 
-  public MascotaRegistrada buscasMascota(String ID){
+  public MascotaRegistrada buscarMascota(String ID){
     return RepositorioMascotas.getInstance().buscarMascotaPorID(ID);
   }
 
@@ -31,21 +32,18 @@ public class CentroDeRescate {
 
   /** FUNCIONES PARA MASCOTAS PERDIDAS*/
 
-  public void agregarDatosMascotaPerdida(DatosMascotaPerdida datosMascotaPerdida) {
+  public void agregarDatosMascotaPerdida(DatosMascotaPerdida datosMascotaPerdida) { // Agrega y notifica a la vez, no deberia ser el caso
     RepositorioMascotas.getInstance().agregarDatosMascotaPerdida(datosMascotaPerdida);
-    try{
-      this.notificar(
-          this.buscarDuenioApartirIDMascota(datosMascotaPerdida.getIDMascotaPerdida()),
-          datosMascotaPerdida,
-          new JavaMailApi(this.correoDelCentro, this.contrasenia_correo)
-      );
-    } catch (RuntimeException e) {
+    try {
+      this.notificar(this.buscarDuenioApartirIDMascota(datosMascotaPerdida.getIDMascotaPerdida()), datosMascotaPerdida);
+    }
+    catch (RuntimeException e) {
       e.printStackTrace();
     }
   }
 
-  public void notificar(Duenio duenio, DatosMascotaPerdida datosMascotaPerdida, Notificador notificador){
-    notificador.notificar(duenio, datosMascotaPerdida);
+  public void notificar(Duenio duenio, DatosMascotaPerdida datosMascotaPerdida){
+    notificadorActual.notificar(duenio, datosMascotaPerdida);
   }
 
   /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
@@ -55,9 +53,9 @@ public class CentroDeRescate {
   * Obtiene una mascota a partir del ID registrado en el estado y luego notifica al duenio.
   */
   public void notificarMascotaEncontrada(DatosMascotaPerdida datosMascotaPerdida) {
-    MascotaRegistrada mascota = this.buscasMascota(datosMascotaPerdida.getIDMascotaPerdida());
+    MascotaRegistrada mascota = this.buscarMascota(datosMascotaPerdida.getIDMascotaPerdida());
     Duenio duenioMascota = buscarDuenioApartirIDMascota(mascota.getID());
-    duenioMascota.seEncontro(mascota);
+    duenioMascota.seEncontro(mascota); // Deberia usar notificador
 
     //TODO esta bien que al notificar se elimine los datos de la mascota perdida?
     RepositorioMascotas.getInstance().eliminarDatosMascotaPerdida(datosMascotaPerdida.getIDMascotaPerdida());
