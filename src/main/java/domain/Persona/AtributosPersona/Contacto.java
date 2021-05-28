@@ -1,4 +1,4 @@
-package domain.Persona;
+package domain.Persona.AtributosPersona;
 
 public class Contacto {
   private String nombre;
@@ -11,5 +11,21 @@ public class Contacto {
     this.apellido = apellido;
     this.telefono = telefono;
     this.email = email;
+  }
+
+  public String getNombre() {
+    return nombre;
+  }
+
+  public String getApellido() {
+    return apellido;
+  }
+
+  public Integer getTelefono() {
+    return telefono;
+  }
+
+  public String getEmail() {
+    return email;
   }
 }

@@ -1,6 +1,9 @@
 package domain.Mascota;
 
-import domain.Persona.Duenio;
+import Funciones.manejoQR;
+import domain.Mascota.AtributosMascota.Foto;
+import domain.Mascota.AtributosMascota.Sexo;
+import domain.Mascota.AtributosMascota.TipoMascota;
 
 import java.util.ArrayList;
 
@@ -12,12 +15,10 @@ public class MascotaRegistrada {
   private Sexo sexo;
   private String descripcionFisica;
   private ArrayList<Foto> fotos;
-  private Integer qr;
-  private Duenio duenio;
+  private String ID;
+  //private HashMap<String, String> caracteristicas; TODO caracteristica mascota
 
-  //TODO caracteristica mascota
-
-  public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos, Integer qr, Duenio duenio) {
+  public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos) {
     this.tipo = tipo;
     this.nombre = nombre;
     this.apodo = apodo;
@@ -25,19 +26,33 @@ public class MascotaRegistrada {
     this.sexo = sexo;
     this.descripcionFisica = descripcionFisica;
     this.fotos = fotos;
-    this.qr = qr;
-    this.duenio = duenio;
-  }
-
-  public Integer getQr() {
-    return qr;
-  }
-
-  public Duenio getDuenio() {
-    return duenio;
   }
 
   public String getNombre() {
     return nombre;
+  }
+
+  public void setID(String ID) {
+    this.ID = ID;
+  }
+
+  public String getID(){
+    return this.ID;
+  }
+
+  public Boolean coincideID(String ID) {
+    return this.ID == ID;
+  }
+
+  public String generarQR() {
+    return manejoQR.generarQR(this.getID(), this.getNombre(), 500, 500);
+  }
+
+  public String leerQR(String pathQR) {
+    return manejoQR.leerQR(pathQR);
+  }
+
+  public Boolean esMiQR(String pathQR){
+    return this.leerQR(pathQR) == this.getID();
   }
 }

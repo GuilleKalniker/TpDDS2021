@@ -1,11 +1,19 @@
-package domain.Sistema;
+package domain.Repositorio;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Caracteristicas {
+public class RepositorioCaracteristicas {
+  private HashMap<String, ArrayList<String>> DiccionarioCaracteristicas;
+  private static final RepositorioCaracteristicas instance = new RepositorioCaracteristicas();
 
-  private HashMap<String, ArrayList<String>> DiccionarioCaracteristicas = new HashMap<>();
+  private RepositorioCaracteristicas(){
+    this.DiccionarioCaracteristicas = new HashMap<String, ArrayList<String>>();
+  }
+
+  public static RepositorioCaracteristicas getInstance(){
+    return instance;
+  }
 
   public void agregarCaracteristicas(String nombreCaracteristica, ArrayList<String> valorsPosibles){
     this.DiccionarioCaracteristicas.put(nombreCaracteristica, valorsPosibles);

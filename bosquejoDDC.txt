@@ -72,6 +72,16 @@ class Rescatista {
     + notificarMascotaEncontrada(mascota)
 }
 
+abstract class Usuario {
+    - nombreDeUsuario: String
+    - contrasenia: String
+
+    + registrarse()
+}
+
+Duenio -up-|> Usuario
+Administrador -up-|> Usuario
+
 class Administrador {
     + agregarCaracteristica()
     + agregarValorACaracteristica()
@@ -108,3 +118,5 @@ Administrador ..> CentroDeRescate
 Administrador ..> Caracteristicas
 
 @enduml
+
+

@@ -1,18 +1,21 @@
 package domain.Persona;
 
-import domain.Sistema.CentroDeRescate;
+import domain.Repositorio.RepositorioCaracteristicas;
 
 import java.util.ArrayList;
 
-public class Administrador {
-  public void agregarCaracteristica(String caracteristica, ArrayList<String> valorsPosibles) {
-    CentroDeRescate.getInstance().getCaracteristicas().agregarCaracteristicas(caracteristica, valorsPosibles);
+public class Administrador extends Usuario{
+
+  public void agregarCaracteristica(String caracteristica, ArrayList<String> valoresPosibles) {
+    RepositorioCaracteristicas.getInstance().agregarCaracteristicas(caracteristica, valoresPosibles);
   }
+
   public void agregarValorACaracteristica(String caracteristica, String valor) {
-    CentroDeRescate.getInstance().getCaracteristicas().agregarValorA(caracteristica, valor);
+    RepositorioCaracteristicas.getInstance().agregarValorA(caracteristica, valor);
   }
-  //TODO
-  //USUARIO Y CONTRASEÑA TANTO PARA ADMIN COMO PARA DUEÑOS
-  //TESTS
+
+  public Administrador(String usuario, String contrasenia) {
+   super(usuario,contrasenia);
+  }
 
 }
