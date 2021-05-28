@@ -2,6 +2,7 @@ package domain.Repositorio;
 
 import domain.Mascota.DatosMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
+import domain.Mascota.PublicacionMascotaPerdida;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -14,13 +15,14 @@ public class RepositorioMascotas {
 
   private List<MascotaRegistrada> mascotasRegistradas = new ArrayList<>();
   private List<DatosMascotaPerdida> datosMascotasPerdidas = new ArrayList<>();
+  private List<PublicacionMascotaPerdida> publicacionesMascotasPerdidas = new ArrayList<>();
   private static final RepositorioMascotas INSTANCE = new RepositorioMascotas();
 
   public static RepositorioMascotas getInstance() {
     return INSTANCE;
   }
 
-  public void addMascota(MascotaRegistrada mascota){
+  public void agregarMascota(MascotaRegistrada mascota){
     this.getMascotasRegistradas().add(mascota);
   }
 
@@ -36,11 +38,23 @@ public class RepositorioMascotas {
     return datosMascotasPerdidas;
   }
 
+  public void agregarPublicacionMascotaPerdida(PublicacionMascotaPerdida unaPublicacion) {
+    this.getPublicacionesDeMascotasPerdidas().add(unaPublicacion);
+  }
+
+  private List<PublicacionMascotaPerdida> getPublicacionesDeMascotasPerdidas() {
+    return publicacionesMascotasPerdidas;
+  }
+
+  private List<PublicacionMascotaPerdida> getPublicacionesMascotasPerdidasPorCentro(CentroDeRescate unCentro) {
+    return publicacionesMascotasPerdidas.stream().filter(unaPublicacion -> unCentro.equals(unaPublicacion.getCentro())).collect(Collectors.toList());
+  }
+
   /** MASCOTAS REGISTRADAS **/
 
   public String registrarMascota(MascotaRegistrada mascota){
     mascota.setID(this.generarId());
-    this.addMascota(mascota);
+    this.agregarMascota(mascota);
     return mascota.getID();
   }
 

@@ -1,12 +1,14 @@
 package domain.Mascota;
 
 import domain.Mascota.AtributosMascota.Foto;
+import domain.Mascota.AtributosMascota.TipoMascota;
 import domain.Persona.AtributosPersona.DatosPersonales;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class DatosMascotaPerdida {
+  private TipoMascota tipo;
   private DatosPersonales datosRescastista;
   private String descripcionEstado;
   private List<Foto> fotosEncuentro;
@@ -14,7 +16,8 @@ public class DatosMascotaPerdida {
   private LocalDate fechaEncuentro;
   private String ID;
 
-  public DatosMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<Foto> fotosEncuentro, String lugarEncuentro, LocalDate fechaEncuentro, String ID) {
+  public DatosMascotaPerdida(TipoMascota tipo, DatosPersonales datosRescastista, String descripcionEstado, List<Foto> fotosEncuentro, String lugarEncuentro, LocalDate fechaEncuentro, String ID) {
+    this.tipo = tipo;
     this.datosRescastista = datosRescastista;
     this.descripcionEstado = descripcionEstado;
     this.fotosEncuentro = fotosEncuentro;
@@ -33,5 +36,9 @@ public class DatosMascotaPerdida {
 
   public LocalDate getFechaEncuentro() {
     return fechaEncuentro;
+  }
+
+  public TipoMascota getTipo() {
+    return tipo;
   }
 }
