@@ -23,6 +23,10 @@ public class Duenio extends Usuario{
     return datosPersonales;
   }
 
+  public List<String> getMascotasID() {
+    return this.mascotasID;
+  }
+
 
   /*
   * registrarMascota(1)

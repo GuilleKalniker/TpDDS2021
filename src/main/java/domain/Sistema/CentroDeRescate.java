@@ -50,21 +50,20 @@ public class CentroDeRescate {
 
   /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
 
+  public Duenio buscarDuenioApartirIDMascota(String ID){
+    return RepositorioDuenios.getInstance().getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID)).findFirst().get();
+  }
+
   /**
   * notificarMascotaEncontrada(1)
   * Obtiene una mascota a partir del ID registrado en el estado y luego notifica al duenio.
-  */
+   */
   public void notificarMascotaEncontrada(DatosMascotaPerdida datosMascotaPerdida) {
     MascotaRegistrada mascota = this.buscasMascota(datosMascotaPerdida.getIDMascotaPerdida());
     Duenio duenioMascota = buscarDuenioApartirIDMascota(mascota.getID());
     duenioMascota.seEncontro(mascota);
-
     //TODO esta bien que al notificar se elimine los datos de la mascota perdida?
     RepositorioMascotas.getInstance().eliminarDatosMascotaPerdida(datosMascotaPerdida.getIDMascotaPerdida());
-  }
-
-  public Duenio buscarDuenioApartirIDMascota(String ID){
-    return RepositorioDuenios.getInstance().getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID)).findFirst().get();
   }
 
   //TODO armar un mensaje y enviarselo a algun dato de contacto del dueño
