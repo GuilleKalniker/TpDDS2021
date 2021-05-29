@@ -45,5 +45,18 @@ public class Duenio extends Usuario{
     //TODO Comportamiento no definido, se hace "notificacion".
   }
 
-
+  /*
+   * buscarMascotasPerdidas()
+   * Cicla por las publicaciones hasta dar con la publicacion de la mascota propia (o no)
+   */
+  public void buscarMascotasPerdidas() {
+    for (PublicacionMascotaPerdida publicacion : RepositorioMascotas.getInstance().getPublicacionesDeMascotasPerdidas()) {
+      if (esMiMascota(publicacion)) {
+        informar(publicacion, this);
+      }
+      else {
+        ignorar(publicacion);
+      }
+    }
+  }
 }

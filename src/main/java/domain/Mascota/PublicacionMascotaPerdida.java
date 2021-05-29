@@ -19,6 +19,7 @@ public class PublicacionMascotaPerdida {
   PublicacionMascotaPerdida(DatosMascotaPerdida datosMascotaPerdida) {
     filtrarInformacionSensible(datosMascotaPerdida);
     encontrarCentroMasCercano(datosMascotaPerdida);
+    // TODO: Primero deberia aprobarla un Voluntario
     RepositorioMascotas.getInstance().agregarPublicacionMascotaPerdida(this);
   }
 
