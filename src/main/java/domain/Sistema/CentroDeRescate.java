@@ -5,9 +5,12 @@ import domain.Mascota.MascotaRegistrada;
 import domain.Persona.Duenio;
 import domain.Repositorio.RepositorioDuenios;
 import domain.Repositorio.RepositorioMascotas;
+import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
 import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
+import domain.Servicios.ServicioHogaresTransito;
 
+import java.lang.invoke.SerializedLambda;
 import java.util.List;
 
 public class CentroDeRescate {
@@ -81,5 +84,8 @@ public class CentroDeRescate {
     return RepositorioMascotas.getInstance().datosMascotasPerdidasEnUltimosDiezDias();
   }
 
+  public List<HogarTransito> solicitarListaHogaresDeTransito() {
+    return ServicioHogaresTransito.getInstance().solicitarTodosLosHogares();
+  }
 }
 

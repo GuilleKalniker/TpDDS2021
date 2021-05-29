@@ -50,6 +50,4 @@ public class Duenio extends Usuario{
     //TODO Comportamiento no definido, se hace "notificacion".
 
   }
-
-
 }

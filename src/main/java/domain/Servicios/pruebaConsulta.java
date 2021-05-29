@@ -18,7 +18,7 @@ public class pruebaConsulta {
 
     public static void main(String[] args) {
 
-      List<HogarTransito> listado = ServicioHogaresTransito.instancia().solicitarTodosLosHogares();
+      List<HogarTransito> listado = ServicioHogaresTransito.getInstance().solicitarTodosLosHogares();
 
       listado.forEach(hogar -> System.out.println(hogar.getNombre()));
     }

@@ -32,7 +32,7 @@ public class ServicioHogaresTransito {
     this.token = getToken("src/lista_contraseñas_no_seguras/bearer_token.json");
   }
 
-  public static ServicioHogaresTransito instancia() {
+  public static ServicioHogaresTransito getInstance() {
     if(instancia== null) {
       instancia = new ServicioHogaresTransito();
     }
@@ -40,10 +40,9 @@ public class ServicioHogaresTransito {
   }
 
   public List<HogarTransito> solicitarTodosLosHogares() {
-    ListadoHogaresTransito listado = this.listaHogaresTransito(1);
     List<HogarTransito> listaHogares = new ArrayList<>();
 
-    for(Integer i = 1; i <= Math.ceil(listado.total / 10); i++){
+    for(Integer i = 1; i <= Math.ceil(this.cantidadHogaresTotales() / 10); i++){
       listaHogares.addAll(listaHogaresTransito(i).hogares);
     }
 
@@ -62,6 +61,10 @@ public class ServicioHogaresTransito {
     catch (Exception e) {
       throw new RuntimeException("No se pudo realizar la consulta");
     }
+  }
+
+  public Integer cantidadHogaresTotales() {
+    return this.listaHogaresTransito(1).total;
   }
 
   private String requestToken(String email) {
