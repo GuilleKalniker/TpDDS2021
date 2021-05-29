@@ -2,6 +2,7 @@ package domain.Servicios;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
 import domain.Servicios.ClasesParaLaConsulta.ListadoHogaresTransito;
 import domain.Servicios.ClasesParaLaConsulta.Request;
 import domain.Servicios.ClasesParaLaConsulta.UsuariosResponse;
@@ -11,6 +12,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServicioHogaresTransito {
 
@@ -36,24 +39,23 @@ public class ServicioHogaresTransito {
     return instancia;
   }
 
+  public List<HogarTransito> solicitarTodosLosHogares() {
+    ListadoHogaresTransito listado = this.listaHogaresTransito(1);
+    List<HogarTransito> listaHogares = new ArrayList<>();
 
-  /*
-  public UsuariosResponse tokenUsuario() throws IOException {
-    HogaresTransitoService refugiosService = this.retrofit.create(HogaresTransitoService.class);
-    HashMap<String, String> params = new HashMap<>();
-    params.put("email", "msisro@frba.utn.edu.ar");
-    Call<UsuariosResponse> requestToken = refugiosService.postUsuarios(params);
-    Response<UsuariosResponse> responseTokenUsuarios = requestToken.execute();
-    return responseTokenUsuarios.body();
+    for(Integer i = 1; i <= Math.ceil(listado.total / 10); i++){
+      listaHogares.addAll(listaHogaresTransito(i).hogares);
+    }
+
+    return listaHogares;
   }
-  */
 
   //funciona  probarlo aqui domain.Servicios.pruebaConsulta
   //cada consulta solo trae un archivo con 10 hogares de 40, habria que ver la manera de verificar de habernos traido todos
-  public ListadoHogaresTransito listaHogaresTransito() {
+  public ListadoHogaresTransito listaHogaresTransito(Integer numeroDePagina) {
     try {
       HogaresTransitoService refugiosService = this.retrofit.create(HogaresTransitoService.class);
-      Call<ListadoHogaresTransito> requestHogares = refugiosService.getHogares("Bearer " + this.token, 1);
+      Call<ListadoHogaresTransito> requestHogares = refugiosService.getHogares("Bearer " + this.token, numeroDePagina);
       Response<ListadoHogaresTransito> responseHogaresTransito = requestHogares.execute();
       return responseHogaresTransito.body();
     }

@@ -25,4 +25,7 @@ public class HogarTransito {
     public Boolean gatos;
   }
 
+  public String getNombre() {
+    return nombre;
+  }
 }
