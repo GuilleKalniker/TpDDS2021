@@ -24,7 +24,7 @@ public class CentroDeRescate {
     return RepositorioMascotas.getInstance().registrarMascota(mascota);
   }
 
-  public MascotaRegistrada buscasMascota(String ID){
+  public MascotaRegistrada buscarMascota(String ID){
     return RepositorioMascotas.getInstance().buscarMascotaPorID(ID);
   }
 
@@ -62,7 +62,7 @@ public class CentroDeRescate {
   * Obtiene una mascota a partir del ID registrado en el estado y luego notifica al duenio.
    */
   public void notificarMascotaEncontrada(DatosMascotaPerdida datosMascotaPerdida) {
-    MascotaRegistrada mascota = this.buscasMascota(datosMascotaPerdida.getIDMascotaPerdida());
+    MascotaRegistrada mascota = this.buscarMascota(datosMascotaPerdida.getIDMascotaPerdida());
     Duenio duenioMascota = buscarDuenioApartirIDMascota(mascota.getID());
     duenioMascota.seEncontro(mascota);
     //TODO esta bien que al notificar se elimine los datos de la mascota perdida?
