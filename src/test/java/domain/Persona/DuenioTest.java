@@ -2,6 +2,7 @@ package domain.Persona;
 
 import domain.Exceptions.ContraseniaInvalidaException;
 import domain.Mascota.AtributosMascota.Foto;
+import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.MascotaRegistrada;
 import domain.Mascota.AtributosMascota.Sexo;
 import domain.Mascota.AtributosMascota.TipoMascota;
@@ -74,12 +75,12 @@ public class DuenioTest {
 
   public void registrarleMascotaADuenio(Duenio unDuenio) {
     MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>());
-    unDuenio.registrarMascota(mascota, new CentroDeRescate());
+    unDuenio.registrarMascota(mascota, new CentroDeRescate(new Ubicacion(2.2,2.2)));
   }
 
   public void registrarleOtraMascotaADuenio(Duenio unDuenio) {
     MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Jorgito", "Alfajor", 10, Sexo.MASCULINO, "Perro labrador muy lindo", new ArrayList<Foto>());
-    unDuenio.registrarMascota(mascota, new CentroDeRescate());
+    unDuenio.registrarMascota(mascota, new CentroDeRescate(new Ubicacion(2.2,2.2)));
   }
 
   private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido, Integer telefono, String email){

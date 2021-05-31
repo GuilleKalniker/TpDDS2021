@@ -4,6 +4,7 @@ import domain.Mascota.*;
 import domain.Mascota.AtributosMascota.Foto;
 import domain.Mascota.AtributosMascota.Sexo;
 import domain.Mascota.AtributosMascota.TipoMascota;
+import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Persona.*;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
@@ -41,7 +42,7 @@ public class CentroDeRescateTest {
   @Test
   public void BuscamosElDueñoApartirDeUnaMascotaRegistrada(){
     Duenio duenioDePrueba = new Duenio("juan4321", "guilloteelmaskpox2",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com")));
-    duenioDePrueba.registrarMascota(pepita, new CentroDeRescate());
+    duenioDePrueba.registrarMascota(pepita, new CentroDeRescate(new Ubicacion(2.2,2.2)));
     assertTrue(this.centro.buscarDuenioApartirIDMascota(pepita.getID()).getNombreDeUsuario().equals(duenioDePrueba.getNombreDeUsuario()));
   }
 
@@ -54,8 +55,8 @@ public class CentroDeRescateTest {
 
   @Test
   public void identificoUnaMascotaIdentificaBien(){
-    String id = new CentroDeRescate().registrarMascota(pepita);
-    MascotaRegistrada mascotaEncontrada = this.centro.buscasMascota(id);
+    String id = new CentroDeRescate(new Ubicacion(2.2,2.2)).registrarMascota(pepita);
+    MascotaRegistrada mascotaEncontrada = this.centro.buscarMascota(id);
     assertEquals(pepita.getID(), mascotaEncontrada.getID());
   }
 /*
@@ -106,7 +107,7 @@ public class CentroDeRescateTest {
 
   /** Funciones y definiciones **/
 
-  private CentroDeRescate centro = new CentroDeRescate();
+  private CentroDeRescate centro = new CentroDeRescate(new Ubicacion(2.2,2.2));
 
   private Duenio duenioDePruebaUno = new Duenio("juanito123", "guilloteelmaskpo",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com")));
 
@@ -114,9 +115,9 @@ public class CentroDeRescateTest {
 
   private DatosPersonales datosRescastista = new DatosPersonales("Guillermo", "Francella", LocalDate.now(), TipoDocumento.DNI, 14235653, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
 
-  private DatosMascotaPerdida pepitaPerdida = new DatosMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<Foto>(), "Medrano 754", LocalDate.now(), "saasdasdasd");
+  private DatosMascotaPerdida pepitaPerdida = new DatosMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<Foto>(), new Ubicacion(2.2,2.2), LocalDate.now(), "saasdasdasd");
 
-  private DatosMascotaPerdida chinchulinPerdido = new DatosMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<Foto>(), "Medrano 754", LocalDate.now().minusDays(11), "asdsadadsaads");
+  private DatosMascotaPerdida chinchulinPerdido = new DatosMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<Foto>(), new Ubicacion(2.2,2.2), LocalDate.now().minusDays(11), "asdsadadsaads");
 
   private MascotaRegistrada pepita = new MascotaRegistrada(TipoMascota.PERRO, "Pepita", "Pepisauria", 9, Sexo.FEMENINO, "Perra corgi muy linda", new ArrayList<Foto>());
 
@@ -125,7 +126,7 @@ public class CentroDeRescateTest {
 
   void registrarleMascotaADuenio(Duenio unDuenio) {
     MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>());
-    unDuenio.registrarMascota(mascota, new CentroDeRescate());
+    unDuenio.registrarMascota(mascota, new CentroDeRescate(new Ubicacion(2.2,2.2)));
   }
 
   private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido, Integer telefono, String email){

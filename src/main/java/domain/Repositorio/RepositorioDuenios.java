@@ -23,5 +23,4 @@ public class RepositorioDuenios {
     return this.dueniosRegistrados;
   }
 
-
 }
