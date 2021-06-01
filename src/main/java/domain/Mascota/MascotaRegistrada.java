@@ -1,11 +1,13 @@
 package domain.Mascota;
 
 import Funciones.manejoQR;
+import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Mascota.AtributosMascota.Foto;
 import domain.Mascota.AtributosMascota.Sexo;
 import domain.Mascota.AtributosMascota.TipoMascota;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MascotaRegistrada {
   private TipoMascota tipo;
@@ -16,9 +18,9 @@ public class MascotaRegistrada {
   private String descripcionFisica;
   private ArrayList<Foto> fotos;
   private String ID;
-  //private HashMap<String, String> caracteristicas; TODO caracteristica mascota
+  private List<Caracteristica> caracteristicas;
 
-  public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos) {
+  public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos,List<Caracteristica> caracteristicas) {
     this.tipo = tipo;
     this.nombre = nombre;
     this.apodo = apodo;

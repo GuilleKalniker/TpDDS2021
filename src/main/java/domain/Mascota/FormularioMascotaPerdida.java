@@ -7,7 +7,7 @@ import domain.Persona.AtributosPersona.DatosPersonales;
 import java.time.LocalDate;
 import java.util.List;
 
-public class DatosMascotaPerdida {
+public class FormularioMascotaPerdida {
   private DatosPersonales datosRescastista;
   private String descripcionEstado;
   private List<Foto> fotosEncuentro;
@@ -15,7 +15,7 @@ public class DatosMascotaPerdida {
   private LocalDate fechaEncuentro;
   private String ID;
 
-  public DatosMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<Foto> fotosEncuentro, Ubicacion lugarEncuentro, LocalDate fechaEncuentro, String ID) {
+  public FormularioMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<Foto> fotosEncuentro, Ubicacion lugarEncuentro, LocalDate fechaEncuentro, String ID) {
     this.datosRescastista = datosRescastista;
     this.descripcionEstado = descripcionEstado;
     this.fotosEncuentro = fotosEncuentro;
@@ -24,12 +24,16 @@ public class DatosMascotaPerdida {
     this.ID = ID; //TODO recibimos el qr por el contructor y lo leemos para obtener el ID
   }
 
-  public String getIDMascotaPerdida() {
-    return this.ID;
+  public FormularioMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<Foto> fotosEncuentro, Ubicacion lugarEncuentro, LocalDate fechaEncuentro) {
+    this.datosRescastista = datosRescastista;
+    this.descripcionEstado = descripcionEstado;
+    this.fotosEncuentro = fotosEncuentro;
+    this.lugarEncuentro = lugarEncuentro;
+    this.fechaEncuentro = fechaEncuentro;
   }
 
-  public void setID(String ID) {
-    this.ID = ID;
+  public String getIDMascotaPerdida() {
+    return this.ID;
   }
 
   public LocalDate getFechaEncuentro() {
@@ -39,4 +43,5 @@ public class DatosMascotaPerdida {
   public Ubicacion getLugarEncuentro() {
     return lugarEncuentro;
   }
+
 }

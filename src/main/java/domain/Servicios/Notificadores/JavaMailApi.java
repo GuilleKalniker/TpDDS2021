@@ -1,6 +1,6 @@
 package domain.Servicios.Notificadores;
 
-import domain.Mascota.DatosMascotaPerdida;
+import domain.Mascota.FormularioMascotaPerdida;
 import domain.Persona.Duenio;
 
 import javax.mail.Message;
@@ -31,8 +31,8 @@ public class JavaMailApi implements Notificador{
     this.session = Session.getDefaultInstance(this.props);
   }
 
-  public void notificar(Duenio duenio, DatosMascotaPerdida datosMascotaPerdida) {
-    MimeMessage message = armarMensaje(duenio, datosMascotaPerdida);
+  public void notificar(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida) {
+    MimeMessage message = armarMensaje(duenio, formularioMascotaPerdida);
 
     try {
       Transport t = session.getTransport("smtp");;
@@ -45,7 +45,7 @@ public class JavaMailApi implements Notificador{
     }
   }
 
-  public MimeMessage armarMensaje(Duenio duenio, DatosMascotaPerdida datosMascotaPerdida){
+  public MimeMessage armarMensaje(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida){
     try {
       MimeMessage message = new MimeMessage(this.session);
       message.setFrom(new InternetAddress(this.correo_envio));

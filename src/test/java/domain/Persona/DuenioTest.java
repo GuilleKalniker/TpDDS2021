@@ -1,11 +1,8 @@
 package domain.Persona;
 
 import domain.Exceptions.ContraseniaInvalidaException;
-import domain.Mascota.AtributosMascota.Foto;
-import domain.Mascota.AtributosMascota.Ubicacion;
+import domain.Mascota.AtributosMascota.*;
 import domain.Mascota.MascotaRegistrada;
-import domain.Mascota.AtributosMascota.Sexo;
-import domain.Mascota.AtributosMascota.TipoMascota;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
@@ -74,12 +71,12 @@ public class DuenioTest {
   public Duenio duenioDePruebaUno = new Duenio("juancitoGomez", "matuTesterkpo",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com")));
 
   public void registrarleMascotaADuenio(Duenio unDuenio) {
-    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>());
+    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>(),new ArrayList<>());
     unDuenio.registrarMascota(mascota, new CentroDeRescate(new Ubicacion(2.2,2.2)));
   }
 
   public void registrarleOtraMascotaADuenio(Duenio unDuenio) {
-    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Jorgito", "Alfajor", 10, Sexo.MASCULINO, "Perro labrador muy lindo", new ArrayList<Foto>());
+    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Jorgito", "Alfajor", 10, Sexo.MASCULINO, "Perro labrador muy lindo", new ArrayList<Foto>(), new ArrayList<>());
     unDuenio.registrarMascota(mascota, new CentroDeRescate(new Ubicacion(2.2,2.2)));
   }
 

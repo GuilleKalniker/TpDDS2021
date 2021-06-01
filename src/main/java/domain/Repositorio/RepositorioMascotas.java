@@ -1,6 +1,6 @@
 package domain.Repositorio;
 
-import domain.Mascota.DatosMascotaPerdida;
+import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class RepositorioMascotas {
 
   private List<MascotaRegistrada> mascotasRegistradas = new ArrayList<>();
-  private List<DatosMascotaPerdida> datosMascotasPerdidas = new ArrayList<>();
+  private List<FormularioMascotaPerdida> datosMascotasPerdidas = new ArrayList<>();
   private static final RepositorioMascotas INSTANCE = new RepositorioMascotas();
 
   public static RepositorioMascotas getInstance() {
@@ -28,11 +28,11 @@ public class RepositorioMascotas {
     return this.mascotasRegistradas;
   }
 
-  public void agregarDatosMascotaPerdida(DatosMascotaPerdida datos) {
+  public void agregarDatosMascotaPerdida(FormularioMascotaPerdida datos) {
     this.getDatosMascotasPerdidas().add(datos);
   }
 
-  public List<DatosMascotaPerdida> getDatosMascotasPerdidas() {
+  public List<FormularioMascotaPerdida> getDatosMascotasPerdidas() {
     return datosMascotasPerdidas;
   }
 
@@ -61,13 +61,13 @@ public class RepositorioMascotas {
         .removeIf(datosMascotaPerdida -> datosMascotaPerdida.getIDMascotaPerdida() == ID);
   }
 
-  public DatosMascotaPerdida buscarDatosMascotaPerdida(String ID) {
+  public FormularioMascotaPerdida buscarDatosMascotaPerdida(String ID) {
     return this.getDatosMascotasPerdidas()
         .stream().filter(datos -> datos.getIDMascotaPerdida() == ID)
         .findFirst().get();
   }
 
-  public List<DatosMascotaPerdida> datosMascotasPerdidasEnUltimosDiezDias(){
+  public List<FormularioMascotaPerdida> datosMascotasPerdidasEnUltimosDiezDias(){
     return this.getDatosMascotasPerdidas().stream()
         .filter(datosMascotaPerdida -> this.pasoCantidadDiasEntre(datosMascotaPerdida.getFechaEncuentro(), LocalDate.now(), 10))
         .collect(Collectors.toList());

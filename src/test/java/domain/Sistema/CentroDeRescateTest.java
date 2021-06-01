@@ -46,12 +46,7 @@ public class CentroDeRescateTest {
     assertTrue(this.centro.buscarDuenioApartirIDMascota(pepita.getID()).getNombreDeUsuario().equals(duenioDePrueba.getNombreDeUsuario()));
   }
 
-  @Test
-  public void siSePerdieronDosMascotasPeroUnaHaceMasDeDiezDiasNoApareceEnLaLista() {
-    this.centro.agregarDatosMascotaPerdida(pepitaPerdida);
-    this.centro.agregarDatosMascotaPerdida(chinchulinPerdido);
-    assertEquals(this.centro.listaDatosMascotasPerdidasUltimosDiezDias().size(), 1);
-  }
+
 
   @Test
   public void identificoUnaMascotaIdentificaBien(){
@@ -115,17 +110,17 @@ public class CentroDeRescateTest {
 
   private DatosPersonales datosRescastista = new DatosPersonales("Guillermo", "Francella", LocalDate.now(), TipoDocumento.DNI, 14235653, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"));
 
-  private DatosMascotaPerdida pepitaPerdida = new DatosMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<Foto>(), new Ubicacion(2.2,2.2), LocalDate.now(), "saasdasdasd");
+  private FormularioMascotaPerdida pepitaPerdida = new FormularioMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<Foto>(), new Ubicacion(2.2,2.2), LocalDate.now(), "saasdasdasd");
 
-  private DatosMascotaPerdida chinchulinPerdido = new DatosMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<Foto>(), new Ubicacion(2.2,2.2), LocalDate.now().minusDays(11), "asdsadadsaads");
+  private FormularioMascotaPerdida chinchulinPerdido = new FormularioMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<Foto>(), new Ubicacion(2.2,2.2), LocalDate.now().minusDays(11), "asdsadadsaads");
 
-  private MascotaRegistrada pepita = new MascotaRegistrada(TipoMascota.PERRO, "Pepita", "Pepisauria", 9, Sexo.FEMENINO, "Perra corgi muy linda", new ArrayList<Foto>());
+  private MascotaRegistrada pepita = new MascotaRegistrada(TipoMascota.PERRO, "Pepita", "Pepisauria", 9, Sexo.FEMENINO, "Perra corgi muy linda", new ArrayList<Foto>(),new ArrayList<>());
 
-  private MascotaRegistrada chinchulin = new MascotaRegistrada(TipoMascota.PERRO, "Chinchulin", "Asadito", 9, Sexo.MASCULINO, "Perro shiba muy lindo", new ArrayList<Foto>());
+  private MascotaRegistrada chinchulin = new MascotaRegistrada(TipoMascota.PERRO, "Chinchulin", "Asadito", 9, Sexo.MASCULINO, "Perro shiba muy lindo", new ArrayList<Foto>(),new ArrayList<>());
 
 
   void registrarleMascotaADuenio(Duenio unDuenio) {
-    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>());
+    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>(), new ArrayList<>());
     unDuenio.registrarMascota(mascota, new CentroDeRescate(new Ubicacion(2.2,2.2)));
   }
 

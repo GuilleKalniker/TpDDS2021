@@ -2,19 +2,10 @@ package domain.Servicios;
 
 
 import domain.Mascota.AtributosMascota.Ubicacion;
-import domain.Mascota.DatosMascotaPerdida;
-import domain.Persona.AtributosPersona.Contacto;
-import domain.Persona.AtributosPersona.DatosPersonales;
-import domain.Persona.AtributosPersona.TipoDocumento;
-import domain.Persona.Duenio;
 import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
-import domain.Servicios.ClasesParaLaConsulta.ListadoHogaresTransito;
-import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Sistema.CentroDeRescate;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class pruebaConsulta {
