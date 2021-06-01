@@ -1,122 +1,294 @@
-@startuml tpa
+@startuml
+object RepositorioCaracteristicas {
+caracteristicasVigentes: Set<Caracteristica>
 
-enum TipoDoc {
-    - DNI
-    - LC
-    - LE
-    - CI
+agregarCaracteristica(caracteristica)
+sacarCaracteristica(caracteristica)
 }
 
-enum TipoMascota {
-    - PERRO
-    - GATO
+
+object RepositorioCentroDeRescate {
+centrosDeRescateRegistradors: List<CentroDeRescate>
+
+registrarCentroDeRescate(centroDeRescate)
+getCentroDeRescateMasCercanoA(ubicacion)
 }
 
-enum Sexo {
-    - MASCULINO
-    - FEMENINO
+
+object RepositorioDuenios {
+dueniosRegistrados: List<Duenio>
+
+registrarDuenio(duenio)
 }
+
+
+object RepositorioMascotas {
+mascotasRegistradas: List<MascotaRegistrada>
+datosMascotasPerdidas: List<FormularioMascotaPerdida>
+}
+
+
+object RepositorioUsuarios {
+usuariosRegistrados: Map<Usuario>
+dueniosRegistrados: Map<Duenio>
+administradoresRegistrados: Map<Administrador>
+}
+
 
 class Foto {
-    - url: String
+URL: String
 }
 
-class Contacto {
-    - nombre: String
-    - apellido: String
-    - telefono: Integer
-    - email: String
+
+class Ubicacion {
+latitud: Double
+longitud: Double
+
+calcularDistanciaA(ubicacion)
 }
 
-class Duenio {
-    - nombre: String
-    - apellido: String
-    - fechaNacimiento: Date
-    - tipoDocumento: TipoDNI
-    - nroDocumento: Integer
-    - contacto: List<Contacto>
-    - mascotas: List<MascotaRegistrada>
 
-    +registrarMascota()
+class FormularioMascotaPerdida {
+datosRescatista: DatosPersonales
+descripcionEstado: String
+fotosEncuentro: List<Foto>
+lugarEncuentro: Ubicacion
+fechaEncuentro: LocalDate
+ID: String
 }
+
 
 class MascotaRegistrada {
-    - tipo: TipoMascota
-    - nombre: String
-    - apodo: String
-    - edad: Integer
-    - sexo: Sexo
-    - descripcionFisica: String
-    - fotos: List<Foto>
-    - qr: Integer
-    - duenio: Duenio
+tipo: TipoMascota
+nombre: String
+apodo: String
+edad: Integer
+sexo: Sexo
+descripcionFisica: String
+fotos: List<Foto>
+ID: String
+caracteristicas: List<Caracteristica>
+
+coincideID(ID)
+generarQR()
+leerQR()
+esMiQR()
 }
 
-class EstadoMascotaPerdida {
-    - rescatistaDeEncuentro: Rescatista
-    - descripcionEstado: String
-    - lugarEncuentro: String
-    - fechaEncuentro: Date
-    - qrMascotaPerdida: Integer
+
+class Contacto {
+nombre: String
+apellido: String
+telefono: Integer
+email: String
 }
 
-class Rescatista {
-    - nombre: String
-    - apellido: String
-    - fechaDeNacimiento: Date
-    - tipoDocumento: TipoDocumento
-    - nroDocumento: Integer
-    - direccion: String
-    - contacto: List<Contacto>
 
-    + notificarMascotaEncontrada(mascota)
+class DatosPersonales {
+nombre: String
+apellido: String
+fechaDeNacimiento: LocalDate
+tipoDocumento: TipoDocumento
+nroDocumento: Integer
+contactos: List<Contacto>
+direccion: String
 }
 
-abstract class Usuario {
-    - nombreDeUsuario: String
-    - contrasenia: String
-
-    + registrarse()
-}
-
-Duenio -up-|> Usuario
-Administrador -up-|> Usuario
 
 class Administrador {
-    + agregarCaracteristica()
-    + agregarValorACaracteristica()
+agregarCaracteristica(caracteristica)
+sacarCaracteristica(caracteristica)
 }
+
+
+class Duenio {
+datosPersonales: DatosPersonales
+mascotasID: List<String>
+
+registrarMascota(mascota, centroDeRescate)
+tieneA(IDMascota)
+}
+
+
+class Rescatista {
+notificarMascotaEncontradaConID(formularioMascotaPerdida)
+generarSolicitudPublicacion(formulario)
+}
+
+
+class Usuario {
+nombreDeUsuario: String
+contrasenia: String
+
+registrarse()
+}
+
+
+class Voluntario {
+centroDeRescate: CentroDeRescate
+
+aprobarSolicitud(solicitudPublicacion)
+rechazarSolicitud(solicitudPublicacion)
+}
+
+
+class PublicacionMascotaPerdida {
+formularioMascotaPerdida: FormularioMascotaPerdida
+
+filtrarInformacionSensible()
+validarQueNoTieneID()
+}
+
+
+class SolicitudPublicacion {
+publicacion: PublicacionMascotaPerdida
+
+aceptarEn(centroDeRescate)
+rechazarEn(centroDeRescate)
+}
+
+
+class JavaMailApi {
+correo_envio: String
+contrasenia: String
+props: Properties
+session: Session
+
+agregarDestinatarioAlMensaje(mensaje, correo)
+armarMensaje(duenio, formularioMascotaPerdid)
+}
+
+
+interface Notificador {
+notificar(duenio, formularioMascotaPerdida)
+}
+
+
+interface HogaresTransitoService {
+postUsuarios(parameters)
+getHogares(token, offset)
+getToken(request)
+}
+
+
+class ServicioHogaresTransito {
+maximaCantidadRegistrosDefault: Integer
+urlApi: String
+retrofit: Retrofit
+token: String
+
+solicitarTodosLosHogares()
+listaHogaresTransito(numeroDePagina)
+cantidadHogaresTotales()
+}
+
 
 class CentroDeRescate {
-    - mascotasRegistradas: List<MascotaRegistrada>
-    - estadosMascotasPerdidas: List<EstadoMascotaPerdida>
-    - caracteristicas: Caracteristicas
+correoDelCentro: String
+contraseniaCorreo: String
+ubicacion: Ubicacion
+solicitudesPublicacion: List<SolicitudPublicacion>
+publicacionesMascotasPerdidasSinID: List<PublicacionMascotaPerdida>
 
-    + otorgarQR()
-    + notificarMascotaEncontrada(mascota)
-    + agregarMascotaRegistrada(mascota)
-    + agregarEstadoMascotaPerdida()
+registrarMascota(mascota)
+buscarMascota(ID)
+existeMascota(ID)
+cargarMascotaPerdida(formularioMascotaPerdida)
+notificar(duenio)
+buscarDuenioAPartirIDMascota(ID)
+aceptarSolicitud(solicitudPublicacion)
+eliminarSolicitud(solicitudPublicacion)
+generarSolicitud(solicitudPublicacion)
 }
 
-class Caracteristicas {
-    - DiccionarioCaracteristicas: HashMap
+
+enum TipoDocumento {
+DNI,
+LC,
+LE,
+CI
 }
 
-TipoDoc -> Duenio
-TipoDoc -> Rescatista
-Contacto "*" -- "*" Duenio
-Contacto "*" -- "*" Rescatista
-TipoMascota -> MascotaRegistrada
-Sexo -> MascotaRegistrada
-Foto "*" -- "1" MascotaRegistrada
-Duenio "1" -- "*" MascotaRegistrada
-Caracteristicas -> CentroDeRescate
-EstadoMascotaPerdida -> CentroDeRescate
-MascotaRegistrada -> CentroDeRescate
-Rescatista -> EstadoMascotaPerdida
-Administrador ..> CentroDeRescate
-Administrador ..> Caracteristicas
 
+enum TipoMascota {
+PERRO,
+GATO
+}
+
+
+enum Caracteristica {
+CASTRADA,
+MARRON,
+NEGRO,
+BLANCO,
+MANSO,
+ARISCO,
+ALTO,
+BAJO,
+PESADO,
+JUGUETON,
+RABIOSO,
+IMPULSIVO,
+HIPERACTIVO,
+AMIGABLE,
+DEPENDIENTE,
+ROMPECOSAS,
+TRANQUILO
+}
+
+
+enum Sexo {
+MASCULINO,
+FEMENINO
+}
+
+
+
+CentroDeRescate --> Ubicacion
+CentroDeRescate -->"*" SolicitudPublicacion
+CentroDeRescate -right->"*" PublicacionMascotaPerdida
+CentroDeRescate ..> Notificador
+
+Usuario <|-- Administrador
+Usuario <|-- Duenio
+Usuario <|-- Voluntario
+
+Duenio --> DatosPersonales
+Duenio -->"*" MascotaRegistrada
+
+DatosPersonales -->"*" Contacto
+DatosPersonales --> TipoDocumento
+
+Voluntario --> CentroDeRescate
+
+Administrador ..> RepositorioCaracteristicas
+
+Rescatista ..> FormularioMascotaPerdida
+RepositorioCentroDeRescate <.. Rescatista
+
+MascotaRegistrada --> TipoMascota
+MascotaRegistrada --> Sexo
+MascotaRegistrada -->"*" Foto
+MascotaRegistrada -->"*" Caracteristica
+
+FormularioMascotaPerdida --> DatosPersonales
+FormularioMascotaPerdida -->"*" Foto
+FormularioMascotaPerdida --> Ubicacion
+
+RepositorioCaracteristicas -->"*" Caracteristica
+
+RepositorioCentroDeRescate -->"*" CentroDeRescate
+
+RepositorioDuenios -->"*" Duenio
+
+RepositorioUsuarios -->"*" Usuario
+RepositorioUsuarios -->"*" Duenio
+RepositorioUsuarios -->"*" Administrador
+
+RepositorioMascotas -->"*" MascotaRegistrada
+RepositorioMascotas -->"*" FormularioMascotaPerdida
+
+Notificador <|.. JavaMailApi
+
+HogaresTransitoService <|.. ServicioHogaresTransito
 @enduml
-
-
