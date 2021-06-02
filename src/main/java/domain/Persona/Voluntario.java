@@ -11,10 +11,16 @@ public class Voluntario{
 
   private CentroDeRescate centroDeRescate;
 
+  private RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
+
   public Voluntario(String nombreDeUsuario, String contrasenia, CentroDeRescate centroDeRescate) {
     this.nombreDeUsuario = nombreDeUsuario;
     this.contrasenia = contrasenia;
     this.centroDeRescate = centroDeRescate;
+  }
+
+  public void setRepositorioUsuarios(RepositorioUsuarios repositorioUsuarios) {
+    this.repositorioUsuarios = repositorioUsuarios;
   }
 
   public void aprobarSolicitud(SolicitudPublicacion solicitudPublicacion){
@@ -26,7 +32,7 @@ public class Voluntario{
   }
 
   public void registrarse() {
-    RepositorioUsuarios.getInstance().registrarVoluntario(this);
+    repositorioUsuarios.registrarVoluntario(this);
   }
 
   public String getNombreUsuario() {

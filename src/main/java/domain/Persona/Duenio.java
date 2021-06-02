@@ -13,14 +13,19 @@ public class Duenio{
 
   private String nombreDeUsuario;
   private String contrasenia;
-
-  DatosPersonales datosPersonales;
+  private DatosPersonales datosPersonales;
   private List<String> mascotasID = new ArrayList<>();
+
+  private RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
 
   public Duenio(String usuario, String contrasenia,DatosPersonales datosPersonales) {
     this.nombreDeUsuario = usuario;
     this.contrasenia = contrasenia;
     this.datosPersonales = datosPersonales;
+  }
+
+  public void setRepositorioUsuarios(RepositorioUsuarios repositorioUsuarios) {
+    this.repositorioUsuarios = repositorioUsuarios;
   }
 
   public DatosPersonales getDatosPersonales() {
@@ -56,7 +61,7 @@ public class Duenio{
   }
 
   public void registrarse() {
-    RepositorioUsuarios.getInstance().registrarDuenio(this);
+    repositorioUsuarios.registrarDuenio(this);
   }
 
   public String getNombreUsuario() {

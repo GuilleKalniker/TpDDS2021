@@ -25,9 +25,25 @@ public class CentroDeRescate {
   private List<SolicitudPublicacion> solicitudesPublicacion;
   private List<PublicacionMascotaPerdida> publicacionesMascotaPerdidasSinID;
 
+  private RepositorioCentroDeRescate repositorioCentroDeRescate = RepositorioCentroDeRescate.getInstance();
+  private RepositorioMascotas repositorioMascotas = RepositorioMascotas.getInstance();
+  private RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
+
   public CentroDeRescate(Ubicacion ubicacion) {
     this.ubicacion = ubicacion;
-    RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(this);
+    repositorioCentroDeRescate.registrarCentroDeRescate(this);
+  }
+
+  public void setRepositorioCentroDeRescate(RepositorioCentroDeRescate repositorioCentroDeRescate) { // Para posibilitar mockeo
+    this.repositorioCentroDeRescate = repositorioCentroDeRescate;
+  }
+
+  public void setRepositorioMascotas(RepositorioMascotas repositorioMascotas) { // Para posibilitar mockeo
+    this.repositorioMascotas = repositorioMascotas;
+  }
+
+  public void setRepositorioUsuarios(RepositorioUsuarios repositorioUsuarios) {
+    this.repositorioUsuarios = repositorioUsuarios;
   }
 
   public List<SolicitudPublicacion> getSolicitudPublicacion() {
@@ -45,21 +61,21 @@ public class CentroDeRescate {
   /** FUNCIONES PARA MASCOTAS REGISTRADAS */
 
   public String registrarMascota(MascotaRegistrada mascota){
-    return RepositorioMascotas.getInstance().registrarMascota(mascota);
+    return repositorioMascotas.registrarMascota(mascota);
   }
 
   public MascotaRegistrada buscarMascota(String ID){
-    return RepositorioMascotas.getInstance().buscarMascotaPorID(ID);
+    return repositorioMascotas.buscarMascotaPorID(ID);
   }
 
   public Boolean existeMascota(String ID) {
-    return RepositorioMascotas.getInstance().existeMascota(ID);
+    return repositorioMascotas.existeMascota(ID);
   }
 
   /** FUNCIONES PARA MASCOTAS PERDIDAS*/
 
   public void cargarMascotaPerdida(FormularioMascotaPerdida formularioMascotaPerdida) {
-    RepositorioMascotas.getInstance().agregarDatosMascotaPerdida(formularioMascotaPerdida);
+    repositorioMascotas.agregarDatosMascotaPerdida(formularioMascotaPerdida);
 
     try{
       this.notificar(
@@ -79,7 +95,7 @@ public class CentroDeRescate {
   /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
 
   public Duenio buscarDuenioApartirIDMascota(String ID){
-    return RepositorioUsuarios.getInstance().getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID)).findFirst().get();
+    return repositorioUsuarios.getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID)).findFirst().get();
   }
 
   public List<HogarTransito> solicitarListaHogaresDeTransito() {

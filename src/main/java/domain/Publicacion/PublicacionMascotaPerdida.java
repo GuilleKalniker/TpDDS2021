@@ -13,8 +13,6 @@ public class PublicacionMascotaPerdida {
     this.formularioMascotaPerdida = formularioMascotaPerdida;
   }
 
-
-
   private void filtrarInformacionSensible(FormularioMascotaPerdida formularioMascotaPerdida) {
     // TODO
   }
