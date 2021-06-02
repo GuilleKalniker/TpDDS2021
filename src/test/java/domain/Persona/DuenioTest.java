@@ -6,7 +6,6 @@ import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
-import domain.Repositorio.RepositorioDuenios;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
 import domain.Sistema.CentroDeRescate;
@@ -24,7 +23,6 @@ public class DuenioTest {
   @BeforeEach
   void init() {
     RepositorioMascotas.getInstance().getMascotasRegistradas().clear();
-    RepositorioDuenios.getInstance().getDueniosRegistrados().clear();
     RepositorioUsuarios.getInstance().clear();
   }
 
@@ -61,9 +59,9 @@ public class DuenioTest {
 
   @Test
   public void unDuenioNoSePuedeCrearConContraseniasYUsuarioInvalido() {
-    Assertions.assertThrows(ContraseniaInvalidaException.class,
-        () -> {new Duenio("moreeee", "12345",
-            new DatosPersonales("morena", "Sisro", LocalDate.now(), TipoDocumento.DNI, 123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com")));});
+    Duenio duenio = new Duenio("moreeee", "12345",
+        new DatosPersonales("morena", "Sisro", LocalDate.now(), TipoDocumento.DNI, 123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com")));
+    Assertions.assertThrows(ContraseniaInvalidaException.class, () -> {duenio.registrarse();});
   }
 
   /** FUNCIONES **/

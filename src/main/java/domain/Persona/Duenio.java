@@ -3,20 +3,24 @@ package domain.Persona;
 
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
-import domain.Repositorio.RepositorioDuenios;
+import domain.Repositorio.RepositorioUsuarios;
 import domain.Sistema.CentroDeRescate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Duenio extends Usuario{
+public class Duenio{
+
+  private String nombreDeUsuario;
+  private String contrasenia;
+
   DatosPersonales datosPersonales;
   private List<String> mascotasID = new ArrayList<>();
 
   public Duenio(String usuario, String contrasenia,DatosPersonales datosPersonales) {
-    super(usuario,contrasenia);
+    this.nombreDeUsuario = usuario;
+    this.contrasenia = contrasenia;
     this.datosPersonales = datosPersonales;
-    RepositorioDuenios.getInstance().registrarDuenio(this);
   }
 
   public DatosPersonales getDatosPersonales() {
@@ -49,5 +53,17 @@ public class Duenio extends Usuario{
   public void seEncontro(MascotaRegistrada unaMascota) {
     //TODO Comportamiento no definido, se hace "notificacion".
 
+  }
+
+  public void registrarse() {
+    RepositorioUsuarios.getInstance().registrarDuenio(this);
+  }
+
+  public String getNombreUsuario() {
+    return nombreDeUsuario;
+  }
+
+  public String getContrasenia() {
+    return contrasenia;
   }
 }

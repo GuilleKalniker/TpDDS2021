@@ -3,6 +3,7 @@ package domain.Repositorio;
 import static org.junit.jupiter.api.Assertions.*;
 
 import Funciones.ValidadorContrasenias;
+import domain.Persona.Administrador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +17,9 @@ public class RepositorioUsuariosTest {
 
   @Test
   public void existeUsuarioYaRegistrado() {
-    RepositorioUsuarios.getInstance().registrarse("willian","sdhasuhpfdsdhfp");
-    assertThrows(Exception.class, () -> RepositorioUsuarios.getInstance().existeUsuario("willian"));
+
+    RepositorioUsuarios.getInstance().registrarAdministrador(willian);
+    assertThrows(Exception.class, () -> RepositorioUsuarios.getInstance().existeUsuario(willian.getNombreUsuario()));
   }
 
   @Test
@@ -35,6 +37,7 @@ public class RepositorioUsuariosTest {
     assertFalse(validador.existeContraseniaEnListaContraseniasNoSeguras("tpanual2021"));
   }
 
+  Administrador willian = new Administrador("willian","sdhasuhpfdsdhfp");
   private ValidadorContrasenias validador = new ValidadorContrasenias(8);
 
 }

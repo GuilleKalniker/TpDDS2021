@@ -9,7 +9,6 @@ import domain.Persona.*;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
-import domain.Repositorio.RepositorioDuenios;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +23,6 @@ public class CentroDeRescateTest {
   @BeforeEach
   void init() {
     RepositorioMascotas.getInstance().getMascotasRegistradas().clear();
-    RepositorioDuenios.getInstance().getDueniosRegistrados().clear();
     RepositorioUsuarios.getInstance().clear();
   }
 
@@ -42,8 +40,9 @@ public class CentroDeRescateTest {
   @Test
   public void BuscamosElDueñoApartirDeUnaMascotaRegistrada(){
     Duenio duenioDePrueba = new Duenio("juan4321", "guilloteelmaskpox2",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com")));
+    duenioDePrueba.registrarse();
     duenioDePrueba.registrarMascota(pepita, new CentroDeRescate(new Ubicacion(2.2,2.2)));
-    assertTrue(this.centro.buscarDuenioApartirIDMascota(pepita.getID()).getNombreDeUsuario().equals(duenioDePrueba.getNombreDeUsuario()));
+    assertTrue(this.centro.buscarDuenioApartirIDMascota(pepita.getID()).getNombreUsuario().equals(duenioDePrueba.getNombreUsuario()));
   }
 
 

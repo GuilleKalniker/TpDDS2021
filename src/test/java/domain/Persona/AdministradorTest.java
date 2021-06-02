@@ -13,6 +13,7 @@ public class AdministradorTest {
 
   @Test
   public void unDuenioNoSePuedeCrearConContraseniasYUsuarioInvalido() throws Exception {
-    Assertions.assertThrows(Exception.class, () -> {new Administrador("soyadmin", "12345");});
+    Administrador admin = new Administrador("soyadmin", "12345");
+    Assertions.assertThrows(Exception.class, () -> {admin.registrarse();});
   }
 }

@@ -3,23 +3,25 @@ package domain.Repositorio;
 import Funciones.ValidadorContrasenias;
 import domain.Exceptions.UsuarioYaRegistradoException;
 import domain.Persona.Administrador;
-import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.Duenio;
+import domain.Persona.Voluntario;
 
 import java.util.HashMap;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RepositorioUsuarios {
 
-  private HashMap<String, String> usuariosRegistrados;
-  private HashMap<String, Duenio> dueniosResgistrados;
-  private HashMap<String, Administrador> administradoresRegistrados;
-  private HashMap<String, Object> usuarios;
+  private HashMap<Duenio, String> dueniosRegistrados;
+  private HashMap<Administrador, String> administradoresRegistrados;
+  private HashMap<Voluntario, String> voluntariosRegistrados;
+
   private static RepositorioUsuarios INSTANCE = null;
 
   private RepositorioUsuarios() {
-    this.usuariosRegistrados = new HashMap<>();
-    this.dueniosResgistrados = new HashMap<>();
+    this.dueniosRegistrados = new HashMap<>();
     this.administradoresRegistrados = new HashMap<>();
+    this.voluntariosRegistrados = new HashMap<>();
   }
 
   public static RepositorioUsuarios getInstance() {
@@ -29,45 +31,55 @@ public class RepositorioUsuarios {
     return INSTANCE;
   }
 
+  public Set<Duenio> getDueniosRegistrados() {
+    return dueniosRegistrados.keySet();
+  }
+
+  public Set<Administrador> getAdministradoresRegistrados() {
+    return administradoresRegistrados.keySet();
+  }
+
+  public Set<Voluntario> getVoluntariosRegistrados() {
+    return voluntariosRegistrados.keySet();
+  }
+
   public void clear() {
-    this.usuariosRegistrados.clear();
-    this.dueniosResgistrados.clear();
-    this.administradoresRegistrados.clear();
+    this.dueniosRegistrados.clear();
   }
 
-  public void registrarse(String usuario, String contrasenia) {
-    this.validarDatosRegistro(usuario, contrasenia);
-    this.usuariosRegistrados.put(usuario, ValidadorContrasenias.passwordToHash(contrasenia));
+  public void registrarDuenio(Duenio duenio) {
+    this.validarDatosRegistro(duenio.getNombreUsuario(), duenio.getContrasenia());
+    this.dueniosRegistrados.put(duenio, ValidadorContrasenias.passwordToHash(duenio.getContrasenia()));
   }
 
-  public Duenio registrarDuenio(String usuario, String contrasenia, DatosPersonales datosPersonales) {
-    this.validarDatosRegistro(usuario, contrasenia);
-    String contraHasheada = ValidadorContrasenias.passwordToHash(contrasenia);
-    Duenio duenio = new Duenio(usuario, contraHasheada, datosPersonales);
-    this.agregarDuenio(usuario, duenio);
-    return duenio;
+  public void registrarAdministrador(Administrador administrador) {
+    this.validarDatosRegistro(administrador.getNombreUsuario(), administrador.getContrasenia());
+    this.administradoresRegistrados.put(administrador, ValidadorContrasenias.passwordToHash(administrador.getContrasenia()));
   }
 
-  public Administrador registrarAdministrador(String usuario, String contrasenia) {
-    this.validarDatosRegistro(usuario, contrasenia);
-    String contraHasheada = ValidadorContrasenias.passwordToHash(contrasenia);
-    Administrador admin = new Administrador(usuario, contraHasheada);
-    this.agregarAdmin(usuario, admin);
-    return admin;
-  }
-
-  private void agregarDuenio(String usuario, Duenio duenio) {
-    this.dueniosResgistrados.put(usuario, duenio);
-  }
-
-  public void agregarAdmin(String usuario, Administrador admin){
-    this.administradoresRegistrados.put(usuario, admin);
+  public void registrarVoluntario(Voluntario voluntario) {
+    this.validarDatosRegistro(voluntario.getNombreUsuario(), voluntario.getContrasenia());
+    this.voluntariosRegistrados.put(voluntario, ValidadorContrasenias.passwordToHash(voluntario.getContrasenia()));
   }
 
   public void existeUsuario(String nombreUsuario){
-    if(this.usuariosRegistrados.containsKey(nombreUsuario)){
+    if(nombreUsuarioEnDuenio(nombreUsuario)
+        || nombreUsuarioEnAdministrador(nombreUsuario)
+        || nombreUsuarioEnVoluntario(nombreUsuario)){
       throw new UsuarioYaRegistradoException("El nombre de ususario ya existe");
     }
+  }
+
+  public boolean nombreUsuarioEnDuenio(String nombreUsuario) {
+    return this.dueniosRegistrados.keySet().stream().anyMatch(duenio -> duenio.getNombreUsuario() == nombreUsuario);
+  }
+
+  public boolean nombreUsuarioEnAdministrador(String nombreUsuario) {
+    return this.administradoresRegistrados.keySet().stream().anyMatch(duenio -> duenio.getNombreUsuario() == nombreUsuario);
+  }
+
+  public boolean nombreUsuarioEnVoluntario(String nombreUsuario) {
+    return this.voluntariosRegistrados.keySet().stream().anyMatch(duenio -> duenio.getNombreUsuario() == nombreUsuario);
   }
 
   public void validarDatosRegistro(String usuario, String contrasenia) {

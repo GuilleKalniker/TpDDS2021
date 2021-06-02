@@ -8,8 +8,8 @@ import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Persona.Duenio;
 import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.RepositorioCentroDeRescate;
-import domain.Repositorio.RepositorioDuenios;
 import domain.Repositorio.RepositorioMascotas;
+import domain.Repositorio.RepositorioUsuarios;
 import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
 import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
@@ -79,7 +79,7 @@ public class CentroDeRescate {
   /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
 
   public Duenio buscarDuenioApartirIDMascota(String ID){
-    return RepositorioDuenios.getInstance().getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID)).findFirst().get();
+    return RepositorioUsuarios.getInstance().getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID)).findFirst().get();
   }
 
   public List<HogarTransito> solicitarListaHogaresDeTransito() {
