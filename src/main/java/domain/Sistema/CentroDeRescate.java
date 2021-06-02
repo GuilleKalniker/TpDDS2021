@@ -3,6 +3,7 @@ package domain.Sistema;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
+import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Persona.Duenio;
 import domain.Publicacion.SolicitudPublicacion;
@@ -99,4 +100,13 @@ public class CentroDeRescate {
   public void generarSolicitud(SolicitudPublicacion solicitud){
     getSolicitudPublicacion().add(solicitud);
   }
+
+  public List<HogarTransito> hogaresAdecuadosParaMascota(FormularioMascotaPerdida formulario, Double radio){
+    return ServicioHogaresTransito.getInstance().filtrarHogaresPara(formulario,radio);
+  }
+
+  public void publicacionMatcheada(PublicacionMascotaPerdida publicacionMascotaPerdida,DatosPersonales datosPersonales, Notificador notificador){
+  //TODO: notificador.notificarARescatista();  -> Dale Willy trabajá *LATIGO*
+  }
+
 }

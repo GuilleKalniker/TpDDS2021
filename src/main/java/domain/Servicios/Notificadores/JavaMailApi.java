@@ -1,7 +1,9 @@
 package domain.Servicios.Notificadores;
 
 import domain.Mascota.FormularioMascotaPerdida;
+import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.Duenio;
+import domain.Persona.Rescatista;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -45,6 +47,7 @@ public class JavaMailApi implements Notificador{
     }
   }
 
+
   public MimeMessage armarMensaje(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida){
     try {
       MimeMessage message = new MimeMessage(this.session);
@@ -53,8 +56,8 @@ public class JavaMailApi implements Notificador{
       duenio.getDatosPersonales().getContactos().stream()
           .forEach(contacto -> this.agregarDestinatarioAlMensaje(message, contacto.getEmail()));
 
-      message.setSubject("Hola " + duenio.getDatosPersonales().getNombre() + duenio.getDatosPersonales().getApellido()+ " entontraron a tu mascota perdida :D!!!");
-      message.setText( "holaaa:D");
+      message.setSubject("Hola " + duenio.getDatosPersonales().getNombre() + duenio.getDatosPersonales().getApellido()+ " encontraron a tu mascota perdida :D!!!");
+      message.setText( "Hola, nos comunicamos para informarte que tu mascota ha sido encontrada.");
 
       return message;
     }

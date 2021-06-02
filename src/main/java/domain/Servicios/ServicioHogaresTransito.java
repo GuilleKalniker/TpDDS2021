@@ -2,6 +2,9 @@ package domain.Servicios;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import domain.Mascota.FormularioMascotaPerdida;
+import domain.Mascota.MascotaRegistrada;
+import domain.Repositorio.RepositorioMascotas;
 import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
 import domain.Servicios.ClasesParaLaConsulta.ListadoHogaresTransito;
 import domain.Servicios.ClasesParaLaConsulta.Request;
@@ -14,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ServicioHogaresTransito {
 
@@ -94,5 +98,10 @@ public class ServicioHogaresTransito {
       //realizamos una consulta para obtener un id?:P
       throw new RuntimeException("No se encontro el archivo");
     }
+  }
+
+  public List<HogarTransito> filtrarHogaresPara(FormularioMascotaPerdida formularioMascotaPerdida, Double radio){
+    MascotaRegistrada mascota = RepositorioMascotas.getInstance().buscarMascotaPorID(formularioMascotaPerdida.getIDMascotaPerdida());
+    return solicitarTodosLosHogares().stream().filter(hogar -> hogar.esAdecuado(mascota,radio, formularioMascotaPerdida.getLugarEncuentro())).collect(Collectors.toList());
   }
 }

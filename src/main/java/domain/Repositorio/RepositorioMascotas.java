@@ -1,5 +1,6 @@
 package domain.Repositorio;
 
+import domain.Exceptions.IDInvalidoException;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 
@@ -45,6 +46,9 @@ public class RepositorioMascotas {
   }
 
   public MascotaRegistrada buscarMascotaPorID(String ID) {
+    if(ID == null){
+      throw new IDInvalidoException();
+    }
     return this.getMascotasRegistradas()
         .stream().filter(mascota -> mascota.coincideID(ID))
         .findFirst().get();

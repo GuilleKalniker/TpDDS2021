@@ -30,6 +30,14 @@ public class MascotaRegistrada {
     this.fotos = fotos;
   }
 
+  public TipoMascota getTipo() {
+    return tipo;
+  }
+
+  public List<Caracteristica> getCaracteristicas() {
+    return caracteristicas;
+  }
+
   public String getNombre() {
     return nombre;
   }
