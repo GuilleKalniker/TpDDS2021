@@ -24,7 +24,7 @@ public class Duenio{
     this.datosPersonales = datosPersonales;
   }
 
-  public void setRepositorioUsuarios(RepositorioUsuarios repositorioUsuarios) {
+  public void setRepositorioUsuarios(RepositorioUsuarios repositorioUsuarios) { // Para permitir mockeo
     this.repositorioUsuarios = repositorioUsuarios;
   }
 

@@ -8,13 +8,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.mockito.Mockito.mock;
+
 public class RepositorioCaracteristicasTest {
 
-  private RepositorioCaracteristicas repositorioCaracteristicas =  RepositorioCaracteristicas.getInstance();
+  private RepositorioCaracteristicas repositorioCaracteristicas =  mock(RepositorioCaracteristicas.class);
 
   @BeforeEach
   void init() {
-    RepositorioCaracteristicas.getInstance().getCaracteristicasVigentes().clear();
+
   }
 
   @Test

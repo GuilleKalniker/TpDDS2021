@@ -4,6 +4,8 @@ import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.RepositorioUsuarios;
 import domain.Sistema.CentroDeRescate;
 
+import java.util.List;
+
 public class Voluntario{
 
   private String nombreDeUsuario;
@@ -23,7 +25,7 @@ public class Voluntario{
     this.repositorioUsuarios = repositorioUsuarios;
   }
 
-  public void aprobarSolicitud(SolicitudPublicacion solicitudPublicacion){
+  public void aprobarSolicitud(SolicitudPublicacion solicitudPublicacion) {
     centroDeRescate.aceptarSolicitud(solicitudPublicacion);
   }
 

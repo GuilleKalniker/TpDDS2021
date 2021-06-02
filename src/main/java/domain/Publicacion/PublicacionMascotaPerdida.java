@@ -18,7 +18,7 @@ public class PublicacionMascotaPerdida {
   }
 
   public void validarQueNoTieneID(){
-    if(formularioMascotaPerdida.getIDMascotaPerdida() != null){
+    if (formularioMascotaPerdida.getIDMascotaPerdida() != null){
       throw new EsUnaMascotaConIDException();
     }
   }

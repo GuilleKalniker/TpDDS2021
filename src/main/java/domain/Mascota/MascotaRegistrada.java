@@ -20,7 +20,7 @@ public class MascotaRegistrada {
   private String ID;
   private List<Caracteristica> caracteristicas;
 
-  public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos,List<Caracteristica> caracteristicas) {
+  public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos, List<Caracteristica> caracteristicas) {
     this.tipo = tipo;
     this.nombre = nombre;
     this.apodo = apodo;
@@ -28,6 +28,7 @@ public class MascotaRegistrada {
     this.sexo = sexo;
     this.descripcionFisica = descripcionFisica;
     this.fotos = fotos;
+    this.caracteristicas = caracteristicas;
   }
 
   public TipoMascota getTipo() {

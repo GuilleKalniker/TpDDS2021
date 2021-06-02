@@ -20,4 +20,5 @@ public class  SolicitudPublicacion {
   public PublicacionMascotaPerdida getPublicacion(){
     return publicacion;
   }
+
 }

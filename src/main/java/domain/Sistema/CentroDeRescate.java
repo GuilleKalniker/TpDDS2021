@@ -25,9 +25,11 @@ public class CentroDeRescate {
   private List<SolicitudPublicacion> solicitudesPublicacion;
   private List<PublicacionMascotaPerdida> publicacionesMascotaPerdidasSinID;
 
+  private Notificador notificador = new JavaMailApi(this.correoDelCentro, this.contrasenia_correo);
   private RepositorioCentroDeRescate repositorioCentroDeRescate = RepositorioCentroDeRescate.getInstance();
   private RepositorioMascotas repositorioMascotas = RepositorioMascotas.getInstance();
   private RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
+  private ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.getInstance();
 
   public CentroDeRescate(Ubicacion ubicacion) {
     this.ubicacion = ubicacion;
@@ -46,7 +48,15 @@ public class CentroDeRescate {
     this.repositorioUsuarios = repositorioUsuarios;
   }
 
-  public List<SolicitudPublicacion> getSolicitudPublicacion() {
+  public void setServicioHogaresTransito(ServicioHogaresTransito servicioHogaresTransito) {
+    this.servicioHogaresTransito = servicioHogaresTransito;
+  }
+
+  public void setNotificador(Notificador notificador) {
+    this.notificador = notificador;
+  }
+
+  public List<SolicitudPublicacion> getSolicitudesPublicacion() {
     return solicitudesPublicacion;
   }
 
@@ -78,17 +88,13 @@ public class CentroDeRescate {
     repositorioMascotas.agregarDatosMascotaPerdida(formularioMascotaPerdida);
 
     try{
-      this.notificar(
-          this.buscarDuenioApartirIDMascota(formularioMascotaPerdida.getIDMascotaPerdida()),
-          formularioMascotaPerdida,
-          new JavaMailApi(this.correoDelCentro, this.contrasenia_correo)
-      );
+      notificar(buscarDuenioApartirIDMascota(formularioMascotaPerdida.getIDMascotaPerdida()), formularioMascotaPerdida);
     } catch (RuntimeException e) {
       e.printStackTrace();
     }
   }
 
-  public void notificar(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida, Notificador notificador){
+  public void notificar(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida){
     notificador.notificar(duenio, formularioMascotaPerdida);
   }
 
@@ -99,7 +105,7 @@ public class CentroDeRescate {
   }
 
   public List<HogarTransito> solicitarListaHogaresDeTransito() {
-    return ServicioHogaresTransito.getInstance().solicitarTodosLosHogares();
+    return servicioHogaresTransito.solicitarTodosLosHogares();
   }
 
   /** FUNCIONES QUE SE COMUNICAN CON EL COMMAND DE REPOSITORIO USUARIOS */
@@ -110,15 +116,15 @@ public class CentroDeRescate {
   }
 
   public void eliminarSolicitud(SolicitudPublicacion solicitud){
-    getSolicitudPublicacion().remove(solicitud);
+    getSolicitudesPublicacion().remove(solicitud);
   }
 
   public void generarSolicitud(SolicitudPublicacion solicitud){
-    getSolicitudPublicacion().add(solicitud);
+    getSolicitudesPublicacion().add(solicitud);
   }
 
   public List<HogarTransito> hogaresAdecuadosParaMascota(FormularioMascotaPerdida formulario, Double radio){
-    return ServicioHogaresTransito.getInstance().filtrarHogaresPara(formulario,radio);
+    return servicioHogaresTransito.filtrarHogaresPara(formulario, radio);
   }
 
   public void publicacionMatcheada(PublicacionMascotaPerdida publicacionMascotaPerdida,DatosPersonales datosPersonales, Notificador notificador){

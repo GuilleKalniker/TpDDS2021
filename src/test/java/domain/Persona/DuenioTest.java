@@ -6,14 +6,19 @@ import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
+import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
+import domain.Servicios.Notificadores.JavaMailApi;
+import domain.Servicios.Notificadores.Notificador;
+import domain.Servicios.ServicioHogaresTransito;
 import domain.Sistema.CentroDeRescate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,8 +27,18 @@ public class DuenioTest {
 
   @BeforeEach
   void init() {
-    RepositorioMascotas.getInstance().getMascotasRegistradas().clear();
-    RepositorioUsuarios.getInstance().clear();
+    RepositorioMascotas repositorioMascotasMockeado = mock(RepositorioMascotas.class);
+    RepositorioUsuarios repositorioUsuariosMockeado = mock(RepositorioUsuarios.class);
+    RepositorioCentroDeRescate repositorioCentrosMockeado = mock(RepositorioCentroDeRescate.class);
+    ServicioHogaresTransito servicioMock = mock(ServicioHogaresTransito.class);
+    Notificador notificadorMock = mock(JavaMailApi.class);
+
+    duenioDePruebaUno.setRepositorioUsuarios(repositorioUsuariosMockeado);
+    centroDeRescateDePrueba.setRepositorioMascotas(repositorioMascotasMockeado);
+    centroDeRescateDePrueba.setRepositorioUsuarios(repositorioUsuariosMockeado);
+    centroDeRescateDePrueba.setRepositorioCentroDeRescate(repositorioCentrosMockeado);
+    centroDeRescateDePrueba.setServicioHogaresTransito(servicioMock);
+    centroDeRescateDePrueba.setNotificador(notificadorMock);
   }
 
   @Test
@@ -68,14 +83,16 @@ public class DuenioTest {
 
   public Duenio duenioDePruebaUno = new Duenio("juancitoGomez", "matuTesterkpo",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com")));
 
+  public CentroDeRescate centroDeRescateDePrueba = new CentroDeRescate(new Ubicacion(0.0, 0.0));
+
   public void registrarleMascotaADuenio(Duenio unDuenio) {
     MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>(),new ArrayList<>());
-    unDuenio.registrarMascota(mascota, new CentroDeRescate(new Ubicacion(2.2,2.2)));
+    unDuenio.registrarMascota(mascota, centroDeRescateDePrueba);
   }
 
   public void registrarleOtraMascotaADuenio(Duenio unDuenio) {
     MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Jorgito", "Alfajor", 10, Sexo.MASCULINO, "Perro labrador muy lindo", new ArrayList<Foto>(), new ArrayList<>());
-    unDuenio.registrarMascota(mascota, new CentroDeRescate(new Ubicacion(2.2,2.2)));
+    unDuenio.registrarMascota(mascota, centroDeRescateDePrueba);
   }
 
   private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido, Integer telefono, String email){
