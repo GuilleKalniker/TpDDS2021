@@ -5,6 +5,7 @@ import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
+import domain.Servicios.HogarTransitoAdaptado;
 import domain.Sistema.CentroDeRescate;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class Rescatista {
   //TODO: Preguntar que hacer con el centro, xq el rescatista no tiene por que saber que centros hay pero tampoco sabemos si poner la logica
   // en el repositorio porque es medio raro, el repositorio, segun entendemos, solo deberia almacenar informacion.
 
-  public List<HogarTransito> buscarHogaresDeTransito(FormularioMascotaPerdida formularioMascotaPerdida, Double radio, CentroDeRescate centro){
+  public List<HogarTransitoAdaptado> buscarHogaresDeTransito(FormularioMascotaPerdida formularioMascotaPerdida, Double radio, CentroDeRescate centro){
     return centro.hogaresAdecuadosParaMascota(formularioMascotaPerdida,radio);
   }
 }

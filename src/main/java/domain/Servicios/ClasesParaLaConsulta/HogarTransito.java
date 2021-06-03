@@ -3,7 +3,9 @@ package domain.Servicios.ClasesParaLaConsulta;
 
 import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Mascota.AtributosMascota.TipoMascota;
+import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.MascotaRegistrada;
+import domain.Servicios.HogarTransitoAdaptado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class HogarTransito {
   public ArrayList<String> caracteristicas;
 
 
-  public static class Ubicacion{
+  public static class Ubicacion {
     public String direccion;
     public Double lat;
     public Double longitud;  // es long pero es una palabra reservada :D
@@ -35,7 +37,7 @@ public class HogarTransito {
     }
   }
 
-  private class Admisiones{
+  private class Admisiones {
     public Boolean perros;
     public Boolean gatos;
 
@@ -45,12 +47,12 @@ public class HogarTransito {
     }
   }
 
-  public HogarTransito(String id, String nombre, String direccion, Double lat, Double longitud, String telefono,Boolean perros, Boolean gatos, Integer capacidad, Integer lugares_disponibles, Boolean patio, ArrayList<String> caracteristicas) {
+  public HogarTransito(String id, String nombre, String direccion, Double lat, Double longitud, String telefono, Boolean perros, Boolean gatos, Integer capacidad, Integer lugares_disponibles, Boolean patio, ArrayList<String> caracteristicas) {
     this.id = id;
     this.nombre = nombre;
-    this.ubicacion = new Ubicacion(direccion,lat,longitud);
+    this.ubicacion = new Ubicacion(direccion, lat, longitud);
     this.telefono = telefono;
-    this.admisiones = new Admisiones(perros,gatos);
+    this.admisiones = new Admisiones(perros, gatos);
     this.capacidad = capacidad;
     this.lugares_disponibles = lugares_disponibles;
     this.patio = patio;
@@ -61,38 +63,63 @@ public class HogarTransito {
     return nombre;
   }
 
-  public Boolean esAdecuado(MascotaRegistrada mascota,Double radio, domain.Mascota.AtributosMascota.Ubicacion ubicacion){
-    return admiteTipo(mascota.getTipo()) &&
-        admiteTamanio(mascota.getCaracteristicas()) &&
-        tieneLugarDisponible();
-        //&& aceptaCaracteristicasEspeciales(mascota.getCaracteristicas()) &&
-       // estaEnElRadio(ubicacion,radio);
+  public HogarTransitoAdaptado adaptarHogar() {
+    HogarTransitoAdaptado hogarAdaptado = new HogarTransitoAdaptado(
+        id,
+        nombre,
+        ubicacion.direccion,
+        new domain.Mascota.AtributosMascota.Ubicacion(ubicacion.lat, ubicacion.longitud),
+        telefono,
+        admisionesAListaTiposMascota(admisiones),
+        lugares_disponibles,
+        patio,
+        stringsAListaCaracteristicas(caracteristicas)
+    );
+    return hogarAdaptado;
   }
 
-  public Boolean admiteTipo(TipoMascota tipo){
-    if(tipo == TipoMascota.PERRO){
-      return this.admisiones.perros;
+  public List<TipoMascota> admisionesAListaTiposMascota(Admisiones admisiones) {
+    List<TipoMascota> listaTipos = new ArrayList<TipoMascota>();
+    if (admisiones.perros)
+      listaTipos.add(TipoMascota.PERRO);
+    if (admisiones.gatos)
+      listaTipos.add(TipoMascota.GATO);
+    return listaTipos;
+  }
+
+  public List<Caracteristica> stringsAListaCaracteristicas(List<String> caracteristicas) {
+    return caracteristicas.stream().map(unString -> stringACaracteristica(unString)).collect(Collectors.toList());
+  }
+
+  public Caracteristica stringACaracteristica(String caracteristica) {
+    List<Caracteristica> todasLasCaracteristicas = todasLasCaracteristicas();
+    Caracteristica caracteristicaObtenida;
+    for (int i = 0; i < todasLasCaracteristicas.size(); i++) {
+      caracteristicaObtenida = todasLasCaracteristicas.get(i);
+      if (caracteristicaObtenida.toString() == caracteristica.toUpperCase(Locale.ROOT)) {
+        return caracteristicaObtenida;
+      }
     }
-    return this.admisiones.gatos;
-  }
-  public Boolean admiteTamanio(List<Caracteristica> caracteristicasMascota){
-    if(!this.patio){
-      return caracteristicasMascota.contains(Caracteristica.Chico);
-    }
-    return true;
+    return null;
   }
 
-  public Boolean tieneLugarDisponible(){
-    return this.lugares_disponibles > 0;
+  public List<Caracteristica> todasLasCaracteristicas() {
+    List<Caracteristica> todasLasCaracteristicas = new ArrayList<Caracteristica>();
+    todasLasCaracteristicas.add(Caracteristica.CASTRADO);
+    todasLasCaracteristicas.add(Caracteristica.MARRON);
+    todasLasCaracteristicas.add(Caracteristica.NEGRO);
+    todasLasCaracteristicas.add(Caracteristica.BLANCO);
+    todasLasCaracteristicas.add(Caracteristica.MANSO);
+    todasLasCaracteristicas.add(Caracteristica.ARISCO);
+    todasLasCaracteristicas.add(Caracteristica.CHICO);
+    todasLasCaracteristicas.add(Caracteristica.GRANDE);
+    todasLasCaracteristicas.add(Caracteristica.BAJO);
+    todasLasCaracteristicas.add(Caracteristica.PESADO);
+    todasLasCaracteristicas.add(Caracteristica.JUGUETON);
+    todasLasCaracteristicas.add(Caracteristica.MEDIANO);
+    todasLasCaracteristicas.add(Caracteristica.RABIOSO);
+
+    return todasLasCaracteristicas;
   }
 
-  public Boolean aceptaCaracteristicasEspeciales(List<Caracteristica> caracteristicasMascota){
-    List<String> caracteristicasMascotaString = caracteristicasMascota.stream().map(caracteristica -> caracteristica.toString()).collect(Collectors.toList());
-
-    return caracteristicasMascotaString.containsAll(this.caracteristicas);
-  }
-
-  public Boolean estaEnElRadio(domain.Mascota.AtributosMascota.Ubicacion ubicacion, Double radio){
-    return ubicacion.calcularDistanciaA(new domain.Mascota.AtributosMascota.Ubicacion(this.ubicacion.lat, this.ubicacion.longitud)) < radio;
-  }
 }

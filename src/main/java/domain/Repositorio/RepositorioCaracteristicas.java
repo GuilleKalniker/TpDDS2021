@@ -1,6 +1,7 @@
 package domain.Repositorio;
 
 import domain.Mascota.AtributosMascota.Caracteristica;
+import domain.Persona.AtributosPersona.TipoDocumento;
 
 import java.util.*;
 

@@ -1,17 +1,17 @@
 package domain.Mascota.AtributosMascota;
 
 public enum Caracteristica {
-  Castrada,
-  Marron,
-  Negro,
-  Blanco,
-  Manso,
-  Arisco,
-  Chico,
-  Grande,
-  Bajo,
-  Pesado,
-  Jugueton,
-  Mediano,
-  Rabioso
+  CASTRADO,
+  MARRON,
+  NEGRO,
+  BLANCO,
+  MANSO,
+  ARISCO,
+  CHICO,
+  GRANDE,
+  BAJO,
+  PESADO,
+  JUGUETON,
+  MEDIANO,
+  RABIOSO
 }

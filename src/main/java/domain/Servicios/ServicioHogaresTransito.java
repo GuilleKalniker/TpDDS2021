@@ -100,8 +100,8 @@ public class ServicioHogaresTransito {
     }
   }
 
-  public List<HogarTransito> filtrarHogaresPara(FormularioMascotaPerdida formularioMascotaPerdida, Double radio){
+  public List<HogarTransitoAdaptado> filtrarHogaresPara(FormularioMascotaPerdida formularioMascotaPerdida, Double radio){
     MascotaRegistrada mascota = RepositorioMascotas.getInstance().buscarMascotaPorID(formularioMascotaPerdida.getIDMascotaPerdida());
-    return solicitarTodosLosHogares().stream().filter(hogar -> hogar.esAdecuado(mascota,radio, formularioMascotaPerdida.getLugarEncuentro())).collect(Collectors.toList());
+    return solicitarTodosLosHogares().stream().map(hogar -> hogar.adaptarHogar()).filter(hogar -> hogar.esAdecuado(mascota,radio, formularioMascotaPerdida.getLugarEncuentro())).collect(Collectors.toList());
   }
 }

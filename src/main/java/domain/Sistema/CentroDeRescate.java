@@ -11,6 +11,7 @@ import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
 import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
+import domain.Servicios.HogarTransitoAdaptado;
 import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
@@ -123,7 +124,7 @@ public class CentroDeRescate {
     getSolicitudesPublicacion().add(solicitud);
   }
 
-  public List<HogarTransito> hogaresAdecuadosParaMascota(FormularioMascotaPerdida formulario, Double radio){
+  public List<HogarTransitoAdaptado> hogaresAdecuadosParaMascota(FormularioMascotaPerdida formulario, Double radio){
     return servicioHogaresTransito.filtrarHogaresPara(formulario, radio);
   }
 

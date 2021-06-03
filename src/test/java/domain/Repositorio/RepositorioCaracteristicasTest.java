@@ -21,25 +21,25 @@ public class RepositorioCaracteristicasTest {
 
   @Test
   public void agregarCaracteristicaAgregaOK() {
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.Arisco);
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.Castrada);
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.Bajo);
+    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.ARISCO);
+    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.CASTRADO);
+    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.BAJO);
     Assertions.assertEquals(repositorioCaracteristicas.getCaracteristicasVigentes().size(), 3);
   }
 
   @Test
   public void agregarDosVecesLaMismaCaracteristicaNoLaRepite() {
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.Arisco);
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.Arisco);
+    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.ARISCO);
+    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.ARISCO);
     Assertions.assertEquals(repositorioCaracteristicas.getCaracteristicasVigentes().size(), 1);
   }
 
   @Test
   public void sacarCaracteristicaSacaOK() {
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.Arisco);
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.Marron);
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.Bajo);
-    repositorioCaracteristicas.sacarCaracteristica(Caracteristica.Marron);
+    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.ARISCO);
+    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.MARRON);
+    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.BAJO);
+    repositorioCaracteristicas.sacarCaracteristica(Caracteristica.MARRON);
     Assertions.assertEquals(repositorioCaracteristicas.getCaracteristicasVigentes().size(), 2);
   }
 
