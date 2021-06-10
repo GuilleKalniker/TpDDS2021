@@ -26,7 +26,7 @@ public class RepositorioCentroDeRescate {
   }
 
   public CentroDeRescate getCentroDeRescateMasCercanoA(Ubicacion ubicacion) {
-    return centrosDeRescateRegistrados.stream().sorted(Comparator.comparing(centro -> centro.getUbicacion().calcularDistanciaA(ubicacion))).collect(Collectors.toList()).get(0);
+    return centrosDeRescateRegistrados.stream().sorted(Comparator.comparing(centro -> centro.getUbicacion().calcularDistanciaA(ubicacion))).findFirst().get();
   }
 
 

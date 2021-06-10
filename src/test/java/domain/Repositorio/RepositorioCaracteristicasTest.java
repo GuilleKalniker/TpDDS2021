@@ -12,35 +12,34 @@ import static org.mockito.Mockito.mock;
 
 public class RepositorioCaracteristicasTest {
 
-  private RepositorioCaracteristicas repositorioCaracteristicas =  mock(RepositorioCaracteristicas.class);
 
   @BeforeEach
   void init() {
-
+    RepositorioCaracteristicas.getInstance().getCaracteristicasVigentes().clear();
   }
 
   @Test
   public void agregarCaracteristicaAgregaOK() {
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.ARISCO);
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.CASTRADO);
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.BAJO);
-    Assertions.assertEquals(repositorioCaracteristicas.getCaracteristicasVigentes().size(), 3);
+    RepositorioCaracteristicas.getInstance().agregarCaracteristica(Caracteristica.ARISCO);
+    RepositorioCaracteristicas.getInstance().agregarCaracteristica(Caracteristica.CASTRADO);
+    RepositorioCaracteristicas.getInstance().agregarCaracteristica(Caracteristica.BAJO);
+    Assertions.assertEquals(3, RepositorioCaracteristicas.getInstance().getCaracteristicasVigentes().size());
   }
 
   @Test
   public void agregarDosVecesLaMismaCaracteristicaNoLaRepite() {
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.ARISCO);
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.ARISCO);
-    Assertions.assertEquals(repositorioCaracteristicas.getCaracteristicasVigentes().size(), 1);
+    RepositorioCaracteristicas.getInstance().agregarCaracteristica(Caracteristica.ARISCO);
+    RepositorioCaracteristicas.getInstance().agregarCaracteristica(Caracteristica.ARISCO);
+    Assertions.assertEquals(1, RepositorioCaracteristicas.getInstance().getCaracteristicasVigentes().size());
   }
 
   @Test
   public void sacarCaracteristicaSacaOK() {
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.ARISCO);
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.MARRON);
-    repositorioCaracteristicas.agregarCaracteristica(Caracteristica.BAJO);
-    repositorioCaracteristicas.sacarCaracteristica(Caracteristica.MARRON);
-    Assertions.assertEquals(repositorioCaracteristicas.getCaracteristicasVigentes().size(), 2);
+    RepositorioCaracteristicas.getInstance().agregarCaracteristica(Caracteristica.ARISCO);
+    RepositorioCaracteristicas.getInstance().agregarCaracteristica(Caracteristica.MARRON);
+    RepositorioCaracteristicas.getInstance().agregarCaracteristica(Caracteristica.BAJO);
+    RepositorioCaracteristicas.getInstance().sacarCaracteristica(Caracteristica.MARRON);
+    Assertions.assertEquals(2, RepositorioCaracteristicas.getInstance().getCaracteristicasVigentes().size());
   }
 
 }

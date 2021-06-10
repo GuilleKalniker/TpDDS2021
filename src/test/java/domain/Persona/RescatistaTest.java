@@ -1,22 +1,22 @@
 package domain.Persona;
 import static org.mockito.Mockito.*;
 
-import domain.Exceptions.TestCorrectoException;
+
 import domain.Mascota.AtributosMascota.*;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
-import domain.Repositorio.RepositorioCentroDeRescate;
-import domain.Repositorio.RepositorioMascotas;
-import domain.Repositorio.RepositorioUsuarios;
+import domain.Repositorio.*;
 import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
+import domain.Servicios.HogarTransitoAdaptado;
 import domain.Servicios.HogaresTransitoService;
 import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
 import domain.Sistema.CentroDeRescate;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -30,56 +30,90 @@ import java.util.List;
 
 public class RescatistaTest {
 
+  private ServicioHogaresTransito servicioHogaresMock;
+  private Notificador notificadorMock;
+
+  private Rescatista rescatistaPrueba;
+  private FormularioMascotaPerdida formulario;
+  private Duenio duenioDePruebaUno;
+  private MascotaRegistrada mascota;
+  private CentroDeRescate centroDeRescate;
+  private HogarTransitoAdaptado hogarAdecuado;
+  private HogarTransitoAdaptado hogarInadecuado;
+  private List<TipoMascota> mascotasPermitidas = new ArrayList<TipoMascota>();
+
+
   @BeforeEach
   void init() {
-    RepositorioCentroDeRescate repositorioCentroDeRescateMock = mock(RepositorioCentroDeRescate.class);
-    RepositorioUsuarios repositorioUsuariosMock = mock(RepositorioUsuarios.class);
-    RepositorioMascotas repositorioMascotasMock = mock(RepositorioMascotas.class);
-    ServicioHogaresTransito servicioMock = mock(ServicioHogaresTransito.class);
-    Notificador notificadorMock = mock(JavaMailApi.class);
+    servicioHogaresMock = mock(ServicioHogaresTransito.class);
+    notificadorMock = mock(Notificador.class);
 
-    rescatistaPrueba.setRepositorioCentroDeRescate(repositorioCentroDeRescateMock);
-    centroDeRescate.setRepositorioCentroDeRescate(repositorioCentroDeRescateMock);
-    centroDeRescate.setRepositorioUsuarios(repositorioUsuariosMock);
-    centroDeRescate.setRepositorioMascotas(repositorioMascotasMock);
-    centroDeRescate.setServicioHogaresTransito(servicioMock);
+    centroDeRescate = new CentroDeRescate(new Ubicacion(100.0, 100.0));
+    centroDeRescate.setServicioHogaresTransito(servicioHogaresMock);
     centroDeRescate.setNotificador(notificadorMock);
-    duenioDePruebaUno.setRepositorioUsuarios(repositorioUsuariosMock);
 
+    RepositorioCaracteristicas.getInstance().getCaracteristicasVigentes().clear();
+    RepositorioUsuarios.getInstance().getDueniosRegistrados().clear();
+    RepositorioUsuarios.getInstance().getAdministradoresRegistrados().clear();
+    RepositorioUsuarios.getInstance().getVoluntariosRegistrados().clear();
+    RepositorioCentroDeRescate.getInstance().getCentrosDeRescateRegistrados().clear();
+    RepositorioMascotas.getInstance().getMascotasRegistradas().clear();
+    mascotasPermitidas.clear();
+
+
+    rescatistaPrueba = new Rescatista();
+    formulario = new FormularioMascotaPerdida(new DatosPersonales("Pablo", "Perez", LocalDate.now(), TipoDocumento.DNI, 1, contactoDePrueba("Pablo", "Perez", 47483233, "pablop@shimeil.com")), "Re loco", new ArrayList<Foto>(), new Ubicacion(0.0, 0.0), LocalDate.now(), "123");
+    duenioDePruebaUno = new Duenio("juancitoGomez123", "xXpanchito94Xx",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com")));
+    mascota = new MascotaRegistrada(TipoMascota.GATO, "Don Gato", "Gatokun", 46, Sexo.FEMENINO, "Lindo", new ArrayList<Foto>(), new ArrayList<Caracteristica>());
+    mascotasPermitidas.add(TipoMascota.GATO);
+    mascotasPermitidas.add(TipoMascota.PERRO);
+    hogarAdecuado = new HogarTransitoAdaptado("0001", "Lo de Roberto", "Pichula 456", new Ubicacion(100.0, 100.0), "47481564", mascotasPermitidas, 50, true, RepositorioCaracteristicas.getInstance().todasLasCaracteristicas());
+    hogarInadecuado = new HogarTransitoAdaptado("0002", "Zootopia", "Cachito 333", new Ubicacion(700.0, 700.0), "47481565", mascotasPermitidas, 50, true, RepositorioCaracteristicas.getInstance().todasLasCaracteristicas());
+
+
+    centroDeRescate.setNotificador(notificadorMock);
+    centroDeRescate.setServicioHogaresTransito(servicioHogaresMock);
+    RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(centroDeRescate);
     duenioDePruebaUno.registrarse();
-    mascota.setID("123");
     duenioDePruebaUno.registrarMascota(mascota, centroDeRescate);
+    mascota.setID("123");
   }
 
   @Test
-  public void seNotificoMascotaEncontradaConID() {
-    doThrow(TestCorrectoException.class).when(centroDeRescate).notificar(duenioDePruebaUno, formulario);
-    assertThrows(TestCorrectoException.class, () -> {rescatistaPrueba.notificarMascotaEncontradaConID(formulario, centroDeRescate);});
+  public void seNotificaMascotaEncontradaConIDCorrectamente() {
+
+    doNothing().when(notificadorMock).notificar(duenioDePruebaUno, formulario);
+
+    centroDeRescate.notificar(duenioDePruebaUno, formulario);
+
+    verify(notificadorMock).notificar(duenioDePruebaUno, formulario);
   }
 
   @Test
-  public void devuelveHogarAdecuado() {
-    List<HogarTransito> hogares = new ArrayList<>();
-    hogares.add(hogarPrueba);
-    doReturn(hogares).when(centroDeRescate).solicitarListaHogaresDeTransito();
-    assert(rescatistaPrueba.buscarHogaresDeTransito(formulario, 500.0, centroDeRescate).contains(hogarPrueba));
+  public void alFiltrarTodosLosHogaresSoloDevuelveElAdecuado() {
+    List<HogarTransitoAdaptado> hogares = new ArrayList<>();
+    hogares.add(hogarAdecuado);
+    hogares.add(hogarInadecuado);
+
+    when(servicioHogaresMock.solicitarTodosLosHogares()).thenReturn(hogares);
+    doCallRealMethod().when(servicioHogaresMock).filtrarHogaresPara(any(), any());
+
+    List<HogarTransitoAdaptado> hogaresFiltrados = rescatistaPrueba.buscarHogaresDeTransito(formulario, 500.0, centroDeRescate);
+
+    assert(hogaresFiltrados.contains(hogarAdecuado));
+    assert(!hogaresFiltrados.contains(hogarInadecuado));
   }
 
-  public Rescatista rescatistaPrueba = new Rescatista();
-  public FormularioMascotaPerdida formulario = new FormularioMascotaPerdida(new DatosPersonales("Pablo", "Perez", LocalDate.now(), TipoDocumento.DNI, 1, agregarContactos()), "Re loco", new ArrayList<Foto>(), new Ubicacion(0.0, 0.0), LocalDate.now(), "123");
-  public Duenio duenioDePruebaUno = new Duenio("juancitoGomez123", "m15215atuTsdfjhbfdskjhsdfgjkhjsdrgafkljdfgrahkjgdfresterkpo",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com")));
-  public MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.GATO, "Don Gato", "Gatokun", 46, Sexo.FEMENINO, "Lindo", new ArrayList<Foto>(), new ArrayList<Caracteristica>());
-  public CentroDeRescate centroDeRescate = mock(CentroDeRescate.class);
-  public HogarTransito hogarPrueba = new HogarTransito("321", "Papa", "Av Liao", 400.0, 400.0, "1231423", true, true, 50, 50, true, new ArrayList<String>());
+  @Test
+  public void solicitudesSeGeneranCorrectamente() {
 
-  public List<Contacto> agregarContactos() {
+    rescatistaPrueba.generarSolicitudPublicacion(formulario);
+
+    Assertions.assertEquals(1, centroDeRescate.getSolicitudesPublicacion().size());
+  }
+
+  private List<Contacto> contactoDePrueba(String nombre, String apellido, Integer telefono, String email){
     List<Contacto> contactos = new ArrayList<>();
-    contactos.add(new Contacto("Pablo", "Perez", 5345684, "bjsdfgjd"));
-    return contactos;
-  }
-
-  private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido, Integer telefono, String email){
-    ArrayList<Contacto> contactos = new ArrayList<>();
     Contacto contacto = new Contacto(nombre, apellido, telefono, email);
     contactos.add(contacto);
     return contactos;

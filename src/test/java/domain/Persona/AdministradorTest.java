@@ -12,14 +12,6 @@ import static org.mockito.Mockito.mock;
 
 public class AdministradorTest {
 
-  @BeforeEach
-  void init() {
-    RepositorioUsuarios repoUsuariosMock = mock(RepositorioUsuarios.class);
-    RepositorioCaracteristicas repoCaracteristicasMock = mock(RepositorioCaracteristicas.class);
-
-    admin.setRepositorioCaracteristicas(repoCaracteristicasMock);
-    admin.setRepositorioUsuarios(repoUsuariosMock);
-  }
 
   @Test
   public void unAdminSeCreaBien() throws Exception {

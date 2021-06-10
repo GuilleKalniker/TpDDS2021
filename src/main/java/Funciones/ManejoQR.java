@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.HashMap;
 
-public class manejoQR {
+public class ManejoQR {
 
   public static String generarQR(String data, String fileName, Integer weidth, Integer height) {
 

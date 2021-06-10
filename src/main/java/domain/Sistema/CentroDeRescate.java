@@ -16,6 +16,7 @@ import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CentroDeRescate {
@@ -23,30 +24,15 @@ public class CentroDeRescate {
   private String correoDelCentro = "centrodemascotasdds@gmail.com";
   private String contrasenia_correo = "tpdds2021";
   private Ubicacion ubicacion;
-  private List<SolicitudPublicacion> solicitudesPublicacion;
-  private List<PublicacionMascotaPerdida> publicacionesMascotaPerdidasSinID;
+  private List<SolicitudPublicacion> solicitudesPublicacion = new ArrayList<>();
+  private List<PublicacionMascotaPerdida> publicacionesMascotaPerdidasSinID = new ArrayList<>();
 
   private Notificador notificador = new JavaMailApi(this.correoDelCentro, this.contrasenia_correo);
-  private RepositorioCentroDeRescate repositorioCentroDeRescate = RepositorioCentroDeRescate.getInstance();
-  private RepositorioMascotas repositorioMascotas = RepositorioMascotas.getInstance();
-  private RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
   private ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.getInstance();
 
   public CentroDeRescate(Ubicacion ubicacion) {
     this.ubicacion = ubicacion;
-    repositorioCentroDeRescate.registrarCentroDeRescate(this);
-  }
-
-  public void setRepositorioCentroDeRescate(RepositorioCentroDeRescate repositorioCentroDeRescate) { // Para posibilitar mockeo
-    this.repositorioCentroDeRescate = repositorioCentroDeRescate;
-  }
-
-  public void setRepositorioMascotas(RepositorioMascotas repositorioMascotas) { // Para posibilitar mockeo
-    this.repositorioMascotas = repositorioMascotas;
-  }
-
-  public void setRepositorioUsuarios(RepositorioUsuarios repositorioUsuarios) {
-    this.repositorioUsuarios = repositorioUsuarios;
+    RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(this);
   }
 
   public void setServicioHogaresTransito(ServicioHogaresTransito servicioHogaresTransito) {
@@ -72,21 +58,21 @@ public class CentroDeRescate {
   /** FUNCIONES PARA MASCOTAS REGISTRADAS */
 
   public String registrarMascota(MascotaRegistrada mascota){
-    return repositorioMascotas.registrarMascota(mascota);
+    return RepositorioMascotas.getInstance().registrarMascota(mascota);
   }
 
   public MascotaRegistrada buscarMascota(String ID){
-    return repositorioMascotas.buscarMascotaPorID(ID);
+    return RepositorioMascotas.getInstance().buscarMascotaPorID(ID);
   }
 
   public Boolean existeMascota(String ID) {
-    return repositorioMascotas.existeMascota(ID);
+    return RepositorioMascotas.getInstance().existeMascota(ID);
   }
 
   /** FUNCIONES PARA MASCOTAS PERDIDAS*/
 
   public void cargarMascotaPerdida(FormularioMascotaPerdida formularioMascotaPerdida) {
-    repositorioMascotas.agregarDatosMascotaPerdida(formularioMascotaPerdida);
+    RepositorioMascotas.getInstance().agregarDatosMascotaPerdida(formularioMascotaPerdida);
 
     try{
       notificar(buscarDuenioApartirIDMascota(formularioMascotaPerdida.getIDMascotaPerdida()), formularioMascotaPerdida);
@@ -102,10 +88,10 @@ public class CentroDeRescate {
   /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
 
   public Duenio buscarDuenioApartirIDMascota(String ID){
-    return repositorioUsuarios.getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID)).findFirst().get();
+    return RepositorioUsuarios.getInstance().getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID)).findFirst().get();
   }
 
-  public List<HogarTransito> solicitarListaHogaresDeTransito() {
+  public List<HogarTransitoAdaptado> solicitarListaHogaresDeTransito() {
     return servicioHogaresTransito.solicitarTodosLosHogares();
   }
 

@@ -26,4 +26,22 @@ public class RepositorioCaracteristicas {
     this.caracteristicasVigentes.remove(caracteristica);
   }
 
+  public List<Caracteristica> todasLasCaracteristicas() {
+    List<Caracteristica> todasLasCaracteristicas = new ArrayList<Caracteristica>();
+    todasLasCaracteristicas.add(Caracteristica.CASTRADO);
+    todasLasCaracteristicas.add(Caracteristica.MARRON);
+    todasLasCaracteristicas.add(Caracteristica.NEGRO);
+    todasLasCaracteristicas.add(Caracteristica.BLANCO);
+    todasLasCaracteristicas.add(Caracteristica.MANSO);
+    todasLasCaracteristicas.add(Caracteristica.ARISCO);
+    todasLasCaracteristicas.add(Caracteristica.CHICO);
+    todasLasCaracteristicas.add(Caracteristica.GRANDE);
+    todasLasCaracteristicas.add(Caracteristica.BAJO);
+    todasLasCaracteristicas.add(Caracteristica.PESADO);
+    todasLasCaracteristicas.add(Caracteristica.JUGUETON);
+    todasLasCaracteristicas.add(Caracteristica.MEDIANO);
+    todasLasCaracteristicas.add(Caracteristica.RABIOSO);
+
+    return todasLasCaracteristicas;
+  }
 }

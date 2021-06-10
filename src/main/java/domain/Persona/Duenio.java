@@ -16,16 +16,10 @@ public class Duenio{
   private DatosPersonales datosPersonales;
   private List<String> mascotasID = new ArrayList<>();
 
-  private RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
-
   public Duenio(String usuario, String contrasenia,DatosPersonales datosPersonales) {
     this.nombreDeUsuario = usuario;
     this.contrasenia = contrasenia;
     this.datosPersonales = datosPersonales;
-  }
-
-  public void setRepositorioUsuarios(RepositorioUsuarios repositorioUsuarios) { // Para permitir mockeo
-    this.repositorioUsuarios = repositorioUsuarios;
   }
 
   public DatosPersonales getDatosPersonales() {
@@ -61,7 +55,7 @@ public class Duenio{
   }
 
   public void registrarse() {
-    repositorioUsuarios.registrarDuenio(this);
+    RepositorioUsuarios.getInstance().registrarDuenio(this);
   }
 
   public String getNombreUsuario() {

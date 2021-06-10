@@ -43,14 +43,16 @@ public class ServicioHogaresTransito {
     return instancia;
   }
 
-  public List<HogarTransito> solicitarTodosLosHogares() {
+  public List<HogarTransitoAdaptado> solicitarTodosLosHogares() {
     List<HogarTransito> listaHogares = new ArrayList<>();
 
     for(Integer i = 1; i <= Math.ceil(this.cantidadHogaresTotales() / 10); i++){
       listaHogares.addAll(listaHogaresTransito(i).hogares);
     }
 
-    return listaHogares;
+    List<HogarTransitoAdaptado> listaHogaresAdaptados = listaHogares.stream().map(HogarTransito::adaptarHogar).collect(Collectors.toList());
+
+    return listaHogaresAdaptados;
   }
 
   //funciona  probarlo aqui domain.Servicios.pruebaConsulta
@@ -102,6 +104,6 @@ public class ServicioHogaresTransito {
 
   public List<HogarTransitoAdaptado> filtrarHogaresPara(FormularioMascotaPerdida formularioMascotaPerdida, Double radio){
     MascotaRegistrada mascota = RepositorioMascotas.getInstance().buscarMascotaPorID(formularioMascotaPerdida.getIDMascotaPerdida());
-    return solicitarTodosLosHogares().stream().map(hogar -> hogar.adaptarHogar()).filter(hogar -> hogar.esAdecuado(mascota,radio, formularioMascotaPerdida.getLugarEncuentro())).collect(Collectors.toList());
+    return solicitarTodosLosHogares().stream().filter(hogar -> hogar.esAdecuado(mascota, radio, formularioMascotaPerdida.getLugarEncuentro())).collect(Collectors.toList());
   }
 }

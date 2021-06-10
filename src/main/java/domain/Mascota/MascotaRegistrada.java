@@ -1,6 +1,6 @@
 package domain.Mascota;
 
-import Funciones.manejoQR;
+import Funciones.ManejoQR;
 import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Mascota.AtributosMascota.Foto;
 import domain.Mascota.AtributosMascota.Sexo;
@@ -56,11 +56,11 @@ public class MascotaRegistrada {
   }
 
   public String generarQR() {
-    return manejoQR.generarQR(this.getID(), this.getNombre(), 500, 500);
+    return ManejoQR.generarQR(this.getID(), this.getNombre(), 500, 500);
   }
 
   public String leerQR(String pathQR) {
-    return manejoQR.leerQR(pathQR);
+    return ManejoQR.leerQR(pathQR);
   }
 
   public Boolean esMiQR(String pathQR){

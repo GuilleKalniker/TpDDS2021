@@ -1,5 +1,6 @@
 package domain.Persona;
 
+import domain.Exceptions.CentroInvalidoException;
 import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.RepositorioUsuarios;
 import domain.Sistema.CentroDeRescate;
@@ -13,28 +14,30 @@ public class Voluntario{
 
   private CentroDeRescate centroDeRescate;
 
-  private RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
-
   public Voluntario(String nombreDeUsuario, String contrasenia, CentroDeRescate centroDeRescate) {
     this.nombreDeUsuario = nombreDeUsuario;
     this.contrasenia = contrasenia;
     this.centroDeRescate = centroDeRescate;
   }
 
-  public void setRepositorioUsuarios(RepositorioUsuarios repositorioUsuarios) {
-    this.repositorioUsuarios = repositorioUsuarios;
-  }
-
   public void aprobarSolicitud(SolicitudPublicacion solicitudPublicacion) {
-    centroDeRescate.aceptarSolicitud(solicitudPublicacion);
+    validarCentro(solicitudPublicacion);
+    solicitudPublicacion.aceptarEn(centroDeRescate);
   }
 
   public void rechazarSolicitud(SolicitudPublicacion solicitudPublicacion){
+    validarCentro(solicitudPublicacion);
     centroDeRescate.eliminarSolicitud(solicitudPublicacion);
   }
 
+  public void validarCentro(SolicitudPublicacion solicitud) {
+    if (!centroDeRescate.getSolicitudesPublicacion().contains(solicitud)) {
+      throw new CentroInvalidoException();
+    }
+  }
+
   public void registrarse() {
-    repositorioUsuarios.registrarVoluntario(this);
+    RepositorioUsuarios.getInstance().registrarVoluntario(this);
   }
 
   public String getNombreUsuario() {

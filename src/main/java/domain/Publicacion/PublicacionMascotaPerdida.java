@@ -8,7 +8,6 @@ public class PublicacionMascotaPerdida {
 
 
  public PublicacionMascotaPerdida(FormularioMascotaPerdida formularioMascotaPerdida) {
-    validarQueNoTieneID();
     filtrarInformacionSensible(formularioMascotaPerdida);
     this.formularioMascotaPerdida = formularioMascotaPerdida;
   }
@@ -17,9 +16,7 @@ public class PublicacionMascotaPerdida {
     // TODO
   }
 
-  public void validarQueNoTieneID(){
-    if (formularioMascotaPerdida.getIDMascotaPerdida() != null){
-      throw new EsUnaMascotaConIDException();
-    }
+  public FormularioMascotaPerdida getFormularioMascotaPerdida() {
+   return formularioMascotaPerdida;
   }
 }

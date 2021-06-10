@@ -3,8 +3,7 @@ package domain.Servicios.ClasesParaLaConsulta;
 
 import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Mascota.AtributosMascota.TipoMascota;
-import domain.Mascota.AtributosMascota.Ubicacion;
-import domain.Mascota.MascotaRegistrada;
+import domain.Repositorio.RepositorioCaracteristicas;
 import domain.Servicios.HogarTransitoAdaptado;
 
 import java.util.ArrayList;
@@ -92,7 +91,7 @@ public class HogarTransito {
   }
 
   public Caracteristica stringACaracteristica(String caracteristica) {
-    List<Caracteristica> todasLasCaracteristicas = todasLasCaracteristicas();
+    List<Caracteristica> todasLasCaracteristicas = RepositorioCaracteristicas.getInstance().todasLasCaracteristicas();
     Caracteristica caracteristicaObtenida;
     for (int i = 0; i < todasLasCaracteristicas.size(); i++) {
       caracteristicaObtenida = todasLasCaracteristicas.get(i);
@@ -102,24 +101,4 @@ public class HogarTransito {
     }
     return null;
   }
-
-  public List<Caracteristica> todasLasCaracteristicas() {
-    List<Caracteristica> todasLasCaracteristicas = new ArrayList<Caracteristica>();
-    todasLasCaracteristicas.add(Caracteristica.CASTRADO);
-    todasLasCaracteristicas.add(Caracteristica.MARRON);
-    todasLasCaracteristicas.add(Caracteristica.NEGRO);
-    todasLasCaracteristicas.add(Caracteristica.BLANCO);
-    todasLasCaracteristicas.add(Caracteristica.MANSO);
-    todasLasCaracteristicas.add(Caracteristica.ARISCO);
-    todasLasCaracteristicas.add(Caracteristica.CHICO);
-    todasLasCaracteristicas.add(Caracteristica.GRANDE);
-    todasLasCaracteristicas.add(Caracteristica.BAJO);
-    todasLasCaracteristicas.add(Caracteristica.PESADO);
-    todasLasCaracteristicas.add(Caracteristica.JUGUETON);
-    todasLasCaracteristicas.add(Caracteristica.MEDIANO);
-    todasLasCaracteristicas.add(Caracteristica.RABIOSO);
-
-    return todasLasCaracteristicas;
-  }
-
 }

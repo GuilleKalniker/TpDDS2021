@@ -27,16 +27,9 @@ public class DuenioTest {
 
   @BeforeEach
   void init() {
-    RepositorioMascotas repositorioMascotasMockeado = mock(RepositorioMascotas.class);
-    RepositorioUsuarios repositorioUsuariosMockeado = mock(RepositorioUsuarios.class);
-    RepositorioCentroDeRescate repositorioCentrosMockeado = mock(RepositorioCentroDeRescate.class);
     ServicioHogaresTransito servicioMock = mock(ServicioHogaresTransito.class);
-    Notificador notificadorMock = mock(JavaMailApi.class);
+    Notificador notificadorMock = mock(Notificador.class);
 
-    duenioDePruebaUno.setRepositorioUsuarios(repositorioUsuariosMockeado);
-    centroDeRescateDePrueba.setRepositorioMascotas(repositorioMascotasMockeado);
-    centroDeRescateDePrueba.setRepositorioUsuarios(repositorioUsuariosMockeado);
-    centroDeRescateDePrueba.setRepositorioCentroDeRescate(repositorioCentrosMockeado);
     centroDeRescateDePrueba.setServicioHogaresTransito(servicioMock);
     centroDeRescateDePrueba.setNotificador(notificadorMock);
   }

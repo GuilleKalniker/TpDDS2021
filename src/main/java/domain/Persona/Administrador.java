@@ -11,32 +11,22 @@ public class Administrador{
   private String nombreDeUsuario;
   private String contrasenia;
 
-  private RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
-  private RepositorioCaracteristicas repositorioCaracteristicas = RepositorioCaracteristicas.getInstance();
 
   public Administrador(String usuario, String contrasenia) {
     this.nombreDeUsuario = usuario;
     this.contrasenia = contrasenia;
   }
 
-  public void setRepositorioUsuarios(RepositorioUsuarios repositorioUsuarios) {
-    this.repositorioUsuarios = repositorioUsuarios;
-  }
-
-  public void setRepositorioCaracteristicas(RepositorioCaracteristicas repositorioCaracteristicas) {
-    this.repositorioCaracteristicas = repositorioCaracteristicas;
-  }
-
   public void agregarCaracteristica(Caracteristica caracteristica) {
-    repositorioCaracteristicas.agregarCaracteristica(caracteristica);
+    RepositorioCaracteristicas.getInstance().agregarCaracteristica(caracteristica);
   }
 
   public void sacarCaracteristica(Caracteristica caracteristica) {
-    repositorioCaracteristicas.sacarCaracteristica(caracteristica);
+    RepositorioCaracteristicas.getInstance().sacarCaracteristica(caracteristica);
   }
 
   public void registrarse() {
-    repositorioUsuarios.registrarAdministrador(this);
+    RepositorioUsuarios.getInstance().registrarAdministrador(this);
   }
 
   public String getNombreUsuario() {

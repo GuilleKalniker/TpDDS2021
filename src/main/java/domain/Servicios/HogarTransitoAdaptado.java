@@ -6,7 +6,6 @@ import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.MascotaRegistrada;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HogarTransitoAdaptado {
   private String id;
@@ -29,6 +28,10 @@ public class HogarTransitoAdaptado {
     this.lugaresDisponibles = lugaresDisponibles;
     this.tienePatio = tienePatio;
     this.caracteristicasAdmitidas = caracteristicasAdmitidas;
+  }
+
+  public String getNombre() {
+    return nombre;
   }
 
   public Boolean esAdecuado(MascotaRegistrada mascota, Double radio, domain.Mascota.AtributosMascota.Ubicacion ubicacion){
