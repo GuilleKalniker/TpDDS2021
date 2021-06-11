@@ -3,6 +3,7 @@ package domain.Sistema;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
+import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Persona.Duenio;
@@ -10,7 +11,6 @@ import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
-import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
 import domain.Servicios.HogarTransitoAdaptado;
 import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
@@ -82,7 +82,7 @@ public class CentroDeRescate {
   }
 
   public void notificar(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida){
-    notificador.notificar(duenio, formularioMascotaPerdida);
+    notificador.notificarDuenio(duenio, formularioMascotaPerdida);
   }
 
   /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
@@ -114,8 +114,10 @@ public class CentroDeRescate {
     return servicioHogaresTransito.filtrarHogaresPara(formulario, radio);
   }
 
-  public void publicacionMatcheada(PublicacionMascotaPerdida publicacionMascotaPerdida,DatosPersonales datosPersonales, Notificador notificador){
-  //TODO: notificador.notificarARescatista();  -> Dale Willy trabajá *LATIGO*
+  //Requerimiento 5:
+  public void publicacionMatcheada(DatosPersonales datosDuenio, PublicacionMascotaPerdida publicacionMascotaPerdida){
+    DatosPersonales datosRescatista = publicacionMascotaPerdida.getFormularioMascotaPerdida().getDatosRescastista();
+    notificador.notificarRescatista(datosRescatista, datosDuenio);
   }
 
 }

@@ -9,23 +9,16 @@ import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Repositorio.*;
-import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
 import domain.Servicios.HogarTransitoAdaptado;
-import domain.Servicios.HogaresTransitoService;
-import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
 import domain.Sistema.CentroDeRescate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RescatistaTest {
@@ -82,11 +75,11 @@ public class RescatistaTest {
   @Test
   public void seNotificaMascotaEncontradaConIDCorrectamente() {
 
-    doNothing().when(notificadorMock).notificar(duenioDePruebaUno, formulario);
+    doNothing().when(notificadorMock).notificarDuenio(duenioDePruebaUno, formulario);
 
     centroDeRescate.notificar(duenioDePruebaUno, formulario);
 
-    verify(notificadorMock).notificar(duenioDePruebaUno, formulario);
+    verify(notificadorMock).notificarDuenio(duenioDePruebaUno, formulario);
   }
 
   @Test
