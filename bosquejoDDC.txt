@@ -178,6 +178,8 @@ contraseniaCorreo: String
 ubicacion: Ubicacion
 solicitudesPublicacion: List<SolicitudPublicacion>
 publicacionesMascotasPerdidasSinID: List<PublicacionMascotaPerdida>
+notificador: Notificador
+servicioHogaresTransito: ServicioHogaresTransito
 
 registrarMascota(mascota)
 buscarMascota(ID)
@@ -188,6 +190,25 @@ buscarDuenioAPartirIDMascota(ID)
 aceptarSolicitud(solicitudPublicacion)
 eliminarSolicitud(solicitudPublicacion)
 generarSolicitud(solicitudPublicacion)
+}
+
+class HogarTransitoAdaptado {
+id: String
+nombre: String
+direccion: String
+ubicacion: Ubicacion
+telefono: String
+tiposMascotaAdmitidos: List<TipoMascota>
+lugaresDisponibles: Integer
+tienePatio: boolean
+caracteristicasAdmitidas: List<Caracteristica>
+
+esAdecuado(mascota, radio, ubicacion)
+admiteTipo(tipoMascota)
+admiteTamanio(caracteristicas)
+tieneLugarDisponible()
+aceptaCaracteristicasEspeciales(caracteristicasMascota)
+estaEnElRadio(ubicacion, radio)
 }
 
 
@@ -236,7 +257,8 @@ FEMENINO
 CentroDeRescate --> Ubicacion
 CentroDeRescate -->"*" SolicitudPublicacion
 CentroDeRescate -right->"*" PublicacionMascotaPerdida
-CentroDeRescate ..> Notificador
+CentroDeRescate --> Notificador
+CentroDeRescate --> ServicioHogaresTransito
 
 Duenio --> DatosPersonales
 Duenio -->"*" MascotaRegistrada
@@ -275,4 +297,6 @@ RepositorioMascotas -->"*" FormularioMascotaPerdida
 Notificador <|.. JavaMailApi
 
 HogaresTransitoService <|.. ServicioHogaresTransito
+
+HogarTransitoAdaptado <.. HogaresTransitoService
 @enduml
