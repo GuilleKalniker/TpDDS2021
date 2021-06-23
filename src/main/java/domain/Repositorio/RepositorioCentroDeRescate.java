@@ -1,5 +1,6 @@
 package domain.Repositorio;
 
+import domain.Exceptions.NoExisteCentroException;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Sistema.CentroDeRescate;
 
@@ -26,8 +27,6 @@ public class RepositorioCentroDeRescate {
   }
 
   public CentroDeRescate getCentroDeRescateMasCercanoA(Ubicacion ubicacion) {
-    return centrosDeRescateRegistrados.stream().sorted(Comparator.comparing(centro -> centro.getUbicacion().calcularDistanciaA(ubicacion))).findFirst().get();
+    return centrosDeRescateRegistrados.stream().sorted(Comparator.comparing(centro -> centro.getUbicacion().calcularDistanciaA(ubicacion))).findFirst().orElseThrow(() -> new NoExisteCentroException());
   }
-
-
 }

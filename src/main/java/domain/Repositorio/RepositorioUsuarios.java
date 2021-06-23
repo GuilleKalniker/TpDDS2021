@@ -64,13 +64,15 @@ public class RepositorioUsuarios {
   }
 
   public void existeUsuario(String nombreUsuario){
-    if(nombreUsuarioEnDuenio(nombreUsuario)
+    if (nombreUsuarioEnDuenio(nombreUsuario)
         || nombreUsuarioEnAdministrador(nombreUsuario)
         || nombreUsuarioEnVoluntario(nombreUsuario)){
-      throw new UsuarioYaRegistradoException("El nombre de ususario ya existe");
+      throw new UsuarioYaRegistradoException("El nombre de ususario ya existe.");
     }
   }
 
+  // No seria mejor una func que verifique en todas las listas y devuelva el string de que es?
+  // Mucha rep de codigo, aparte que si queres saber si es admin ponele, le comparas desde donde llama a "Administrador" y listo
   public boolean nombreUsuarioEnDuenio(String nombreUsuario) {
     return this.dueniosRegistrados.keySet().stream().anyMatch(duenio -> duenio.getNombreUsuario() == nombreUsuario);
   }

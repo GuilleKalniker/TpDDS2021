@@ -80,7 +80,7 @@ public class ServicioHogaresTransito {
       Response<UsuariosResponse> responseTokenUsuarios = requestToken.execute();
       return responseTokenUsuarios.body().getToken(); //aca podria devolver directamente el objeto UsuarioResponse y mapearlo con el Gson para convertirlo en un archivo
     }
-    catch (Exception e){
+    catch (Exception e) { // TODO: Ver que tipo de errores tira, yo no pude encontrar
       throw new RuntimeException("No se pudo realizar la consulta");
     }
   }

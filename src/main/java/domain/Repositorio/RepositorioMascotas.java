@@ -1,6 +1,7 @@
 package domain.Repositorio;
 
 import domain.Exceptions.IDInvalidoException;
+import domain.Exceptions.IDNoSeCorrespondeException;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 
@@ -46,12 +47,13 @@ public class RepositorioMascotas {
   }
 
   public MascotaRegistrada buscarMascotaPorID(String ID) {
-    if(ID == null){
+    if (ID == null) {
       throw new IDInvalidoException();
+    } else {
+        return this.getMascotasRegistradas()
+          .stream().filter(mascota -> mascota.coincideID(ID))
+          .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException());
     }
-    return this.getMascotasRegistradas()
-        .stream().filter(mascota -> mascota.coincideID(ID))
-        .findFirst().get();
   }
 
   public Boolean existeMascota(String ID) {
@@ -68,7 +70,7 @@ public class RepositorioMascotas {
   public FormularioMascotaPerdida buscarDatosMascotaPerdida(String ID) {
     return this.getDatosMascotasPerdidas()
         .stream().filter(datos -> datos.getIDMascotaPerdida() == ID)
-        .findFirst().get();
+        .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException());
   }
 
   public List<FormularioMascotaPerdida> datosMascotasPerdidasEnUltimosDiezDias(){
