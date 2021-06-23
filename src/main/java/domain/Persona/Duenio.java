@@ -1,8 +1,12 @@
 package domain.Persona;
 
 
+import domain.Exceptions.IDNoSeCorrespondeException;
+import domain.Exceptions.RespuestasIncompletasException;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
+import domain.Repositorio.RepositorioCentroDeRescate;
+import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
 import domain.Sistema.CentroDeRescate;
 
@@ -22,6 +26,14 @@ public class Duenio{
     this.datosPersonales = datosPersonales;
   }
 
+  public String getNombreUsuario() {
+    return nombreDeUsuario;
+  }
+
+  public String getContrasenia() {
+    return contrasenia;
+  }
+
   public DatosPersonales getDatosPersonales() {
     return datosPersonales;
   }
@@ -30,12 +42,12 @@ public class Duenio{
     return this.mascotasID;
   }
 
-
+  public void registrarse() {
+    RepositorioUsuarios.getInstance().registrarDuenio(this);
+  }
   /*
   * registrarMascota(1)
-  * Consigue del centro un ID nuevo para la mascota que se va a registrar, luego crea el objeto mascota con todos los parametros de la funcion + this, para que mascota conozca a su duenio
->>>>>>> 8fb96c99e1caa4af178dd2d9d982b0b670947cb5
-  * Posteriormente agrega a la mascota recien registrada a la lista de mascotas del duenio y del centro de rescate.
+  * Agrega a la mascota recien registrada a la lista de mascotas del duenio y del centro de rescate.
   */
   public void registrarMascota(MascotaRegistrada mascota, CentroDeRescate centroDeRescate){
     this.mascotasID.add(centroDeRescate.registrarMascota(mascota));
@@ -51,18 +63,19 @@ public class Duenio{
   */
   public void seEncontro(MascotaRegistrada unaMascota) {
     //TODO Comportamiento no definido, se hace "notificacion".
-
   }
 
-  public void registrarse() {
-    RepositorioUsuarios.getInstance().registrarDuenio(this);
-  }
-
-  public String getNombreUsuario() {
-    return nombreDeUsuario;
-  }
-
-  public String getContrasenia() {
-    return contrasenia;
+  public void darEnAdopcionA(String ID) {
+    if (mascotasID.contains(ID)) {
+      centroDeRescate.getPreguntasDeAdopcion(); // TODO: Inyectar centro de rescate, ver criterio
+      // TODO: Contestar preguntas
+        if (centroDeRescate.validarPreguntas(respuestas)) {
+          centroDeRescate(generarPublicacionAdopcion(RepositorioMascotas.getInstance().buscarMascotaPorID(ID)));
+        } else {
+          throw new RespuestasIncompletasException();
+        }
+    } else {
+      throw new IDNoSeCorrespondeException();
+    }
   }
 }

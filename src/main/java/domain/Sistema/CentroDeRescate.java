@@ -27,6 +27,10 @@ public class CentroDeRescate {
   private List<SolicitudPublicacion> solicitudesPublicacion = new ArrayList<>();
   private List<PublicacionMascotaPerdida> publicacionesMascotaPerdidasSinID = new ArrayList<>();
 
+  // TODO: Revisar
+  private List<String> preguntasDeAdopcion = new ArrayList<>();
+  private List<PublicacionAdopcion>  publicacionesAdopcion = new ArrayList<>();
+
   private Notificador notificador = new JavaMailApi(this.correoDelCentro, this.contrasenia_correo);
   private ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.getInstance();
 
@@ -53,6 +57,10 @@ public class CentroDeRescate {
 
   public Ubicacion getUbicacion() {
     return ubicacion;
+  }
+
+  public List<String> getPreguntasDeAdopcion() {
+    return preguntasDeAdopcion;
   }
 
   /** FUNCIONES PARA MASCOTAS REGISTRADAS */
@@ -120,4 +128,21 @@ public class CentroDeRescate {
     notificador.notificarRescatista(datosRescatista, datosDuenio);
   }
 
+  /** FUNCIONES PARA EL MANEJO DE ADOPCIONES */
+
+  public void agregarPregunta(String pregunta) {
+    preguntasDeAdopcion.add(pregunta);
+  }
+
+  public void quitarPregunta(String pregunta) {
+    preguntasDeAdopcion.remove(pregunta);
+  }
+
+  public boolean validarPreguntas(respuestas) {
+    // TODO: Implementar
+  }
+
+  public void generarPublicacionAdopcion() {
+    publicacionesAdopcion.add(new PublicacionAdopcion()); // TODO: Implementar constructor
+  }
 }
