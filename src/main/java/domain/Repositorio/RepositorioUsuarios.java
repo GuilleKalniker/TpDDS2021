@@ -5,6 +5,7 @@ import domain.Exceptions.UsuarioYaRegistradoException;
 import domain.Persona.Administrador;
 import domain.Persona.Duenio;
 import domain.Persona.Voluntario;
+import domain.Exceptions.*;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -86,5 +87,9 @@ public class RepositorioUsuarios {
     existeUsuario(usuario);
     ValidadorContrasenias validador = new ValidadorContrasenias(8);
     validador.esUnaContraseniaValida(contrasenia);
+  }
+
+  public Duenio getDuenioPorID(String ID) {
+    return getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID)).findFirst().orElseThrow(() -> new IDNoSeCorrespondeException());
   }
 }

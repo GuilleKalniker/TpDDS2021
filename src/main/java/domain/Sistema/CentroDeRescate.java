@@ -87,8 +87,8 @@ public class CentroDeRescate {
 
   /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
 
-  public Duenio buscarDuenioApartirIDMascota(String ID){
-    return RepositorioUsuarios.getInstance().getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID)).findFirst().get();
+  public Duenio buscarDuenioApartirIDMascota(String ID){ // TODO: Pensar si un try-catch tiene sentido
+    return RepositorioUsuarios.getInstance().getDuenioPorID(ID);
   }
 
   public List<HogarTransitoAdaptado> solicitarListaHogaresDeTransito() {
