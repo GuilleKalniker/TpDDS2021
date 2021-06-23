@@ -1,10 +1,12 @@
 package domain.Sistema;
 
+import domain.Exceptions.NoHayPublicacionAptaException;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
+import domain.Publicacion.PublicacionAdopcion;
 import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Persona.Duenio;
 import domain.Publicacion.SolicitudPublicacion;
@@ -29,7 +31,8 @@ public class CentroDeRescate {
 
   // TODO: Revisar
   private List<String> preguntasDeAdopcion = new ArrayList<>();
-  private List<PublicacionAdopcion>  publicacionesAdopcion = new ArrayList<>();
+  private List<PublicacionAdopcion>  publicacionesAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
+  private List<Duenio> interesadosEnAdoptar = new ArrayList<>(); // Observers
 
   private Notificador notificador = new JavaMailApi(this.correoDelCentro, this.contrasenia_correo);
   private ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.getInstance();
@@ -138,11 +141,31 @@ public class CentroDeRescate {
     preguntasDeAdopcion.remove(pregunta);
   }
 
+  public void nuevoInteresadoEnAdoptar(Duenio duenio) {
+    interesadosEnAdoptar.add(duenio);
+  }
+
+  public void quitarInteresadoEnAdoptar(Duenio duenio) {
+    interesadosEnAdoptar.remove(duenio);
+  }
+
   public boolean validarPreguntas(respuestas) {
     // TODO: Implementar
   }
 
   public void generarPublicacionAdopcion() {
     publicacionesAdopcion.add(new PublicacionAdopcion()); // TODO: Implementar constructor
+  }
+
+  public void enviarSugerenciaDeAdopcionSemanal() {
+    interesadosEnAdoptar.forEach(duenio -> duenio.recibirSugerenciaAdopcion(obtenerSugerenciaAdopcionPara(duenio)));
+  }
+
+  public PublicacionAdopcion obtenerSugerenciaAdopcionPara(Duenio duenio) {
+    publicacionesAdopcion.
+        stream().
+        filter(publicacion -> duenio.mascotaSeriaApta(publicacion)).
+        findFirst().
+        orElseThrow(() -> new NoHayPublicacionAptaException());
   }
 }

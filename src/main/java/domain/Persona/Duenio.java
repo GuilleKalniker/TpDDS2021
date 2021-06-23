@@ -5,6 +5,8 @@ import domain.Exceptions.IDNoSeCorrespondeException;
 import domain.Exceptions.RespuestasIncompletasException;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
+import domain.Publicacion.PublicacionAdopcion;
+import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
@@ -19,6 +21,11 @@ public class Duenio{
   private String contrasenia;
   private DatosPersonales datosPersonales;
   private List<String> mascotasID = new ArrayList<>();
+
+  // TODO: Revisar
+  private List<PublicacionAdopcion> sugerenciasAdopcion = new ArrayList<>();
+  private Preferencias preferencias;
+  private Comodidades comodidades;
 
   public Duenio(String usuario, String contrasenia,DatosPersonales datosPersonales) {
     this.nombreDeUsuario = usuario;
@@ -77,5 +84,25 @@ public class Duenio{
     } else {
       throw new IDNoSeCorrespondeException();
     }
+  }
+
+  public void mostrarIntencionDeAdopcion() {
+    // En vez de un duenio podria hacerse una clase nueva (publicacion o adoptador) pero ver abajo
+    centroDeRescate.nuevoInteresadoEnAdoptar(this);
+  }
+
+  // Funcionalidad de querer adoptar podria ser otra clase, por ahora intente y es muy middleman
+  // Si comodidades y preferencias lo maneja duenio y centro, no tiene sentido, si el manejos se hace
+  // propio del adoptador puede ser, pero pareceria ser redundante
+  public boolean mascotaSeriaApta(PublicacionAdopcion publicacionAdopcion) {
+    return preferencias.cumple(publicacionAdopcion) && comodidades.cumple(publicacionAdopcion);
+  }
+
+  public void recibirSugerenciaAdopcion(PublicacionAdopcion publicacionAdopcion) {
+    sugerenciasAdopcion.add(publicacionAdopcion);
+  }
+
+  public void revisarSugerencias() {
+    // TODO: Implementar
   }
 }
