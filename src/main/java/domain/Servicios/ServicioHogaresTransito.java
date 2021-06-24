@@ -63,8 +63,8 @@ public class ServicioHogaresTransito {
       Call<ListadoHogaresTransito> requestHogares = refugiosService.getHogares("Bearer " + this.token, numeroDePagina);
       Response<ListadoHogaresTransito> responseHogaresTransito = requestHogares.execute();
       return responseHogaresTransito.body();
-    }
-    catch (Exception e) {
+    } catch (IOException e) {
+      e.printStackTrace();
       throw new RuntimeException("No se pudo realizar la consulta");
     }
   }

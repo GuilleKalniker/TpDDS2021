@@ -30,8 +30,8 @@ public class CentroDeRescateTest {
 
   @Test
   public void obtenemosUnaListaDeIDsAcordeALasMascotasRegistradas(){
-    String id_pepita = this.centro.registrarMascota(pepita);
-    String id_chinchulin = this.centro.registrarMascota(chinchulin);
+    String id_pepita = RepositorioMascotas.getInstance().registrarMascota(pepita);
+    String id_chinchulin = RepositorioMascotas.getInstance().registrarMascota(chinchulin);
 
     assertTrue(this.centro.existeMascota(id_pepita));
     assertTrue(this.centro.existeMascota(id_chinchulin));
@@ -49,7 +49,7 @@ public class CentroDeRescateTest {
 
   @Test
   public void identificoUnaMascotaIdentificaBien(){
-    String id = new CentroDeRescate(new Ubicacion(2.2,2.2)).registrarMascota(pepita);
+    String id = RepositorioMascotas.getInstance().registrarMascota(pepita);
     MascotaRegistrada mascotaEncontrada = this.centro.buscarMascota(id);
     assertEquals(pepita.getID(), mascotaEncontrada.getID());
   }

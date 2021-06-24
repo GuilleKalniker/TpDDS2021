@@ -24,8 +24,8 @@ public class Duenio{
 
   // TODO: Revisar
   private List<PublicacionAdopcion> sugerenciasAdopcion = new ArrayList<>();
-  private Preferencias preferencias;
-  private Comodidades comodidades;
+  //private Preferencias preferencias;
+  //private Comodidades comodidades;
 
   public Duenio(String usuario, String contrasenia,DatosPersonales datosPersonales) {
     this.nombreDeUsuario = usuario;
@@ -57,7 +57,7 @@ public class Duenio{
   * Agrega a la mascota recien registrada a la lista de mascotas del duenio y del centro de rescate.
   */
   public void registrarMascota(MascotaRegistrada mascota, CentroDeRescate centroDeRescate){
-    this.mascotasID.add(centroDeRescate.registrarMascota(mascota));
+    this.mascotasID.add(RepositorioMascotas.getInstance().registrarMascota(mascota));
   }
 
   public boolean tieneA(String IDMascota){
@@ -71,7 +71,7 @@ public class Duenio{
   public void seEncontro(MascotaRegistrada unaMascota) {
     //TODO Comportamiento no definido, se hace "notificacion".
   }
-
+/*
   public void darEnAdopcionA(String ID) {
     if (mascotasID.contains(ID)) {
       centroDeRescate.getPreguntasDeAdopcion(); // TODO: Inyectar centro de rescate, ver criterio
@@ -104,5 +104,5 @@ public class Duenio{
 
   public void revisarSugerencias() {
     // TODO: Implementar
-  }
+  }*/
 }

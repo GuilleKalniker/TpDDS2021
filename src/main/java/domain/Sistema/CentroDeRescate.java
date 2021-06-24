@@ -68,10 +68,6 @@ public class CentroDeRescate {
 
   /** FUNCIONES PARA MASCOTAS REGISTRADAS */
 
-  public String registrarMascota(MascotaRegistrada mascota){
-    return RepositorioMascotas.getInstance().registrarMascota(mascota);
-  }
-
   public MascotaRegistrada buscarMascota(String ID){
     return RepositorioMascotas.getInstance().buscarMascotaPorID(ID);
   }
@@ -82,18 +78,12 @@ public class CentroDeRescate {
 
   /** FUNCIONES PARA MASCOTAS PERDIDAS*/
 
-  public void cargarMascotaPerdida(FormularioMascotaPerdida formularioMascotaPerdida) {
-    RepositorioMascotas.getInstance().agregarDatosMascotaPerdida(formularioMascotaPerdida);
-
+  public void notificar(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida){
     try{
-      notificar(buscarDuenioApartirIDMascota(formularioMascotaPerdida.getIDMascotaPerdida()), formularioMascotaPerdida);
+    notificador.notificarDuenio(duenio, formularioMascotaPerdida);
     } catch (RuntimeException e) {
       e.printStackTrace();
     }
-  }
-
-  public void notificar(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida){
-    notificador.notificarDuenio(duenio, formularioMascotaPerdida);
   }
 
   /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
@@ -131,8 +121,41 @@ public class CentroDeRescate {
     notificador.notificarRescatista(datosRescatista, datosDuenio);
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /** FUNCIONES PARA EL MANEJO DE ADOPCIONES */
-/*
+
   public void agregarPregunta(String pregunta) {
     preguntasDeAdopcion.add(pregunta);
   }
@@ -148,11 +171,10 @@ public class CentroDeRescate {
   public void quitarInteresadoEnAdoptar(Duenio duenio) {
     interesadosEnAdoptar.remove(duenio);
   }
-
+/*
   public boolean validarPreguntas(respuestas) {
     // TODO: Implementar
-  }
-  */
+  }*/
 
   public void generarPublicacionAdopcion() {
     publicacionesAdopcion.add(new PublicacionAdopcion()); // TODO: Implementar constructor
@@ -160,8 +182,8 @@ public class CentroDeRescate {
 /*
   public void enviarSugerenciaDeAdopcionSemanal() {
     interesadosEnAdoptar.forEach(duenio -> duenio.recibirSugerenciaAdopcion(obtenerSugerenciaAdopcionPara(duenio)));
-  }*/
-  /*
+  }
+
   public PublicacionAdopcion obtenerSugerenciaAdopcionPara(Duenio duenio) {
     publicacionesAdopcion.
         stream().

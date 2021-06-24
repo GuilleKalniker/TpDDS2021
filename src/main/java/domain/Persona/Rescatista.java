@@ -4,6 +4,7 @@ import domain.Mascota.FormularioMascotaPerdida;
 import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.RepositorioCentroDeRescate;
+import domain.Repositorio.RepositorioMascotas;
 import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
 import domain.Servicios.HogarTransitoAdaptado;
 import domain.Sistema.CentroDeRescate;
@@ -16,7 +17,8 @@ public class Rescatista {
   //Esta lógica va para cuando la mascota tiene chapita
   //TODO: Ver logica pq el repositorio esta medio raro --> ver si hacer un centroGeneral, meter logica en en el repositorio o dejarlo asi
   public void notificarMascotaEncontradaConID(FormularioMascotaPerdida formularioMascotaPerdida, CentroDeRescate centroDeRescate) {
-   centroDeRescate.cargarMascotaPerdida(formularioMascotaPerdida);
+    RepositorioMascotas.getInstance().agregarDatosMascotaPerdida(formularioMascotaPerdida);
+    centroDeRescate.notificar(centroDeRescate.buscarDuenioApartirIDMascota(formularioMascotaPerdida.getIDMascotaPerdida()), formularioMascotaPerdida);
   }
 
   public void generarSolicitudPublicacion(FormularioMascotaPerdida formulario){
