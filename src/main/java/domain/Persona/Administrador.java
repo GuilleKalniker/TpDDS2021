@@ -4,10 +4,7 @@ import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Repositorio.RepositorioCaracteristicas;
 import domain.Repositorio.RepositorioUsuarios;
 
-import java.util.ArrayList;
-
-public class Administrador{
-
+public class Administrador {
   private String nombreDeUsuario;
   private String contrasenia;
 

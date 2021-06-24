@@ -132,7 +132,7 @@ public class CentroDeRescate {
   }
 
   /** FUNCIONES PARA EL MANEJO DE ADOPCIONES */
-
+/*
   public void agregarPregunta(String pregunta) {
     preguntasDeAdopcion.add(pregunta);
   }
@@ -152,20 +152,21 @@ public class CentroDeRescate {
   public boolean validarPreguntas(respuestas) {
     // TODO: Implementar
   }
+  */
 
   public void generarPublicacionAdopcion() {
     publicacionesAdopcion.add(new PublicacionAdopcion()); // TODO: Implementar constructor
   }
-
+/*
   public void enviarSugerenciaDeAdopcionSemanal() {
     interesadosEnAdoptar.forEach(duenio -> duenio.recibirSugerenciaAdopcion(obtenerSugerenciaAdopcionPara(duenio)));
-  }
-
+  }*/
+  /*
   public PublicacionAdopcion obtenerSugerenciaAdopcionPara(Duenio duenio) {
     publicacionesAdopcion.
         stream().
         filter(publicacion -> duenio.mascotaSeriaApta(publicacion)).
         findFirst().
         orElseThrow(() -> new NoHayPublicacionAptaException());
-  }
+  }*/
 }

@@ -3,7 +3,6 @@ package domain.Repositorio;
 import static org.junit.jupiter.api.Assertions.*;
 
 import Funciones.ValidadorContrasenias;
-import domain.Persona.Administrador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

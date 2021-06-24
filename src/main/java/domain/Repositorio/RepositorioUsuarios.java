@@ -9,7 +9,6 @@ import domain.Exceptions.*;
 
 import java.util.HashMap;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class RepositorioUsuarios {
 
