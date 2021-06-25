@@ -1,11 +1,11 @@
 package domain.Repositorio;
 
 import Funciones.ValidadorContrasenias;
+import domain.Exceptions.IDNoSeCorrespondeException;
 import domain.Exceptions.UsuarioYaRegistradoException;
 import domain.Persona.Administrador;
 import domain.Persona.Duenio;
 import domain.Persona.Voluntario;
-import domain.Exceptions.*;
 
 import java.util.HashMap;
 import java.util.Set;

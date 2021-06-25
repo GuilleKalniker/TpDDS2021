@@ -1,6 +1,5 @@
 package domain.Publicacion;
 
-import domain.Exceptions.EsUnaMascotaConIDException;
 import domain.Mascota.FormularioMascotaPerdida;
 
 public class PublicacionMascotaPerdida {

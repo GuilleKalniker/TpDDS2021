@@ -6,10 +6,9 @@ import domain.Exceptions.RespuestasIncompletasException;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Publicacion.PublicacionAdopcion;
-import domain.Publicacion.PublicacionMascotaPerdida;
-import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
+import domain.Servicios.Notificadores.Notificador;
 import domain.Sistema.CentroDeRescate;
 
 import java.util.ArrayList;
@@ -21,6 +20,8 @@ public class Duenio{
   private String contrasenia;
   private DatosPersonales datosPersonales;
   private List<String> mascotasID = new ArrayList<>();
+
+  private List<Notificador> notificadores = new ArrayList<>();
 
   // TODO: Revisar
   private List<PublicacionAdopcion> sugerenciasAdopcion = new ArrayList<>();
@@ -71,7 +72,20 @@ public class Duenio{
   public void seEncontro(MascotaRegistrada unaMascota) {
     //TODO Comportamiento no definido, se hace "notificacion".
   }
-/*
+
+  public List<Notificador> getNotificadores() {
+    return notificadores;
+  }
+
+  public void setNotificadores(List<Notificador> notificadores) {
+    this.notificadores = notificadores;
+  }
+
+  public void serNotificado() {
+    notificadores.forEach(notificador -> notificador(this, "holi"));
+  }
+
+  /*
   public void darEnAdopcionA(String ID) {
     if (mascotasID.contains(ID)) {
       centroDeRescate.getPreguntasDeAdopcion(); // TODO: Inyectar centro de rescate, ver criterio

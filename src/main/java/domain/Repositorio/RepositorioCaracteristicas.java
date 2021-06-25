@@ -1,9 +1,11 @@
 package domain.Repositorio;
 
 import domain.Mascota.AtributosMascota.Caracteristica;
-import domain.Persona.AtributosPersona.TipoDocumento;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class RepositorioCaracteristicas {
   private static final RepositorioCaracteristicas instance = new RepositorioCaracteristicas();

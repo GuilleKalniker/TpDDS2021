@@ -1,11 +1,6 @@
 package domain.Servicios;
 
 
-import domain.Mascota.AtributosMascota.Ubicacion;
-import domain.Repositorio.RepositorioCentroDeRescate;
-import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
-import domain.Sistema.CentroDeRescate;
-
 import java.util.List;
 
 public class pruebaConsulta {

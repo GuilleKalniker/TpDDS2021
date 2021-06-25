@@ -3,6 +3,7 @@ package domain.Publicacion;
 import domain.Sistema.CentroDeRescate;
 
 public class  SolicitudPublicacion {
+
   private PublicacionMascotaPerdida publicacion;
 
   public SolicitudPublicacion(PublicacionMascotaPerdida publicacion) {

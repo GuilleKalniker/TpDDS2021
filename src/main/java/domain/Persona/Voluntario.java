@@ -5,8 +5,6 @@ import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.RepositorioUsuarios;
 import domain.Sistema.CentroDeRescate;
 
-import java.util.List;
-
 public class Voluntario{
 
   private String nombreDeUsuario;

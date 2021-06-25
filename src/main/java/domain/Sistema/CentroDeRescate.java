@@ -1,14 +1,13 @@
 package domain.Sistema;
 
-import domain.Exceptions.NoHayPublicacionAptaException;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
-import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
+import domain.Persona.Duenio;
+import domain.Pregunta.Pregunta;
 import domain.Publicacion.PublicacionAdopcion;
 import domain.Publicacion.PublicacionMascotaPerdida;
-import domain.Persona.Duenio;
 import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
@@ -30,12 +29,14 @@ public class CentroDeRescate {
   private List<PublicacionMascotaPerdida> publicacionesMascotaPerdidasSinID = new ArrayList<>();
 
   // TODO: Revisar
-  private List<String> preguntasDeAdopcion = new ArrayList<>();
-  private List<PublicacionAdopcion>  publicacionesAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
+  private List<Pregunta> preguntasDeAdopcion = new ArrayList<>();
+  private List<PublicacionAdopcion> publicacionesAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
   private List<Duenio> interesadosEnAdoptar = new ArrayList<>(); // Observers
 
   private Notificador notificador = new JavaMailApi(this.correoDelCentro, this.contrasenia_correo);
   private ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.getInstance();
+
+
 
   public CentroDeRescate(Ubicacion ubicacion) {
     this.ubicacion = ubicacion;
@@ -62,9 +63,13 @@ public class CentroDeRescate {
     return ubicacion;
   }
 
-  public List<String> getPreguntasDeAdopcion() {
+  public List<Pregunta> getPreguntasDeAdopcion() {
     return preguntasDeAdopcion;
   }
+
+
+
+
 
   /** FUNCIONES PARA MASCOTAS REGISTRADAS */
 
@@ -76,6 +81,10 @@ public class CentroDeRescate {
     return RepositorioMascotas.getInstance().existeMascota(ID);
   }
 
+
+
+
+
   /** FUNCIONES PARA MASCOTAS PERDIDAS*/
 
   public void notificar(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida){
@@ -86,6 +95,10 @@ public class CentroDeRescate {
     }
   }
 
+
+
+
+
   /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
 
   public Duenio buscarDuenioApartirIDMascota(String ID){ // TODO: Pensar si un try-catch tiene sentido
@@ -95,6 +108,10 @@ public class CentroDeRescate {
   public List<HogarTransitoAdaptado> solicitarListaHogaresDeTransito() {
     return servicioHogaresTransito.solicitarTodosLosHogares();
   }
+
+
+
+
 
   /** FUNCIONES QUE SE COMUNICAN CON EL COMMAND DE REPOSITORIO USUARIOS */
 
@@ -127,40 +144,13 @@ public class CentroDeRescate {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /** FUNCIONES PARA EL MANEJO DE ADOPCIONES */
 
-  public void agregarPregunta(String pregunta) {
+  public void agregarPregunta(Pregunta pregunta) {
     preguntasDeAdopcion.add(pregunta);
   }
 
-  public void quitarPregunta(String pregunta) {
+  public void quitarPregunta(Pregunta pregunta) {
     preguntasDeAdopcion.remove(pregunta);
   }
 

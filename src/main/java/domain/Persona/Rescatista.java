@@ -5,7 +5,6 @@ import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
-import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
 import domain.Servicios.HogarTransitoAdaptado;
 import domain.Sistema.CentroDeRescate;
 
