@@ -3,24 +3,21 @@ package domain.Servicios.Notificadores;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.Duenio;
+import domain.Servicios.Notificadores.Mail.Mensaje;
 
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class JavaMailApi implements Notificador{
 
-  private String correo_envio;
-  private String contraseña;
+  private String correo_envio = "centrodemascotasdds@gmail.com";
+  private String contraseña = "tpdds2021";
   private Properties props;
   private Session session;
 
-  public JavaMailApi(String correo_envio, String contraseña) {
-    this.correo_envio = correo_envio;
-    this.contraseña = contraseña;
+  public JavaMailApi() {
 
     this.props = new Properties();
     props.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -60,8 +57,6 @@ public class JavaMailApi implements Notificador{
     }
   }
 
-
-
   public MimeMessage armarMensajeRescatista(DatosPersonales datosRescatista, DatosPersonales datosDuenio){
     try {
       MimeMessage message = new MimeMessage(this.session);
@@ -77,11 +72,12 @@ public class JavaMailApi implements Notificador{
 
       return message;
     }
-
     catch (Exception e){
       throw new RuntimeException("No se pudo armar el mensaje.");
     }
   }
+
+
 
   public MimeMessage armarMensajeMascotaEncontrada(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida){
     try {
@@ -110,4 +106,40 @@ public class JavaMailApi implements Notificador{
     }
   }
 
+  /**VISION DE OBSERVER**/
+
+  public void notificar(Mensaje mensaje){
+    MimeMessage message = armarMail(mensaje);
+
+    try {
+      Transport t = session.getTransport("smtp");;
+      t.connect(this.correo_envio, this.contraseña);
+      t.sendMessage(message, message.getAllRecipients());
+      t.close();
+
+    } catch (NoSuchProviderException e) {
+      e.printStackTrace();
+      throw new RuntimeException("no se pudo armar al Transport");
+    } catch (MessagingException e) {
+      e.printStackTrace();
+      throw new RuntimeException("no se pudo armar al Transport");
+    }
+  }
+
+  public MimeMessage armarMail(Mensaje mensaje){
+    try {
+      MimeMessage message = new MimeMessage(this.session);
+      message.setFrom(new InternetAddress(this.correo_envio));
+
+      this.agregarDestinatarioAlMensaje(message, mensaje.getContacto().getEmail());
+      message.setSubject(mensaje.getAsunto());
+      message.setText(mensaje.getTexto());
+      return message;
+    }
+    catch (Exception e){
+      throw new RuntimeException("No se pudo armar el mensaje.");
+    }
+  }
 }
+
+

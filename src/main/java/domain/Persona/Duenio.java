@@ -1,13 +1,12 @@
 package domain.Persona;
 
 
-import domain.Exceptions.IDNoSeCorrespondeException;
-import domain.Exceptions.RespuestasIncompletasException;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Publicacion.PublicacionAdopcion;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
+import domain.Servicios.Notificadores.Mail.Mensaje;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Sistema.CentroDeRescate;
 
@@ -73,17 +72,24 @@ public class Duenio{
     //TODO Comportamiento no definido, se hace "notificacion".
   }
 
-  public List<Notificador> getNotificadores() {
-    return notificadores;
+  /**vision de observers sobre el duenio**/
+
+  public void notificarContactos(String asunto, String texto){
+    notificadores.forEach(notificador ->{
+      this.getDatosPersonales().getContactos().forEach(contacto -> {
+        Mensaje mensaje = new Mensaje(contacto, asunto, texto);
+        notificador.notificar(mensaje);
+      });
+    });
   }
 
-  public void setNotificadores(List<Notificador> notificadores) {
-    this.notificadores = notificadores;
+  public void notificarme(String asunto, String texto){
+    notificadores.forEach(notificador ->{
+      Mensaje mensaje = new Mensaje(this.datosPersonales.getContactos().get(0), asunto, texto );
+      notificador.notificar(mensaje);
+    });
   }
 
-  public void serNotificado() {
-    notificadores.forEach(notificador -> notificador(this, "holi"));
-  }
 
   /*
   public void darEnAdopcionA(String ID) {

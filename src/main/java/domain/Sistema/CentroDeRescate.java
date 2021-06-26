@@ -9,9 +9,7 @@ import domain.Pregunta.Pregunta;
 import domain.Publicacion.PublicacionAdopcion;
 import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Publicacion.SolicitudPublicacion;
-import domain.Repositorio.RepositorioCentroDeRescate;
-import domain.Repositorio.RepositorioMascotas;
-import domain.Repositorio.RepositorioUsuarios;
+import domain.Repositorio.*;
 import domain.Servicios.HogarTransitoAdaptado;
 import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
@@ -22,8 +20,6 @@ import java.util.List;
 
 public class CentroDeRescate {
 
-  private String correoDelCentro = "centrodemascotasdds@gmail.com";
-  private String contrasenia_correo = "tpdds2021";
   private Ubicacion ubicacion;
   private List<SolicitudPublicacion> solicitudesPublicacion = new ArrayList<>();
   private List<PublicacionMascotaPerdida> publicacionesMascotaPerdidasSinID = new ArrayList<>();
@@ -33,7 +29,7 @@ public class CentroDeRescate {
   private List<PublicacionAdopcion> publicacionesAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
   private List<Duenio> interesadosEnAdoptar = new ArrayList<>(); // Observers
 
-  private Notificador notificador = new JavaMailApi(this.correoDelCentro, this.contrasenia_correo);
+  private Notificador notificador = new JavaMailApi();
   private ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.getInstance();
 
 
@@ -89,7 +85,7 @@ public class CentroDeRescate {
 
   public void notificar(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida){
     try{
-    notificador.notificarDuenio(duenio, formularioMascotaPerdida);
+      notificador.notificarDuenio(duenio, formularioMascotaPerdida);
     } catch (RuntimeException e) {
       e.printStackTrace();
     }
