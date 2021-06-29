@@ -2,8 +2,6 @@ package domain.Servicios.Notificadores.Mail;
 
 import domain.Persona.AtributosPersona.Contacto;
 
-import java.util.List;
-
 public class Mensaje {
 
   private Contacto contacto;

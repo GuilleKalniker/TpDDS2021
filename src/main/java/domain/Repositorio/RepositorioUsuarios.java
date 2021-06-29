@@ -91,6 +91,13 @@ public class RepositorioUsuarios {
   }
 
   public Duenio getDuenioPorID(String ID) {
-    return getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID)).findFirst().orElseThrow(() -> new IDNoSeCorrespondeException());
+    return getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID))
+        .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException("No se encontro el duenio a partir del ID de la mascota"));
+  }
+
+  public Duenio getDuenioPorUsuario(String usuario) {
+    return getDueniosRegistrados().stream()
+        .filter(duenio -> duenio.getNombreUsuario() == usuario)
+        .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException("No se encontro el duenio a partir del usuario ingresado"));
   }
 }

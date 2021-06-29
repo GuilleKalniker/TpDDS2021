@@ -1,33 +1,50 @@
 package domain.Pregunta;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Pregunta {
 
   private String pregunta;
   private Boolean esObligatoria;
-  private String respuesta = null;
+  private List<String> posiblesRespuestas = new ArrayList<>();
+  private String respuesta;
 
-  public Pregunta(String pregunta, Boolean esObligatoria) {
+  public Pregunta(String pregunta, List<String> posiblesRespuestas, Boolean esObligatoria) {
+
+    if(posiblesRespuestas.size() <= 1)
+      throw new RuntimeException("La cantidad minima de respuestas debe ser 2");
+
     this.pregunta = pregunta;
     this.esObligatoria = esObligatoria;
+    this.posiblesRespuestas = posiblesRespuestas;
   }
 
   public String getPregunta() {
     return pregunta;
   }
 
-  public Boolean getEsObligatoria() {
+  public String getRespuesta() {
+    return respuesta;
+  }
+
+  public void setRespuestas(String respuestas) {
+    if(respuestas.isEmpty())
+      throw new RuntimeException("La cantidad minima de respuestas debe ser 1");
+    this.respuesta = respuestas;
+  }
+
+  public Boolean esObligatoria() {
     return esObligatoria;
   }
 
-  public void setRespuesta(String respuesta) {
-    this.respuesta = respuesta;
+  public Boolean estaRespondida() {
+    return respuesta != null;
   }
 
-  public void estaRespondida() {
-    if (this.esObligatoria && Objects.isNull(respuesta))
-      throw new RuntimeException("no se respondio");
-      //TODO: willy has algo decente con esto
+  public Boolean esValida() {
+    return (this.esObligatoria() && this.estaRespondida()) || !this.esObligatoria;
+    //TODO darle expresividad ;)
   }
+
 }

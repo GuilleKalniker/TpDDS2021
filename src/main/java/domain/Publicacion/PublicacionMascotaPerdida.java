@@ -3,8 +3,8 @@ package domain.Publicacion;
 import domain.Mascota.FormularioMascotaPerdida;
 
 public class PublicacionMascotaPerdida {
- private FormularioMascotaPerdida formularioMascotaPerdida;
 
+ private FormularioMascotaPerdida formularioMascotaPerdida;
 
  public PublicacionMascotaPerdida(FormularioMascotaPerdida formularioMascotaPerdida) {
     filtrarInformacionSensible(formularioMascotaPerdida);

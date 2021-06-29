@@ -52,7 +52,7 @@ public class RepositorioMascotas {
     } else {
         return this.getMascotasRegistradas()
           .stream().filter(mascota -> mascota.coincideID(ID))
-          .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException());
+          .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException("No se encontro la mascota por el ID"));
     }
   }
 
@@ -70,7 +70,7 @@ public class RepositorioMascotas {
   public FormularioMascotaPerdida buscarDatosMascotaPerdida(String ID) {
     return this.getDatosMascotasPerdidas()
         .stream().filter(datos -> datos.getIDMascotaPerdida() == ID)
-        .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException());
+        .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException("No se encontro la mascota perdida por ID"));
   }
 
   public List<FormularioMascotaPerdida> datosMascotasPerdidasEnUltimosDiezDias(){

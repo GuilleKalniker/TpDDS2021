@@ -52,7 +52,8 @@ public class Duenio{
   public void registrarse() {
     RepositorioUsuarios.getInstance().registrarDuenio(this);
   }
-  /*
+
+  /**
   * registrarMascota(1)
   * Agrega a la mascota recien registrada a la lista de mascotas del duenio y del centro de rescate.
   */
@@ -73,7 +74,6 @@ public class Duenio{
   }
 
   /**vision de observers sobre el duenio**/
-
   public void notificarContactos(String asunto, String texto){
     notificadores.forEach(notificador ->{
       this.getDatosPersonales().getContactos().forEach(contacto -> {
@@ -97,7 +97,7 @@ public class Duenio{
       centroDeRescate.getPreguntasDeAdopcion(); // TODO: Inyectar centro de rescate, ver criterio
       // TODO: Contestar preguntas
         if (centroDeRescate.validarPreguntas(respuestas)) {
-          centroDeRescate(generarPublicacionAdopcion(RepositorioMascotas.getInstance().buscarMascotaPorID(ID)));
+          centroDeRescate.generarPublicacionAdopcion(RepositorioMascotas.getInstance().buscarMascotaPorID(ID));
         } else {
           throw new RespuestasIncompletasException();
         }
@@ -124,5 +124,6 @@ public class Duenio{
 
   public void revisarSugerencias() {
     // TODO: Implementar
-  }*/
+  }
+  */
 }

@@ -17,6 +17,7 @@ import domain.Servicios.ServicioHogaresTransito;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CentroDeRescate {
 
@@ -27,6 +28,7 @@ public class CentroDeRescate {
   // TODO: Revisar
   private List<Pregunta> preguntasDeAdopcion = new ArrayList<>();
   private List<PublicacionAdopcion> publicacionesAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
+  private List<PublicacionAdopcion> publicacionesIntencionAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
   private List<Duenio> interesadosEnAdoptar = new ArrayList<>(); // Observers
 
   private Notificador notificador = new JavaMailApi();
@@ -80,21 +82,6 @@ public class CentroDeRescate {
 
 
 
-
-  /** FUNCIONES PARA MASCOTAS PERDIDAS*/
-
-  public void notificar(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida){
-    try{
-      notificador.notificarDuenio(duenio, formularioMascotaPerdida);
-    } catch (RuntimeException e) {
-      e.printStackTrace();
-    }
-  }
-
-
-
-
-
   /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
 
   public Duenio buscarDuenioApartirIDMascota(String ID){ // TODO: Pensar si un try-catch tiene sentido
@@ -104,7 +91,6 @@ public class CentroDeRescate {
   public List<HogarTransitoAdaptado> solicitarListaHogaresDeTransito() {
     return servicioHogaresTransito.solicitarTodosLosHogares();
   }
-
 
 
 
@@ -136,10 +122,6 @@ public class CentroDeRescate {
 
 
 
-
-
-
-
   /** FUNCIONES PARA EL MANEJO DE ADOPCIONES */
 
   public void agregarPregunta(Pregunta pregunta) {
@@ -162,14 +144,26 @@ public class CentroDeRescate {
     // TODO: Implementar
   }*/
 
-  public void generarPublicacionAdopcion() {
-    publicacionesAdopcion.add(new PublicacionAdopcion()); // TODO: Implementar constructor
+  public void generarPublicacionAdopcion(List<Pregunta> preguntasRespondidas, String id) {
+    publicacionesAdopcion.add(new PublicacionAdopcion(preguntasRespondidas, id));
   }
+
+  public void generarPublicacionIntencionAdopcion(List<Pregunta> preguntasRespondidas, String Usuario) {
+    publicacionesIntencionAdopcion.add(new PublicacionAdopcion(preguntasRespondidas, Usuario));
+    Duenio duenio =  RepositorioUsuarios.getInstance().getDuenioPorID(Usuario);
+    //TODO: intentar hacer funciones que generen el asunto y el texto
+    duenio.notificarme("Link de baja de tu publicacion", "<Inserte link aki>");
+  }
+/*
+  public void generarPublicacionAdopcion(List<Pregunta> preguntasRespondidas) {
+    new solicitudPublicacion(new PublicacionAdopcion(preguntasRespondidas));
+  }
+*/
+
 /*
   public void enviarSugerenciaDeAdopcionSemanal() {
     interesadosEnAdoptar.forEach(duenio -> duenio.recibirSugerenciaAdopcion(obtenerSugerenciaAdopcionPara(duenio)));
   }
-
   public PublicacionAdopcion obtenerSugerenciaAdopcionPara(Duenio duenio) {
     publicacionesAdopcion.
         stream().
@@ -177,4 +171,27 @@ public class CentroDeRescate {
         findFirst().
         orElseThrow(() -> new NoHayPublicacionAptaException());
   }*/
+
+  //TODO ingnorar esto ;)
+
+  // publicacionesMascotasAdopcion { id, (preguntas, repuestas) }
+  // publicacionPersonasIntencionAdoptar { id, (preguntas, repuestas) } -> cada persona interesada
+  //enviar sugerencias de adopcion a personas que quieres adoptar
+
+  public void notificacionSemanal(){
+
+    this.publicacionesIntencionAdopcion.forEach(publicacion -> {
+      List<String> filtros = publicacion.obtenerRespuestas();
+      List<PublicacionAdopcion> publicacionAdopciones = this.filtrarPublicaciones(filtros);
+      //String mensaje = armarMaensaje(publicacionAdopciones) //TODO: hacerlo :c
+      RepositorioUsuarios.getInstance().getDuenioPorUsuario(publicacion.getId()).notificarme("Recomendacion semanal de adopcion", "mensaje");
+    });
+  }
+
+  public List<PublicacionAdopcion> filtrarPublicaciones(List<String> filtros) {
+    return this.publicacionesAdopcion.stream()
+        .filter(publicacionAdopcion -> publicacionAdopcion.matcheaConTodosFiltros(filtros))
+        .collect(Collectors.toList());
+  }
+  
 }
