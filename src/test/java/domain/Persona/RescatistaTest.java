@@ -73,16 +73,6 @@ public class RescatistaTest {
   }
 
   @Test
-  public void seNotificaMascotaEncontradaConIDCorrectamente() {
-
-    doNothing().when(notificadorMock).notificarDuenio(duenioDePruebaUno, formulario);
-    //TODO: RECODEARLO adaptado a los observers de duenio
-    //centroDeRescate.notificar(duenioDePruebaUno, formulario);
-
-    //verify(notificadorMock).notificarDuenio(duenioDePruebaUno, formulario);
-  }
-
-  @Test
   public void alFiltrarTodosLosHogaresSoloDevuelveElAdecuado() {
     List<HogarTransitoAdaptado> hogares = new ArrayList<>();
     hogares.add(hogarAdecuado);

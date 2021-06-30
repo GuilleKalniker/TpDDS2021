@@ -9,11 +9,11 @@ import java.util.List;
 public class RepositorioPreguntasObligatorias {
 
   private List<Pregunta> preguntas;
+  private static final RepositorioPreguntasObligatorias INSTANCE = new RepositorioPreguntasObligatorias();
 
   public RepositorioPreguntasObligatorias() {
     this.preguntas = new ArrayList<>();
   }
-  private static final RepositorioPreguntasObligatorias INSTANCE = new RepositorioPreguntasObligatorias();
 
   public static RepositorioPreguntasObligatorias getInstance() {
     return INSTANCE;

@@ -1,8 +1,6 @@
 package domain.Servicios.Notificadores;
 
-import domain.Mascota.FormularioMascotaPerdida;
 import domain.Persona.AtributosPersona.DatosPersonales;
-import domain.Persona.Duenio;
 import domain.Servicios.Notificadores.Mail.Mensaje;
 
 import javax.mail.*;
@@ -27,20 +25,6 @@ public class JavaMailApi implements Notificador{
     props.setProperty("mail.smtp.auth", "true");
 
     this.session = Session.getDefaultInstance(this.props);
-  }
-
-  public void notificarDuenio(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida) {
-    MimeMessage message = armarMensajeMascotaEncontrada(duenio, formularioMascotaPerdida);
-
-    try {
-      Transport t = session.getTransport("smtp");;
-      t.connect(this.correo_envio, this.contraseña);
-      t.sendMessage(message, message.getAllRecipients());
-      t.close();
-    }
-    catch (Exception e) {
-      throw new RuntimeException("no se pudo armar al Transport");
-    }
   }
 
   public void notificarRescatista(DatosPersonales datosRescatista, DatosPersonales datosDuenio) {
@@ -72,27 +56,6 @@ public class JavaMailApi implements Notificador{
 
       return message;
     }
-    catch (Exception e){
-      throw new RuntimeException("No se pudo armar el mensaje.");
-    }
-  }
-
-
-
-  public MimeMessage armarMensajeMascotaEncontrada(Duenio duenio, FormularioMascotaPerdida formularioMascotaPerdida){
-    try {
-      MimeMessage message = new MimeMessage(this.session);
-      message.setFrom(new InternetAddress(this.correo_envio));
-
-      duenio.getDatosPersonales().getContactos().stream()
-          .forEach(contacto -> this.agregarDestinatarioAlMensaje(message, contacto.getEmail()));
-
-      message.setSubject("Hola " + duenio.getDatosPersonales().getNombre() + duenio.getDatosPersonales().getApellido()+ " encontraron a tu mascota perdida :D!!!");
-      message.setText( "Hola, nos comunicamos para informarte que tu mascota ha sido encontrada.");
-
-      return message;
-    }
-
     catch (Exception e){
       throw new RuntimeException("No se pudo armar el mensaje.");
     }

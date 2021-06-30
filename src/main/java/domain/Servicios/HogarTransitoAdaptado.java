@@ -15,7 +15,7 @@ public class HogarTransitoAdaptado {
   private String telefono;
   private List<TipoMascota> tiposMascotaAdmitidos;
   private Integer lugaresDisponibles;
-  private boolean tienePatio;
+  private Boolean tienePatio;
   private List<Caracteristica> caracteristicasAdmitidas;
 
   public HogarTransitoAdaptado(String id, String nombre, String direccion, Ubicacion ubicacion, String telefono, List<TipoMascota> tiposMascotaAdmitidos, Integer lugaresDisponibles, boolean tienePatio, List<Caracteristica> caracteristicasAdmitidas) {

@@ -57,8 +57,6 @@ public class ServicioHogaresTransito {
     return listaHogaresAdaptados;
   }
 
-  //funciona  probarlo aqui domain.Servicios.pruebaConsulta
-  //cada consulta solo trae un archivo con 10 hogares de 40, habria que ver la manera de verificar de habernos traido todos
   public ListadoHogaresTransito listaHogaresTransito(Integer numeroDePagina) {
     try {
       HogaresTransitoService refugiosService = this.retrofit.create(HogaresTransitoService.class);
@@ -80,26 +78,21 @@ public class ServicioHogaresTransito {
       HogaresTransitoService refugiosService = this.retrofit.create(HogaresTransitoService.class);
       Call<UsuariosResponse> requestToken = refugiosService.getToken(new Request("Saitteld1987@fleckens.hu"));
       Response<UsuariosResponse> responseTokenUsuarios = requestToken.execute();
-      return responseTokenUsuarios.body().getToken(); //aca podria devolver directamente el objeto UsuarioResponse y mapearlo con el Gson para convertirlo en un archivo
+      return responseTokenUsuarios.body().getToken();
     }
-    catch (Exception e) { // TODO: Ver que tipo de errores tira, yo no pude encontrar
+    catch (Exception e) {
       throw new RuntimeException("No se pudo realizar la consulta");
     }
   }
 
-  // tal vez crear funciones para hacer una consulta obtener un token y crear un .JSON
-  // tal vez una funcion para actualizar el .JSON
-  // no se que mas, tengpo sueño :C
   private String getToken(String path) {
     try {
       File bearerTokenFile = new File(path);
       Gson gson = new Gson();
       JsonReader reader = new JsonReader(new FileReader(bearerTokenFile));
       UsuariosResponse token = gson.fromJson(reader, UsuariosResponse.class);
-      //TODO tal vez antes de devolverlo crear un archivo .JSON y guardar el token ahi
       return token.getToken();
     } catch (Exception e) {
-      //realizamos una consulta para obtener un id?:P
       throw new RuntimeException("No se encontro el archivo");
     }
   }

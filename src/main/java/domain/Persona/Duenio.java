@@ -76,6 +76,14 @@ public class Duenio{
   }
 
   /**vision de observers sobre el duenio**/
+  public void agregarNotificador(Notificador notificador) {
+    notificadores.add(notificador);
+  }
+
+  public void quitarNotificador(Notificador notificador) {
+    notificadores.remove(notificador);
+  }
+
   public void notificarContactos(String asunto, String texto){
     notificadores.forEach(notificador ->{
       this.getDatosPersonales().getContactos().forEach(contacto -> {
@@ -85,15 +93,7 @@ public class Duenio{
     });
   }
 
-  public void agregarNotificador(Notificador notificador) {
-    notificadores.add(notificador);
-  }
-
-  public void quitarNotificador(Notificador notificador) {
-    notificadores.remove(notificador);
-  }
-
-  public void notificarme(String asunto, String texto){
+  public void notificar(String asunto, String texto){
     notificadores.forEach(notificador ->{
       Mensaje mensaje = new Mensaje(this.datosPersonales.getContactos().get(0), asunto, texto );
       notificador.notificar(mensaje);

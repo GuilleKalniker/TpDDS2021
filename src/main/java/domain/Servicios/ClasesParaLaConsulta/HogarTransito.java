@@ -27,7 +27,7 @@ public class HogarTransito {
   public static class Ubicacion {
     public String direccion;
     public Double lat;
-    public Double longitud;  // es long pero es una palabra reservada :D
+    public Double longitud;
 
     public Ubicacion(String direccion, Double lat, Double longitud) {
       this.direccion = direccion;

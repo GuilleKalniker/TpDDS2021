@@ -21,7 +21,7 @@ public class FormularioMascotaPerdida {
     this.fotosEncuentro = fotosEncuentro;
     this.lugarEncuentro = lugarEncuentro;
     this.fechaEncuentro = fechaEncuentro;
-    this.ID = ID; //TODO recibimos el qr por el contructor y lo leemos para obtener el ID
+    this.ID = ID;
   }
 
   public DatosPersonales getDatosRescastista() {

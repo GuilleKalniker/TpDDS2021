@@ -9,7 +9,7 @@ public class Pregunta {
 
   private String pregunta;
   private Boolean esObligatoria;
-  private List<String> posiblesRespuestas = new ArrayList<>();
+  private List<String> posiblesRespuestas;
   private String respuesta;
 
   public Pregunta(String pregunta, List<String> posiblesRespuestas, Boolean esObligatoria) {

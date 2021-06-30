@@ -73,7 +73,12 @@
           <scope>test</scope>
       </dependency>
 
-
+      <dependency>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.3.0</version>
+        <type>maven-plugin</type>
+      </dependency>
   </dependencies>
 
   <build>
@@ -157,6 +162,30 @@
           <target>8</target>
         </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>build-b</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <archive>
+                <manifest>
+                  <mainClass>domain.Sistema.ActivadorSemanal</mainClass>
+                </manifest>
+              </archive>
+              <finalName>notificadorSemanal</finalName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 </project>
