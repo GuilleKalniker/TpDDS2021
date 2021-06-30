@@ -14,7 +14,7 @@ public class Pregunta {
 
   public Pregunta(String pregunta, List<String> posiblesRespuestas, Boolean esObligatoria) {
 
-    if(posiblesRespuestas.size() <= 1)
+    if (posiblesRespuestas.size() <= 1)
       throw new RespuestaInvalidaException("La cantidad minima de respuestas debe ser 2");
 
     this.pregunta = pregunta;
@@ -31,9 +31,9 @@ public class Pregunta {
   }
 
   public void setRespuesta(String respuesta) {
-    if(respuesta.isEmpty())
+    if (respuesta.isEmpty())
       throw new RespuestaVaciaException("La cantidad minima de respuestas debe ser 1");
-    if (!posiblesRespuestas.contains(respuesta))
+    if (!posiblesRespuestas.contains(respuesta)) // Deberia ser asincronico (?)
       throw new RespuestaInvalidaException("La respuesta es inválida.");
     this.respuesta = respuesta;
   }

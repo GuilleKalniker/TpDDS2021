@@ -1,9 +1,15 @@
 package domain.Persona;
 
 
+import domain.Exceptions.IDNoSeCorrespondeException;
+import domain.Exceptions.RespuestasIncompletasException;
+import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
+import domain.Pregunta.Pregunta;
 import domain.Publicacion.PublicacionAdopcion;
+import domain.Publicacion.PublicacionAdoptante;
+import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
 import domain.Servicios.Notificadores.Mail.Mensaje;
@@ -23,14 +29,13 @@ public class Duenio{
   private List<Notificador> notificadores = new ArrayList<>();
 
   // TODO: Revisar
-  private List<PublicacionAdopcion> sugerenciasAdopcion = new ArrayList<>();
-  //private Preferencias preferencias;
-  //private Comodidades comodidades;
+  private CentroDeRescate centroDeRescate;
 
-  public Duenio(String usuario, String contrasenia,DatosPersonales datosPersonales) {
+  public Duenio(String usuario, String contrasenia,DatosPersonales datosPersonales, CentroDeRescate centroDeRescate) {
     this.nombreDeUsuario = usuario;
     this.contrasenia = contrasenia;
     this.datosPersonales = datosPersonales;
+    this.centroDeRescate = centroDeRescate; // Revisar si tiene sentido ubicacion para Duenio
   }
 
   public String getNombreUsuario() {
@@ -46,7 +51,7 @@ public class Duenio{
   }
 
   public List<String> getMascotasID() {
-    return this.mascotasID;
+    return mascotasID;
   }
 
   public void registrarse() {
@@ -90,40 +95,29 @@ public class Duenio{
     });
   }
 
-
-  /*
   public void darEnAdopcionA(String ID) {
     if (mascotasID.contains(ID)) {
-      centroDeRescate.getPreguntasDeAdopcion(); // TODO: Inyectar centro de rescate, ver criterio
-      // TODO: Contestar preguntas
-        if (centroDeRescate.validarPreguntas(respuestas)) {
-          centroDeRescate.generarPublicacionAdopcion(RepositorioMascotas.getInstance().buscarMascotaPorID(ID));
-        } else {
+
+      List<Pregunta> preguntasCentro = centroDeRescate.getPreguntasDeAdopcion();
+      preguntasCentro.forEach(pregunta -> {contestarPregunta(pregunta);});
+
+      if (preguntasCentro.stream().allMatch(pregunta -> pregunta.esValida())) {
+          centroDeRescate.generarPublicacionAdopcion(preguntasCentro, ID);
+      } else {
           throw new RespuestasIncompletasException();
-        }
+      }
     } else {
-      throw new IDNoSeCorrespondeException();
+      throw new IDNoSeCorrespondeException("El ID de la mascota enviado no pertenece a una mascota propia.");
     }
   }
 
+  public void contestarPregunta(Pregunta pregunta) {
+    // TODO: Conseguir la respuesta (GUI)
+    // pregunta.setRespuesta(respuesta);
+  }
+
   public void mostrarIntencionDeAdopcion() {
-    // En vez de un duenio podria hacerse una clase nueva (publicacion o adoptador) pero ver abajo
-    centroDeRescate.nuevoInteresadoEnAdoptar(this);
+    PublicacionAdoptante publicacionAdoptante = new PublicacionAdoptante(this, centroDeRescate);
+    centroDeRescate.nuevoInteresadoEnAdoptar(publicacionAdoptante);
   }
-
-  // Funcionalidad de querer adoptar podria ser otra clase, por ahora intente y es muy middleman
-  // Si comodidades y preferencias lo maneja duenio y centro, no tiene sentido, si el manejos se hace
-  // propio del adoptador puede ser, pero pareceria ser redundante
-  public boolean mascotaSeriaApta(PublicacionAdopcion publicacionAdopcion) {
-    return preferencias.cumple(publicacionAdopcion) && comodidades.cumple(publicacionAdopcion);
-  }
-
-  public void recibirSugerenciaAdopcion(PublicacionAdopcion publicacionAdopcion) {
-    sugerenciasAdopcion.add(publicacionAdopcion);
-  }
-
-  public void revisarSugerencias() {
-    // TODO: Implementar
-  }
-  */
 }

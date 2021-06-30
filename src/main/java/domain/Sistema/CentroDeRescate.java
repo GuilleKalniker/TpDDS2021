@@ -7,6 +7,7 @@ import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.Duenio;
 import domain.Pregunta.Pregunta;
 import domain.Publicacion.PublicacionAdopcion;
+import domain.Publicacion.PublicacionAdoptante;
 import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.*;
@@ -14,7 +15,7 @@ import domain.Servicios.HogarTransitoAdaptado;
 import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
-
+import domain.Exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,8 +29,8 @@ public class CentroDeRescate {
   // TODO: Revisar
   private List<Pregunta> preguntasDeAdopcion = new ArrayList<>();
   private List<PublicacionAdopcion> publicacionesAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
-  private List<PublicacionAdopcion> publicacionesIntencionAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
-  private List<Duenio> interesadosEnAdoptar = new ArrayList<>(); // Observers
+  //private List<PublicacionAdopcion> publicacionesIntencionAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
+  private List<PublicacionAdoptante> interesadosEnAdoptar = new ArrayList<>(); // Observers
 
   private Notificador notificador = new JavaMailApi();
   private ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.getInstance();
@@ -64,7 +65,9 @@ public class CentroDeRescate {
     return preguntasDeAdopcion;
   }
 
-
+  public List<PublicacionAdopcion> getPublicacionesAdopcion() {
+    return publicacionesAdopcion;
+  }
 
   /** FUNCIONES PARA MASCOTAS REGISTRADAS */
 
@@ -116,12 +119,14 @@ public class CentroDeRescate {
   }
 
   public void publicacionAdopcionMatcheada(DatosPersonales datosAdoptante, PublicacionAdopcion publicacionAdopcion) {
-    Duenio duenio = RepositorioUsuarios.getInstance().getDuenioPorUsuario(publicacionAdopcion.getId());
+    Duenio duenio = buscarDuenioApartirIDMascota(publicacionAdopcion.getId());
     duenio.notificarme("A un adoptante le interesó su publicacion de adopción de su mascota...",
-        "El adoptante se llama" + datosAdoptante.getNombre() + datosAdoptante.getApellido());
-    //TODO: Acá deberíamos eliminar la publicación directo o tiene que haber una confirmación por parte del duenio?
+        "El adoptante se llama" + datosAdoptante.getNombre() + datosAdoptante.getApellido()); // Deberia pasarle contacto
   }
 
+  public void seConcretoAdopcion(PublicacionAdopcion publicacionAdopcion) {
+    publicacionesAdopcion.remove(publicacionAdopcion);
+  }
 
   /** FUNCIONES PARA EL MANEJO DE ADOPCIONES */
 
@@ -133,37 +138,43 @@ public class CentroDeRescate {
     preguntasDeAdopcion.remove(pregunta);
   }
 
-  public void nuevoInteresadoEnAdoptar(Duenio duenio) {
-    interesadosEnAdoptar.add(duenio);
+  public void nuevoInteresadoEnAdoptar(PublicacionAdoptante adoptante) {
+    interesadosEnAdoptar.add(adoptante);
   }
 
-  public void quitarInteresadoEnAdoptar(Duenio duenio) {
-    interesadosEnAdoptar.remove(duenio);
+  public void quitarInteresadoEnAdoptar(PublicacionAdoptante adoptante) {
+    interesadosEnAdoptar.remove(adoptante);
   }
-/*
-  public boolean validarPreguntas(respuestas) {
-    // TODO: Implementar
-  }*/
 
   public void generarPublicacionAdopcion(List<Pregunta> preguntasRespondidas, String id) {
     publicacionesAdopcion.add(new PublicacionAdopcion(preguntasRespondidas, id));
   }
 
-  public void generarPublicacionIntencionAdopcion(List<Pregunta> preguntasRespondidas, String Usuario) {
-    publicacionesIntencionAdopcion.add(new PublicacionAdopcion(preguntasRespondidas, Usuario));
-    Duenio duenio =  RepositorioUsuarios.getInstance().getDuenioPorID(Usuario);
+  /*
+  public void generarPublicacionIntencionAdopcion(List<Pregunta> preguntasRespondidas, String usuario) {
+    publicacionesIntencionAdopcion.add(new PublicacionAdopcion(preguntasRespondidas, usuario));
+    Duenio duenio =  RepositorioUsuarios.getInstance().getDuenioPorID(usuario);
     //TODO: intentar hacer funciones que generen el asunto y el texto
     duenio.notificarme("Link de baja de tu publicacion", "<Inserte link aki>");
   }
 
-  public void notificacionSemanal(){
 
+  public void notificacionSemanal(){
     this.publicacionesIntencionAdopcion.forEach(publicacion -> {
       List<String> filtros = publicacion.obtenerRespuestas();
       List<PublicacionAdopcion> publicacionAdopciones = this.filtrarPublicaciones(filtros);
-      //String mensaje = armarMaensaje(publicacionAdopciones) //TODO: hacerlo :c
-      RepositorioUsuarios.getInstance().getDuenioPorUsuario(publicacion.getId()).notificarme("Recomendacion semanal de adopcion", "mensaje");
+      //String mensaje = armarMensaje(publicacionAdopciones) //TODO: hacerlo :c
+      RepositorioUsuarios.getInstance().getDuenioPorUsuario(publicacion.getId()).notificarme("Recomendacion semanal de adopcion", "Llego una mascota compatible con vos!");
     });
+  }*/
+
+  public void notificacionSemanal() {
+    interesadosEnAdoptar.forEach(interesado -> {
+      interesado.recibirSugerenciaAdopcion(
+          filtrarPublicaciones(interesado.getPreferencias()).
+          stream().
+          findFirst().
+          orElseThrow(() -> new NoHayPublicacionAptaException()));});
   }
 
   public List<PublicacionAdopcion> filtrarPublicaciones(List<String> filtros) {
@@ -171,5 +182,4 @@ public class CentroDeRescate {
         .filter(publicacionAdopcion -> publicacionAdopcion.matcheaConTodosFiltros(filtros))
         .collect(Collectors.toList());
   }
-  
 }
