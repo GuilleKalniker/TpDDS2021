@@ -1,6 +1,7 @@
 package domain.Persona;
 
 import domain.Exceptions.ContraseniaInvalidaException;
+import domain.Exceptions.NoHayPublicacionAptaException;
 import domain.Mascota.AtributosMascota.*;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.Contacto;
@@ -12,13 +13,17 @@ import domain.Repositorio.RepositorioUsuarios;
 import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
+import domain.Sistema.ActivadorSemanal;
 import domain.Sistema.CentroDeRescate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -70,6 +75,21 @@ public class DuenioTest {
     Duenio duenio = new Duenio("moreeee", "12345",
         new DatosPersonales("morena", "Sisro", LocalDate.now(), TipoDocumento.DNI, 123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com")));
     Assertions.assertThrows(ContraseniaInvalidaException.class, () -> {duenio.registrarse();});
+  }
+
+  @Test
+  public void seGeneranLasPublicacionesDeAdopcion() {
+    registrarleMascotaADuenio(duenioDePruebaUno);
+    String id = duenioDePruebaUno.getMascotasID().get(0);
+    duenioDePruebaUno.darEnAdopcionA(id, centroDeRescateDePrueba);
+
+    assertEquals(1, centroDeRescateDePrueba.getPublicacionesAdopcion().size());
+  }
+
+  @Test
+  public void noRecibeNingunaNotificacionAlNoEspecificarPreferencias() {
+    duenioDePruebaUno.mostrarIntencionDeAdopcion(centroDeRescateDePrueba);
+    assertThrows(NoHayPublicacionAptaException.class, () -> {centroDeRescateDePrueba.notificacionSemanal();});
   }
 
   /** FUNCIONES **/

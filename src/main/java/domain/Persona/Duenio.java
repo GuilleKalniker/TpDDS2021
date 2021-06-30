@@ -28,14 +28,11 @@ public class Duenio{
 
   private List<Notificador> notificadores = new ArrayList<>();
 
-  // TODO: Revisar
-  private CentroDeRescate centroDeRescate;
 
-  public Duenio(String usuario, String contrasenia,DatosPersonales datosPersonales, CentroDeRescate centroDeRescate) {
+  public Duenio(String usuario, String contrasenia,DatosPersonales datosPersonales) {
     this.nombreDeUsuario = usuario;
     this.contrasenia = contrasenia;
     this.datosPersonales = datosPersonales;
-    this.centroDeRescate = centroDeRescate; // Revisar si tiene sentido ubicacion para Duenio
   }
 
   public String getNombreUsuario() {
@@ -88,6 +85,14 @@ public class Duenio{
     });
   }
 
+  public void agregarNotificador(Notificador notificador) {
+    notificadores.add(notificador);
+  }
+
+  public void quitarNotificador(Notificador notificador) {
+    notificadores.remove(notificador);
+  }
+
   public void notificarme(String asunto, String texto){
     notificadores.forEach(notificador ->{
       Mensaje mensaje = new Mensaje(this.datosPersonales.getContactos().get(0), asunto, texto );
@@ -95,7 +100,7 @@ public class Duenio{
     });
   }
 
-  public void darEnAdopcionA(String ID) {
+  public void darEnAdopcionA(String ID, CentroDeRescate centroDeRescate) {
     if (mascotasID.contains(ID)) {
 
       List<Pregunta> preguntasCentro = centroDeRescate.getPreguntasDeAdopcion();
@@ -116,7 +121,7 @@ public class Duenio{
     // pregunta.setRespuesta(respuesta);
   }
 
-  public void mostrarIntencionDeAdopcion() {
+  public void mostrarIntencionDeAdopcion(CentroDeRescate centroDeRescate) {
     PublicacionAdoptante publicacionAdoptante = new PublicacionAdoptante(this, centroDeRescate);
     centroDeRescate.nuevoInteresadoEnAdoptar(publicacionAdoptante);
   }

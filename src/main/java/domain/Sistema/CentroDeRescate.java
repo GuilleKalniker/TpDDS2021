@@ -32,7 +32,7 @@ public class CentroDeRescate {
   //private List<PublicacionAdopcion> publicacionesIntencionAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
   private List<PublicacionAdoptante> interesadosEnAdoptar = new ArrayList<>(); // Observers
 
-  private Notificador notificador = new JavaMailApi();
+  private Notificador notificador = new JavaMailApi(); //Creo que hay que quitarlo ya
   private ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.getInstance();
 
 

@@ -31,6 +31,7 @@ public class PublicacionAdoptante {
 
   public void recibirSugerenciaAdopcion(PublicacionAdopcion publicacionAdopcion) {
     sugerenciasAdopcion.add(publicacionAdopcion);
+    duenioAsociado.notificarme("Nueva sugerencia semanal", "Aca tenes una mascota que podrias estar interesado en adoptar.");
   }
 
   public void revisarSugerenciasRecibidas() {

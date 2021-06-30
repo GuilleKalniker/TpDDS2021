@@ -32,7 +32,7 @@ public class Pregunta {
 
   public void setRespuesta(String respuesta) {
     if (respuesta.isEmpty())
-      throw new RespuestaVaciaException("La cantidad minima de respuestas debe ser 1");
+      throw new RespuestaVaciaException("La respuesta está vacía.");
     if (!posiblesRespuestas.contains(respuesta)) // Deberia ser asincronico (?)
       throw new RespuestaInvalidaException("La respuesta es inválida.");
     this.respuesta = respuesta;
