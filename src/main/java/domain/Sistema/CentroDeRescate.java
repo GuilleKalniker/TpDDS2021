@@ -35,7 +35,6 @@ public class CentroDeRescate {
   private ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.getInstance();
 
 
-
   public CentroDeRescate(Ubicacion ubicacion) {
     this.ubicacion = ubicacion;
     RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(this);
@@ -67,8 +66,6 @@ public class CentroDeRescate {
 
 
 
-
-
   /** FUNCIONES PARA MASCOTAS REGISTRADAS */
 
   public MascotaRegistrada buscarMascota(String ID){
@@ -81,7 +78,6 @@ public class CentroDeRescate {
 
 
 
-
   /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
 
   public Duenio buscarDuenioApartirIDMascota(String ID){ // TODO: Pensar si un try-catch tiene sentido
@@ -91,7 +87,6 @@ public class CentroDeRescate {
   public List<HogarTransitoAdaptado> solicitarListaHogaresDeTransito() {
     return servicioHogaresTransito.solicitarTodosLosHogares();
   }
-
 
 
 
@@ -115,11 +110,17 @@ public class CentroDeRescate {
   }
 
   //Requerimiento 5:
-  public void publicacionMatcheada(DatosPersonales datosDuenio, PublicacionMascotaPerdida publicacionMascotaPerdida){
+  public void publicacionMascotaPerdidaMatcheada(DatosPersonales datosDuenio, PublicacionMascotaPerdida publicacionMascotaPerdida){
     DatosPersonales datosRescatista = publicacionMascotaPerdida.getFormularioMascotaPerdida().getDatosRescastista();
     notificador.notificarRescatista(datosRescatista, datosDuenio);
   }
 
+  public void publicacionAdopcionMatcheada(DatosPersonales datosAdoptante, PublicacionAdopcion publicacionAdopcion) {
+    Duenio duenio = RepositorioUsuarios.getInstance().getDuenioPorUsuario(publicacionAdopcion.getId());
+    duenio.notificarme("A un adoptante le interesó su publicacion de adopción de su mascota...",
+        "El adoptante se llama" + datosAdoptante.getNombre() + datosAdoptante.getApellido());
+    //TODO: Acá deberíamos eliminar la publicación directo o tiene que haber una confirmación por parte del duenio?
+  }
 
 
   /** FUNCIONES PARA EL MANEJO DE ADOPCIONES */
@@ -154,29 +155,6 @@ public class CentroDeRescate {
     //TODO: intentar hacer funciones que generen el asunto y el texto
     duenio.notificarme("Link de baja de tu publicacion", "<Inserte link aki>");
   }
-/*
-  public void generarPublicacionAdopcion(List<Pregunta> preguntasRespondidas) {
-    new solicitudPublicacion(new PublicacionAdopcion(preguntasRespondidas));
-  }
-*/
-
-/*
-  public void enviarSugerenciaDeAdopcionSemanal() {
-    interesadosEnAdoptar.forEach(duenio -> duenio.recibirSugerenciaAdopcion(obtenerSugerenciaAdopcionPara(duenio)));
-  }
-  public PublicacionAdopcion obtenerSugerenciaAdopcionPara(Duenio duenio) {
-    publicacionesAdopcion.
-        stream().
-        filter(publicacion -> duenio.mascotaSeriaApta(publicacion)).
-        findFirst().
-        orElseThrow(() -> new NoHayPublicacionAptaException());
-  }*/
-
-  //TODO ingnorar esto ;)
-
-  // publicacionesMascotasAdopcion { id, (preguntas, repuestas) }
-  // publicacionPersonasIntencionAdoptar { id, (preguntas, repuestas) } -> cada persona interesada
-  //enviar sugerencias de adopcion a personas que quieres adoptar
 
   public void notificacionSemanal(){
 

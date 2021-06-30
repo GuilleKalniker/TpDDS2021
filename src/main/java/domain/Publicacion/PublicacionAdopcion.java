@@ -1,5 +1,6 @@
 package domain.Publicacion;
 
+import domain.Exceptions.PublicacionAdopcionInvalidaException;
 import domain.Pregunta.Pregunta;
 import domain.Sistema.CentroDeRescate;
 
@@ -14,8 +15,8 @@ public class PublicacionAdopcion {
 
   public PublicacionAdopcion(List<Pregunta> preguntasRespondidas, String id) {
 
-    if(!preguntasRespondidas.stream().allMatch(pregunta -> pregunta.estaRespondida()))
-      throw new RuntimeException("Alguna pregunta obligatoria fue respondida");
+    if(!preguntasRespondidas.stream().allMatch(pregunta -> pregunta.esValida()))
+      throw new PublicacionAdopcionInvalidaException("Alguna pregunta obligatoria no fue respondida");
 
     this.preguntas = preguntasRespondidas;
     this.id = id;

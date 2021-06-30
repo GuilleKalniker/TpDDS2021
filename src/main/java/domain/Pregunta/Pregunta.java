@@ -1,5 +1,7 @@
 package domain.Pregunta;
 
+import domain.Exceptions.RespuestaInvalidaException;
+import domain.Exceptions.RespuestaVaciaException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class Pregunta {
   public Pregunta(String pregunta, List<String> posiblesRespuestas, Boolean esObligatoria) {
 
     if(posiblesRespuestas.size() <= 1)
-      throw new RuntimeException("La cantidad minima de respuestas debe ser 2");
+      throw new RespuestaInvalidaException("La cantidad minima de respuestas debe ser 2");
 
     this.pregunta = pregunta;
     this.esObligatoria = esObligatoria;
@@ -28,10 +30,12 @@ public class Pregunta {
     return respuesta;
   }
 
-  public void setRespuestas(String respuestas) {
-    if(respuestas.isEmpty())
-      throw new RuntimeException("La cantidad minima de respuestas debe ser 1");
-    this.respuesta = respuestas;
+  public void setRespuesta(String respuesta) {
+    if(respuesta.isEmpty())
+      throw new RespuestaVaciaException("La cantidad minima de respuestas debe ser 1");
+    if (!posiblesRespuestas.contains(respuesta))
+      throw new RespuestaInvalidaException("La respuesta es inválida.");
+    this.respuesta = respuesta;
   }
 
   public Boolean esObligatoria() {

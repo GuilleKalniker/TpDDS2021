@@ -1,5 +1,6 @@
 package domain.Repositorio;
 
+import domain.Exceptions.PreguntaNoObligatoriaException;
 import domain.Pregunta.Pregunta;
 
 import java.util.ArrayList;
@@ -9,14 +10,18 @@ public class RepositorioPreguntasObligatorias {
 
   private List<Pregunta> preguntas;
 
-  //TODO hacerlo singleton esta clase
   public RepositorioPreguntasObligatorias() {
     this.preguntas = new ArrayList<>();
+  }
+  private static final RepositorioPreguntasObligatorias INSTANCE = new RepositorioPreguntasObligatorias();
+
+  public static RepositorioPreguntasObligatorias getInstance() {
+    return INSTANCE;
   }
 
   private void agregarPregunta(Pregunta pregunta) {
     if(!pregunta.esObligatoria())
-      throw new RuntimeException("la pregunta no es obligatoria");
+      throw new PreguntaNoObligatoriaException("La pregunta no es obligatoria.");
     this.preguntas.add(pregunta);
   }
 
