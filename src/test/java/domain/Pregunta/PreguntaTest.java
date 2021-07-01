@@ -29,7 +29,7 @@ public class PreguntaTest {
   public void seLePuedeSettearUnaRespuestaAUnaPregunta() {
     Pregunta pregunta = new Pregunta("Gato o perro?", obtenerListaDePosiblesRespuestas(), true);
     pregunta.setRespuesta("Gato");
-    assertTrue(pregunta.getRespuesta() == "Gato");
+    assertEquals(pregunta.getRespuesta(), "Gato");
   }
 
   @Test
