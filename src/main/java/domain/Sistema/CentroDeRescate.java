@@ -59,8 +59,11 @@ public class CentroDeRescate {
     return ubicacion;
   }
 
+  //Devuelve las propias + las obligatorias
   public List<Pregunta> getPreguntasDeAdopcion() {
-
+    List<Pregunta> totalPreguntas = new ArrayList<>();
+    totalPreguntas.addAll(RepositorioPreguntasObligatorias.getInstance().getPreguntas());
+    totalPreguntas.addAll(preguntasDeAdopcion);
     return preguntasDeAdopcion;
   }
 

@@ -1,4 +1,8 @@
 @startuml
+object RepositorioPreguntasObligatorias {
+preguntas: List<String>
+}
+
 object RepositorioCaracteristicas {
 caracteristicasVigentes: Set<Caracteristica>
 
@@ -129,6 +133,26 @@ validarQueNoTieneID()
 }
 
 
+class PublicacionAdopcion {
+idMascota: String
+preguntasRespondidas: List<Pregunta>
+
+matcheaConRespuesta(respuesta)
+matcheaConTodosFiltros(filtros)
+obtenerRespuestas()
+}
+
+
+class PublicacionAdoptante {
+duenioAsociado: Duenio
+preferencias: List<String>
+sugerenciasAdopcion: List<PublicacionAdopcion>
+centroDeRescate: CentroDeRescate
+
+recibirSugerenciaAdopcion(publicacionAdopcion)
+}
+
+
 class SolicitudPublicacion {
 publicacion: PublicacionMascotaPerdida
 
@@ -190,6 +214,8 @@ buscarDuenioAPartirIDMascota(ID)
 aceptarSolicitud(solicitudPublicacion)
 eliminarSolicitud(solicitudPublicacion)
 generarSolicitud(solicitudPublicacion)
+notificacionSemanal()
+filtrarPublicaciones(filtros)
 }
 
 class HogarTransitoAdaptado {
@@ -209,6 +235,16 @@ admiteTamanio(caracteristicas)
 tieneLugarDisponible()
 aceptaCaracteristicasEspeciales(caracteristicasMascota)
 estaEnElRadio(ubicacion, radio)
+}
+
+class Pregunta {
+pregunta: String
+esObligatoria: Boolean
+posiblesRespuestas: List<String>
+respuesta: String
+
+estaRespondida()
+esValida()
 }
 
 
@@ -259,6 +295,9 @@ CentroDeRescate -->"*" SolicitudPublicacion
 CentroDeRescate -right->"*" PublicacionMascotaPerdida
 CentroDeRescate --> Notificador
 CentroDeRescate --> ServicioHogaresTransito
+CentroDeRescate -->"*" PublicacionAdopcion
+CentroDeRescate -->"*" PublicacionAdoptante
+CentroDeRescate ..> RepositorioPreguntasObligatorias
 
 Duenio --> DatosPersonales
 Duenio -->"*" MascotaRegistrada
@@ -286,6 +325,8 @@ RepositorioCaracteristicas -->"*" Caracteristica
 
 RepositorioCentroDeRescate -->"*" CentroDeRescate
 
+RepositorioPreguntasObligatorias -->"*" Pregunta
+
 
 RepositorioUsuarios -->"*" Duenio
 RepositorioUsuarios -->"*" Administrador
@@ -299,4 +340,9 @@ Notificador <|.. JavaMailApi
 HogaresTransitoService <|.. ServicioHogaresTransito
 
 HogarTransitoAdaptado <.. HogaresTransitoService
+
+PublicacionAdopcion -->"*" Pregunta
+
+PublicacionAdoptante --> Duenio
+PublicacionAdoptante -->"*" PublicacionAdopcion
 @enduml
