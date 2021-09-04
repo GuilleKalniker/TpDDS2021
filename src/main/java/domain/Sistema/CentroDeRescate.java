@@ -33,7 +33,6 @@ public class CentroDeRescate {
   private Notificador notificador = new JavaMailApi(); //Creo que hay que quitarlo ya
   private ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.getInstance();
 
-
   public CentroDeRescate(Ubicacion ubicacion) {
     this.ubicacion = ubicacion;
     RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(this);

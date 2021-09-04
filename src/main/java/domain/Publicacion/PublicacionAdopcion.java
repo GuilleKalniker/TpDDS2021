@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PublicacionAdopcion {
-
   private String id;
   private List<Pregunta> preguntas;
 

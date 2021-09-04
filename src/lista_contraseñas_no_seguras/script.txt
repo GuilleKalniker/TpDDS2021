@@ -1,2 +1,1 @@
-0 0 * * 0 target/notificadorSemanal-jar-with-dependencies.jar
-
+0 0 * * 0 java -jar target/notificadorSemanal-jar-with-dependencies.jar
