@@ -99,6 +99,9 @@ public class ServicioHogaresTransito {
 
   public List<HogarTransitoAdaptado> filtrarHogaresPara(FormularioMascotaPerdida formularioMascotaPerdida, Double radio){
     MascotaRegistrada mascota = RepositorioMascotas.getInstance().buscarMascotaPorID(formularioMascotaPerdida.getIDMascotaPerdida());
-    return solicitarTodosLosHogares().stream().filter(hogar -> hogar.esAdecuado(mascota, radio, formularioMascotaPerdida.getLugarEncuentro())).collect(Collectors.toList());
+
+    return solicitarTodosLosHogares().stream()
+        .filter(hogar -> hogar.esAdecuado(mascota, radio, formularioMascotaPerdida.getLugarEncuentro()))
+        .collect(Collectors.toList());
   }
 }

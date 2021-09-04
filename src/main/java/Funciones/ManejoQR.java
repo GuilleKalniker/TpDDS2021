@@ -22,7 +22,6 @@ public class ManejoQR {
     try {
       HashMap<EncodeHintType, String> hints = new HashMap<>();
       hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-      // investigar sobre ErrorCorrectionLevel
       QRCodeWriter writer = new QRCodeWriter();
       BitMatrix bitMatrix = writer.encode(data, BarcodeFormat.QR_CODE, weidth, height, hints);
 

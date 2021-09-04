@@ -149,10 +149,11 @@ public class CentroDeRescate {
   public void notificacionSemanal() {
     interesadosEnAdoptar.forEach(interesado -> {
       interesado.recibirSugerenciaAdopcion(
-          filtrarPublicaciones(interesado.getPreferencias()).
-          stream().
-          findFirst().
-          orElseThrow(() -> new NoHayPublicacionAptaException()));});
+          filtrarPublicaciones(interesado.getPreferencias())
+              .stream()
+              .findFirst()
+              .orElse(null));
+    });
   }
 
   public List<PublicacionAdopcion> filtrarPublicaciones(List<String> filtros) {

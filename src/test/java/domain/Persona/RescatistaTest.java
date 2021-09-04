@@ -81,7 +81,7 @@ public class RescatistaTest {
     when(servicioHogaresMock.solicitarTodosLosHogares()).thenReturn(hogares);
     doCallRealMethod().when(servicioHogaresMock).filtrarHogaresPara(any(), any());
 
-    List<HogarTransitoAdaptado> hogaresFiltrados = rescatistaPrueba.buscarHogaresDeTransito(formulario, 500.0, centroDeRescate);
+    List<HogarTransitoAdaptado> hogaresFiltrados = rescatistaPrueba.buscarHogaresDeTransito(formulario, 500.0);
 
     assert(hogaresFiltrados.contains(hogarAdecuado));
     assert(!hogaresFiltrados.contains(hogarInadecuado));

@@ -9,7 +9,6 @@ import java.util.List;
 public class PublicacionAdoptante {
   private Duenio duenioAsociado;
   private List<String> preferencias = new ArrayList<>();
-  private List<PublicacionAdopcion> sugerenciasAdopcion = new ArrayList<>();
   private CentroDeRescate centroDeRescate;
 
   public PublicacionAdoptante(Duenio duenioAsociado, CentroDeRescate centroDeRescate) {
@@ -30,10 +29,12 @@ public class PublicacionAdoptante {
   }
 
   public void recibirSugerenciaAdopcion(PublicacionAdopcion publicacionAdopcion) {
-    sugerenciasAdopcion.add(publicacionAdopcion);
-    duenioAsociado.notificar("Nueva sugerencia semanal", "Aca tenes una mascota que podrias estar interesado en adoptar.");
+    if(publicacionAdopcion == null) {
+      //TODO: crear una notificacion que indique que no se encontraron publicaciones acordes a su gusto :p
+    }
+    duenioAsociado.notificar("Nueva sugerencia semanal", "Aca tenes una mascota que podrias estar interesado en adoptar");
   }
-
+  /*
   public void revisarSugerenciasRecibidas() {
     // TODO: Implementar, ciclaria por las sugerenciasAdopcion (GUI)
     // Si le gusto alguna, centroDeRescate.publicacionAdopcionMatcheada(duenioAsociado.getDatosPersonales(), publicacion)
@@ -44,4 +45,5 @@ public class PublicacionAdoptante {
     // TODO: Revisarlas
     // Si le gusto alguna, centroDeRescate.publicacionAdopcionMatcheada(duenioAsociado.getDatosPersonales(), publicacion)
   }
+  */
 }

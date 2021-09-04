@@ -1,6 +1,7 @@
 package domain.Publicacion;
 
 import domain.Exceptions.PublicacionAdopcionInvalidaException;
+import domain.Exceptions.SinContactosException;
 import domain.Pregunta.Pregunta;
 import domain.Sistema.CentroDeRescate;
 
@@ -31,7 +32,9 @@ public class PublicacionAdopcion {
 
   public Boolean matcheaConRespuesta(String respuesta) {
     return this.getPreguntas().stream()
-        .anyMatch(pregunta -> pregunta.getRespuesta() == respuesta);
+        .anyMatch(pregunta ->
+          pregunta.getRespuesta().equals(respuesta.toLowerCase())
+        );
   }
 
   public Boolean matcheaConTodosFiltros(List<String> filtros) {

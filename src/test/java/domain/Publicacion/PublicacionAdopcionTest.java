@@ -57,7 +57,7 @@ public class PublicacionAdopcionTest {
     listaDeRespuestas.add("Perro");
     listaDeRespuestas.add("Gato");
     Pregunta preguntaUno = new Pregunta("Gato o perro?", listaDeRespuestas, true);
-    preguntaUno.setRespuesta("Gato");
+    preguntaUno.setRespuesta("Gato   ");
 
     List<String> listaDeRespuestasDos = new ArrayList<>();
     listaDeRespuestasDos.add("Patio");

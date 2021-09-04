@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domain.Exceptions.RespuestaInvalidaException;
-import domain.Exceptions.RespuestaVaciaException;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -27,9 +27,10 @@ public class PreguntaTest {
 
   @Test
   public void seLePuedeSettearUnaRespuestaAUnaPregunta() {
+    String respuesta  = "GaTO  ";
     Pregunta pregunta = new Pregunta("Gato o perro?", obtenerListaDePosiblesRespuestas(), true);
-    pregunta.setRespuesta("Gato");
-    assertTrue(pregunta.getRespuesta() == "Gato");
+    pregunta.setRespuesta(respuesta);
+    assertTrue(pregunta.getRespuesta().equals(respuesta.toLowerCase().trim()));
   }
 
   @Test
@@ -40,7 +41,7 @@ public class PreguntaTest {
   @Test
   public void noSePuedeSettearUnaRespuestaVacia() {
     Pregunta pregunta = new Pregunta("Gato o perro?", obtenerListaDePosiblesRespuestas(), true);
-    assertThrows(RespuestaVaciaException.class, () -> { pregunta.setRespuesta(""); });
+    assertThrows(RespuestaInvalidaException.class, () -> { pregunta.setRespuesta(""); });
   }
 
   @Test

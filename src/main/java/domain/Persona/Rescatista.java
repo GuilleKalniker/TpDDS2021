@@ -36,8 +36,9 @@ public class Rescatista {
   //TODO: Preguntar que hacer con el centro, xq el rescatista no tiene por que saber que centros hay pero tampoco sabemos si poner la logica
   // en el repositorio porque es medio raro, el repositorio, segun entendemos, solo deberia almacenar informacion.
 
-  public List<HogarTransitoAdaptado> buscarHogaresDeTransito(FormularioMascotaPerdida formularioMascotaPerdida, Double radio, CentroDeRescate centro) {
-    return centro.hogaresAdecuadosParaMascota(formularioMascotaPerdida,radio);
+  public List<HogarTransitoAdaptado> buscarHogaresDeTransito(FormularioMascotaPerdida formularioMascotaPerdida, Double radio) {
+    CentroDeRescate centro = RepositorioCentroDeRescate.getInstance().getCentroDeRescateMasCercanoA(formularioMascotaPerdida.getLugarEncuentro());
+    return centro.hogaresAdecuadosParaMascota(formularioMascotaPerdida, radio);
   }
 
 }

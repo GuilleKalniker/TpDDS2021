@@ -101,19 +101,20 @@ public class Duenio{
   }
 
   public void darEnAdopcionA(String ID, CentroDeRescate centroDeRescate) {
-    if (mascotasID.contains(ID)) {
-
-      List<Pregunta> preguntasCentro = centroDeRescate.getPreguntasDeAdopcion();
-      preguntasCentro.forEach(pregunta -> {contestarPregunta(pregunta);});
-
-      if (preguntasCentro.stream().allMatch(pregunta -> pregunta.esValida())) {
-          centroDeRescate.generarPublicacionAdopcion(preguntasCentro, ID);
-      } else {
-          throw new RespuestasIncompletasException();
-      }
-    } else {
-      throw new IDNoSeCorrespondeException("El ID de la mascota enviado no pertenece a una mascota propia.");
+    if (!mascotasID.contains(ID)) {
+      throw new IDNoSeCorrespondeException("El ID de la mascota enviado no pertenece a una mascota propia");
     }
+
+    List<Pregunta> preguntasCentro = centroDeRescate.getPreguntasDeAdopcion();
+    preguntasCentro.forEach(pregunta -> {
+      contestarPregunta(pregunta);
+    });
+
+    if (!preguntasCentro.stream().allMatch(pregunta -> pregunta.esValida())) {
+      throw new RespuestasIncompletasException();
+    }
+
+    centroDeRescate.generarPublicacionAdopcion(preguntasCentro, ID);
   }
 
   public void contestarPregunta(Pregunta pregunta) {

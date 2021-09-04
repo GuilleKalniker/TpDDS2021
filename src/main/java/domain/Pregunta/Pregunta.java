@@ -1,13 +1,15 @@
 package domain.Pregunta;
 
 import domain.Exceptions.RespuestaInvalidaException;
-import domain.Exceptions.RespuestaVaciaException;
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class Pregunta {
 
   private String pregunta;
+
   private Boolean esObligatoria;
   private List<String> posiblesRespuestas;
   private String respuesta;
@@ -19,7 +21,7 @@ public class Pregunta {
 
     this.pregunta = pregunta;
     this.esObligatoria = esObligatoria;
-    this.posiblesRespuestas = posiblesRespuestas;
+    this.posiblesRespuestas = posiblesRespuestas.stream().map(value -> value.toLowerCase().trim()).collect(Collectors.toList());
   }
 
   public String getPregunta() {
@@ -31,11 +33,9 @@ public class Pregunta {
   }
 
   public void setRespuesta(String respuesta) {
-    if (respuesta.isEmpty())
-      throw new RespuestaVaciaException("La respuesta está vacía.");
-    if (!posiblesRespuestas.contains(respuesta)) // Deberia ser asincronico (?)
-      throw new RespuestaInvalidaException("La respuesta es inválida.");
-    this.respuesta = respuesta;
+    if (!posiblesRespuestas.contains(respuesta.toLowerCase().trim()))
+      throw new RespuestaInvalidaException("La respuesta es inválida");
+    this.respuesta = respuesta.toLowerCase().trim();
   }
 
   public Boolean esObligatoria() {
