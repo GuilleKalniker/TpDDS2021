@@ -16,23 +16,20 @@ import domain.Servicios.Notificadores.Mail.Mensaje;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Sistema.CentroDeRescate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
-public class Duenio{
+@Table(name = "duenio")
+public class Duenio {
   @Id
   @GeneratedValue
   private long id;
 
-  @Transient
   private String nombreDeUsuario;
-  @Transient
   private String contrasenia;
-  @Transient
+
   private DatosPersonales datosPersonales;
   @Transient
   private List<String> mascotasID = new ArrayList<>();
@@ -44,6 +41,10 @@ public class Duenio{
     this.nombreDeUsuario = usuario;
     this.contrasenia = contrasenia;
     this.datosPersonales = datosPersonales;
+  }
+
+  public long getId() {
+    return id;
   }
 
   public String getNombreUsuario() {

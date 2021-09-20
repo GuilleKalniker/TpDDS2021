@@ -61,7 +61,7 @@ public class DuenioTest {
   public void unDuenioLanzaExcepcionCuandoNoTieneContactos() {
     assertThrows(RuntimeException.class,
         () -> { new Duenio("robertoLagarto", "robertito5432",
-            new DatosPersonales("Roberto", "Lagarto", LocalDate.now(), TipoDocumento.DNI, 12345342, new ArrayList<Contacto>()));
+            new DatosPersonales("Roberto", "Lagarto", LocalDate.now(), TipoDocumento.DNI, 12345342, new ArrayList<Contacto>(), "nose 123"));
     });
   }
 
@@ -73,7 +73,7 @@ public class DuenioTest {
   @Test
   public void unDuenioNoSePuedeCrearConContraseniasYUsuarioInvalido() {
     Duenio duenio = new Duenio("moreeee", "12345",
-        new DatosPersonales("morena", "Sisro", LocalDate.now(), TipoDocumento.DNI, 123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com")));
+        new DatosPersonales("morena", "Sisro", LocalDate.now(), TipoDocumento.DNI, 123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com"), "nose 123"));
     Assertions.assertThrows(ContraseniaInvalidaException.class, () -> {duenio.registrarse();});
   }
 
@@ -97,7 +97,7 @@ public class DuenioTest {
 
   /** FUNCIONES **/
 
-  public Duenio duenioDePruebaUno = new Duenio("juancitoGomez", "matuTesterkpo",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com")));
+  public Duenio duenioDePruebaUno = new Duenio("juancitoGomez", "matuTesterkpo",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com"), "nose 123"));
 
   public CentroDeRescate centroDeRescateDePrueba = new CentroDeRescate(new Ubicacion(0.0, 0.0));
 

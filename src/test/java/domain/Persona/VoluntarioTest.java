@@ -29,7 +29,7 @@ public class VoluntarioTest {
     Contacto contacto = new Contacto("Juan", "Perez", 113232424, "cachito@a.com");
     List<Contacto> contactos = new ArrayList<>();
     contactos.add(contacto);
-    DatosPersonales datos = new DatosPersonales("Juan", "Perez", LocalDate.now(), TipoDocumento.DNI, 42447322, contactos);
+    DatosPersonales datos = new DatosPersonales("Juan", "Perez", LocalDate.now(), TipoDocumento.DNI, 42447322, contactos, "nose 123");
     FormularioMascotaPerdida formulario = new FormularioMascotaPerdida(datos, "Masomenos", new ArrayList<Foto>(), new Ubicacion(1.1, 532.2), LocalDate.now());
     PublicacionMascotaPerdida publicacion = new PublicacionMascotaPerdida(formulario);
     return new SolicitudPublicacion(publicacion);

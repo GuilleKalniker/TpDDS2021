@@ -6,18 +6,36 @@ import domain.Mascota.AtributosMascota.Foto;
 import domain.Mascota.AtributosMascota.Sexo;
 import domain.Mascota.AtributosMascota.TipoMascota;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "mascota")
 public class MascotaRegistrada {
+
+  @Id
+  @GeneratedValue
+  private long id;
+
+  @Enumerated
   private TipoMascota tipo;
+
   private String nombre;
   private String apodo;
   private Integer edad;
+
+  @Enumerated
   private Sexo sexo;
+
   private String descripcionFisica;
+
+  @Transient
   private ArrayList<Foto> fotos;
+
   private String ID;
+
+  @Transient
   private List<Caracteristica> caracteristicas;
 
   public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos, List<Caracteristica> caracteristicas) {
