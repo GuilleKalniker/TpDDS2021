@@ -16,26 +16,50 @@ import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
 import domain.Exceptions.*;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Entity
+@Table(name = "centroDeRescate")
 public class CentroDeRescate {
+  @Id
+  @GeneratedValue
+  private long id;
 
+  @Embedded
   private Ubicacion ubicacion;
+
+  @Transient
   private List<SolicitudPublicacion> solicitudesPublicacion = new ArrayList<>();
+
+  @Transient
   private List<PublicacionMascotaPerdida> publicacionesMascotaPerdidasSinID = new ArrayList<>();
 
+  @Transient
   private List<Pregunta> preguntasDeAdopcion = new ArrayList<>();
+
+  @Transient
   private List<PublicacionAdopcion> publicacionesAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
+
+  @Transient
   private List<PublicacionAdoptante> interesadosEnAdoptar = new ArrayList<>(); // Observers
 
+  @Transient
   private Notificador notificador = new JavaMailApi(); //Creo que hay que quitarlo ya
+
+  @Transient
   private ServicioHogaresTransito servicioHogaresTransito = ServicioHogaresTransito.getInstance();
 
   public CentroDeRescate(Ubicacion ubicacion) {
     this.ubicacion = ubicacion;
     RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(this);
+  }
+
+  public CentroDeRescate() {
+
   }
 
   public void setServicioHogaresTransito(ServicioHogaresTransito servicioHogaresTransito) {

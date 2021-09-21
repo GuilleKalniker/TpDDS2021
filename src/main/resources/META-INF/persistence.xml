@@ -9,8 +9,11 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>domain.Persona.Duenio</class>
+        <class>domain.Persona.Voluntario</class>
+        <class>domain.Persona.Administrador</class>
         <class>domain.Persona.AtributosPersona.Contacto</class>
         <class>domain.Mascota.MascotaRegistrada</class>
+        <class>domain.Sistema.CentroDeRescate</class>
         <class>converters.LocalDateAttributeConverter.java</class>
 
         <properties>

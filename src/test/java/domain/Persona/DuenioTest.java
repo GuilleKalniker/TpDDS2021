@@ -102,12 +102,12 @@ public class DuenioTest {
   public CentroDeRescate centroDeRescateDePrueba = new CentroDeRescate(new Ubicacion(0.0, 0.0));
 
   public void registrarleMascotaADuenio(Duenio unDuenio) {
-    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<Foto>(),new ArrayList<>());
+    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<String>(),new ArrayList<>());
     unDuenio.registrarMascota(mascota, centroDeRescateDePrueba);
   }
 
   public void registrarleOtraMascotaADuenio(Duenio unDuenio) {
-    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Jorgito", "Alfajor", 10, Sexo.MASCULINO, "Perro labrador muy lindo", new ArrayList<Foto>(), new ArrayList<>());
+    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Jorgito", "Alfajor", 10, Sexo.MASCULINO, "Perro labrador muy lindo", new ArrayList<String>(), new ArrayList<>());
     unDuenio.registrarMascota(mascota, centroDeRescateDePrueba);
   }
 

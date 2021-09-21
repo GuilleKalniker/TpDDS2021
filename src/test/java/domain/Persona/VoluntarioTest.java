@@ -1,6 +1,5 @@
 package domain.Persona;
 
-import domain.Mascota.AtributosMascota.Foto;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Persona.AtributosPersona.Contacto;
@@ -30,7 +29,7 @@ public class VoluntarioTest {
     List<Contacto> contactos = new ArrayList<>();
     contactos.add(contacto);
     DatosPersonales datos = new DatosPersonales("Juan", "Perez", LocalDate.now(), TipoDocumento.DNI, 42447322, contactos, "nose 123");
-    FormularioMascotaPerdida formulario = new FormularioMascotaPerdida(datos, "Masomenos", new ArrayList<Foto>(), new Ubicacion(1.1, 532.2), LocalDate.now());
+    FormularioMascotaPerdida formulario = new FormularioMascotaPerdida(datos, "Masomenos", new ArrayList<String>(), new Ubicacion(1.1, 532.2), LocalDate.now());
     PublicacionMascotaPerdida publicacion = new PublicacionMascotaPerdida(formulario);
     return new SolicitudPublicacion(publicacion);
   }

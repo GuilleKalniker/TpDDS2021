@@ -4,7 +4,18 @@ import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Repositorio.RepositorioCaracteristicas;
 import domain.Repositorio.RepositorioUsuarios;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "administrador")
 public class Administrador {
+  @Id
+  @GeneratedValue
+  private long id;
+
   private String nombreDeUsuario;
   private String contrasenia;
 

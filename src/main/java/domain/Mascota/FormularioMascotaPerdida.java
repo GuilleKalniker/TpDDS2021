@@ -1,6 +1,5 @@
 package domain.Mascota;
 
-import domain.Mascota.AtributosMascota.Foto;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Persona.AtributosPersona.DatosPersonales;
 
@@ -10,12 +9,12 @@ import java.util.List;
 public class FormularioMascotaPerdida {
   private DatosPersonales datosRescastista;
   private String descripcionEstado;
-  private List<Foto> fotosEncuentro;
+  private List<String> fotosEncuentro;
   private Ubicacion lugarEncuentro;
   private LocalDate fechaEncuentro;
   private String ID;
 
-  public FormularioMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<Foto> fotosEncuentro, Ubicacion lugarEncuentro, LocalDate fechaEncuentro, String ID) {
+  public FormularioMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<String> fotosEncuentro, Ubicacion lugarEncuentro, LocalDate fechaEncuentro, String ID) {
     this.datosRescastista = datosRescastista;
     this.descripcionEstado = descripcionEstado;
     this.fotosEncuentro = fotosEncuentro;
@@ -28,7 +27,7 @@ public class FormularioMascotaPerdida {
     return getDatosRescastista();
   }
 
-  public FormularioMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<Foto> fotosEncuentro, Ubicacion lugarEncuentro, LocalDate fechaEncuentro) {
+  public FormularioMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<String> fotosEncuentro, Ubicacion lugarEncuentro, LocalDate fechaEncuentro) {
     this.datosRescastista = datosRescastista;
     this.descripcionEstado = descripcionEstado;
     this.fotosEncuentro = fotosEncuentro;

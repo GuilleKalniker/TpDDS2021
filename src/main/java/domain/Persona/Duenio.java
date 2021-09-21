@@ -43,6 +43,8 @@ public class Duenio {
     this.datosPersonales = datosPersonales;
   }
 
+  public Duenio() {}
+
   public long getId() {
     return id;
   }

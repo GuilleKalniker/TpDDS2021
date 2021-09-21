@@ -1,5 +1,8 @@
 package domain.Mascota.AtributosMascota;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Ubicacion {
   private Double latitud;
   private Double longitud;
@@ -8,6 +11,8 @@ public class Ubicacion {
     this.latitud = latitud;
     this.longitud = longitud;
   }
+
+  public Ubicacion() {}
 
   public Double calcularDistanciaA(Ubicacion ubicacion) {
     return Math.sqrt(Math.pow((ubicacion.getLatitud() - latitud), 2) + Math.pow((ubicacion.getLongitud() - longitud), 2));

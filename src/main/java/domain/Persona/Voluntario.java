@@ -5,11 +5,19 @@ import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.RepositorioUsuarios;
 import domain.Sistema.CentroDeRescate;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "voluntario")
 public class Voluntario{
+  @Id
+  @GeneratedValue
+  private long id;
 
   private String nombreDeUsuario;
   private String contrasenia;
 
+  @Transient
   private CentroDeRescate centroDeRescate;
 
   public Voluntario(String nombreDeUsuario, String contrasenia, CentroDeRescate centroDeRescate) {

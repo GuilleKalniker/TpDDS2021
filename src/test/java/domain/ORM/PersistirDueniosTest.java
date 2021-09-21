@@ -1,9 +1,16 @@
 package domain.ORM;
 
+import domain.Mascota.AtributosMascota.Caracteristica;
+import domain.Mascota.AtributosMascota.Sexo;
+import domain.Mascota.AtributosMascota.TipoMascota;
+import domain.Mascota.AtributosMascota.Ubicacion;
+import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Persona.Duenio;
+import domain.Repositorio.AdapterJPA;
+import domain.Sistema.CentroDeRescate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +21,7 @@ import javax.persistence.Persistence;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PersistirDueniosTest {
 
@@ -26,27 +34,41 @@ public class PersistirDueniosTest {
         return duenio;
     }
 
+    public MascotaRegistrada crearMascota(String nombre, ArrayList<String> fotos) {
+        return new MascotaRegistrada(TipoMascota.PERRO, nombre, nombre.substring(0, 2) + nombre.substring(0, 2),4, Sexo.FEMENINO, "Muerta de hambre", fotos, new ArrayList<Caracteristica>());
+    }
+
     @Test
     public void sePersistenDuenios() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("db");
-        EntityManager entityManager = emf.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-
-        Duenio d = crearDuenio("Pedro", "Picapiedra", "Groenlandia 1234");
+        Duenio d = crearDuenio("Ricardo", "Arjona", "Coso 1234");
         d.getDatosPersonales().getContactos().get(0).setDuenio(d);
 
-        entityManager.persist(d.getDatosPersonales().getContactos().get(0));
-        entityManager.persist(d);
+        AdapterJPA.persistir(d);
+        AdapterJPA.persistir(d.getDatosPersonales().getContactos().get(0));
+    }
 
-        transaction.commit();
+
+    @Test
+    public void sePersistenMascotas() {
+        ArrayList<String> fotos = new ArrayList<>();
+        fotos.add("https://foto.com.ar");
+        fotos.add("https://foto2.com.gov");
 
 
-        transaction.begin();
+        MascotaRegistrada m = crearMascota("pICHULA", fotos);
+        //m.setID(String.valueOf(new Random().nextInt()));
 
-        Duenio d2 = entityManager.find(Duenio.class, d.getId());
-        Assertions.assertEquals(TipoDocumento.DNI, d2.getDatosPersonales().getTipoDocumento());
+        m.getCaracteristicas().add(Caracteristica.RABIOSO);
+        m.getCaracteristicas().add(Caracteristica.JUGUETON);
 
-        transaction.commit();
+
+        AdapterJPA.persistir(m);
+    }
+
+    @Test
+    public void sePersistenCentros() {
+        CentroDeRescate centro = new CentroDeRescate(new Ubicacion(321.04, 6542.21));
+
+        AdapterJPA.persistir(centro);
     }
 }

@@ -2,7 +2,6 @@ package domain.Mascota;
 
 import Funciones.ManejoQR;
 import domain.Mascota.AtributosMascota.Caracteristica;
-import domain.Mascota.AtributosMascota.Foto;
 import domain.Mascota.AtributosMascota.Sexo;
 import domain.Mascota.AtributosMascota.TipoMascota;
 
@@ -18,6 +17,8 @@ public class MascotaRegistrada {
   @GeneratedValue
   private long id;
 
+  private String ID;
+
   @Enumerated
   private TipoMascota tipo;
 
@@ -30,15 +31,14 @@ public class MascotaRegistrada {
 
   private String descripcionFisica;
 
-  @Transient
-  private ArrayList<Foto> fotos;
+  @ElementCollection
+  private List<String> fotos = new ArrayList<>();
 
-  private String ID;
-
-  @Transient
+  @ElementCollection
+  @Enumerated
   private List<Caracteristica> caracteristicas;
 
-  public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<Foto> fotos, List<Caracteristica> caracteristicas) {
+  public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<String> fotos, List<Caracteristica> caracteristicas) {
     this.tipo = tipo;
     this.nombre = nombre;
     this.apodo = apodo;
@@ -48,6 +48,8 @@ public class MascotaRegistrada {
     this.fotos = fotos;
     this.caracteristicas = caracteristicas;
   }
+
+  public MascotaRegistrada() {}
 
   public TipoMascota getTipo() {
     return tipo;
@@ -59,6 +61,10 @@ public class MascotaRegistrada {
 
   public String getNombre() {
     return nombre;
+  }
+
+  public void agregarFoto(String url) {
+    fotos.add(url);
   }
 
   public void setID(String ID) {
