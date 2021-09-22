@@ -1,7 +1,6 @@
 package domain.Persona;
 
-import domain.Exceptions.CentroInvalidoException;
-import domain.Publicacion.SolicitudPublicacion;
+import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Repositorio.RepositorioUsuarios;
 import domain.Sistema.CentroDeRescate;
 
@@ -26,20 +25,12 @@ public class Voluntario{
     this.centroDeRescate = centroDeRescate;
   }
 
-  public void aprobarSolicitud(SolicitudPublicacion solicitudPublicacion) {
-    validarCentro(solicitudPublicacion);
-    solicitudPublicacion.aceptarEn(centroDeRescate);
+  public void aprobarSolicitud(PublicacionMascotaPerdida solicitud) {
+    solicitud.aceptarseEnElCentro();
   }
 
-  public void rechazarSolicitud(SolicitudPublicacion solicitudPublicacion){
-    validarCentro(solicitudPublicacion);
+  public void rechazarSolicitud(PublicacionMascotaPerdida solicitudPublicacion){
     centroDeRescate.eliminarSolicitud(solicitudPublicacion);
-  }
-
-  public void validarCentro(SolicitudPublicacion solicitud) {
-    if (!centroDeRescate.getSolicitudesPublicacion().contains(solicitud)) {
-      throw new CentroInvalidoException();
-    }
   }
 
   public void registrarse() {

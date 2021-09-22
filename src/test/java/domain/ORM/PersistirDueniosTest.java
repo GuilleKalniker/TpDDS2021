@@ -35,7 +35,7 @@ public class PersistirDueniosTest {
     }
 
     public MascotaRegistrada crearMascota(String nombre, ArrayList<String> fotos) {
-        return new MascotaRegistrada(TipoMascota.PERRO, nombre, nombre.substring(0, 2) + nombre.substring(0, 2),4, Sexo.FEMENINO, "Muerta de hambre", fotos, new ArrayList<Caracteristica>());
+        return new MascotaRegistrada(TipoMascota.PERRO, nombre, nombre.substring(0, 2) + nombre.substring(0, 2).toLowerCase(),4, Sexo.FEMENINO, "Muerta de hambre", fotos, new ArrayList<Caracteristica>());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class PersistirDueniosTest {
         fotos.add("https://foto2.com.gov");
 
 
-        MascotaRegistrada m = crearMascota("pICHULA", fotos);
+        MascotaRegistrada m = crearMascota("Pichula", fotos);
         //m.setID(String.valueOf(new Random().nextInt()));
 
         m.getCaracteristicas().add(Caracteristica.RABIOSO);

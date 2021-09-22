@@ -9,13 +9,11 @@ import domain.Pregunta.Pregunta;
 import domain.Publicacion.PublicacionAdopcion;
 import domain.Publicacion.PublicacionAdoptante;
 import domain.Publicacion.PublicacionMascotaPerdida;
-import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.*;
 import domain.Servicios.HogarTransitoAdaptado;
 import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
-import domain.Exceptions.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class CentroDeRescate {
   private Ubicacion ubicacion;
 
   @Transient
-  private List<SolicitudPublicacion> solicitudesPublicacion = new ArrayList<>();
+  private List<PublicacionMascotaPerdida> solicitudesPublicacion = new ArrayList<>(); //Los aceptan los voluntarios
 
   @Transient
   private List<PublicacionMascotaPerdida> publicacionesMascotaPerdidasSinID = new ArrayList<>();
@@ -70,7 +68,7 @@ public class CentroDeRescate {
     this.notificador = notificador;
   }
 
-  public List<SolicitudPublicacion> getSolicitudesPublicacion() {
+  public List<PublicacionMascotaPerdida> getSolicitudesPublicacion() {
     return solicitudesPublicacion;
   }
 
@@ -116,17 +114,18 @@ public class CentroDeRescate {
 
   /** FUNCIONES QUE SE COMUNICAN CON EL COMMAND DE REPOSITORIO USUARIOS */
 
-  public void aceptarSolicitud(SolicitudPublicacion solicitudPublicacion){
-    this.getPublicacionesMascotaPerdidasSinID().add(solicitudPublicacion.getPublicacion());
-    eliminarSolicitud(solicitudPublicacion);
+  public void aceptarSolicitud(PublicacionMascotaPerdida solicitud){
+    this.getPublicacionesMascotaPerdidasSinID().add(solicitud);
+    eliminarSolicitud(solicitud);
   }
 
-  public void eliminarSolicitud(SolicitudPublicacion solicitud){
+  public void eliminarSolicitud(PublicacionMascotaPerdida solicitud){
     getSolicitudesPublicacion().remove(solicitud);
   }
 
-  public void generarSolicitud(SolicitudPublicacion solicitud){
+  public void generarSolicitud(PublicacionMascotaPerdida solicitud){
     getSolicitudesPublicacion().add(solicitud);
+    solicitud.setCentro(this);
   }
 
   public List<HogarTransitoAdaptado> hogaresAdecuadosParaMascota(FormularioMascotaPerdida formulario, Double radio){

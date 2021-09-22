@@ -1,18 +1,13 @@
 package domain.Persona;
 
 import domain.Mascota.FormularioMascotaPerdida;
-import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Publicacion.PublicacionMascotaPerdida;
-import domain.Publicacion.SolicitudPublicacion;
 import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
 import domain.Servicios.HogarTransitoAdaptado;
-import domain.Servicios.Notificadores.Mail.Mensaje;
-import domain.Servicios.Notificadores.Notificador;
 import domain.Sistema.CentroDeRescate;
 
-import java.time.Duration;
 import java.util.List;
 
 
@@ -30,7 +25,7 @@ public class Rescatista {
   public void generarSolicitudPublicacion(FormularioMascotaPerdida formulario){
     CentroDeRescate centroMasCercano = RepositorioCentroDeRescate.getInstance().getCentroDeRescateMasCercanoA(formulario.getLugarEncuentro());
 
-    centroMasCercano.generarSolicitud(new SolicitudPublicacion(new PublicacionMascotaPerdida(formulario)));
+    centroMasCercano.generarSolicitud(new PublicacionMascotaPerdida(formulario));
   }
 
   //TODO: Preguntar que hacer con el centro, xq el rescatista no tiene por que saber que centros hay pero tampoco sabemos si poner la logica
