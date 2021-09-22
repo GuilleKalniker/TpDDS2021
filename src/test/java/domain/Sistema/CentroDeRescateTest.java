@@ -8,8 +8,10 @@ import domain.Persona.*;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
+import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,8 +23,7 @@ public class CentroDeRescateTest {
 
   @BeforeEach
   void init() {
-    RepositorioMascotas.getInstance().getMascotasRegistradas().clear();
-    RepositorioUsuarios.getInstance().clear();
+    //TODO borrar la base de datos de prueba ¿?
   }
 
   /** Nuevos **/
@@ -51,6 +52,24 @@ public class CentroDeRescateTest {
     String id = RepositorioMascotas.getInstance().registrarMascota(pepita);
     MascotaRegistrada mascotaEncontrada = this.centro.buscarMascota(id);
     assertEquals(pepita.getID(), mascotaEncontrada.getID());
+  }
+
+
+  @Test
+  public void seEncuentraElCentroMasCercanoAUnaUbicacion() {
+    CentroDeRescate centroLejano = new CentroDeRescate(new Ubicacion(10.0, 0.0));
+    CentroDeRescate centroCercano = new CentroDeRescate(new Ubicacion(1.0, 1.0));
+    CentroDeRescate centroLejano1 = new CentroDeRescate(new Ubicacion(4.0, 1.0));
+    CentroDeRescate centroLejano2 = new CentroDeRescate(new Ubicacion(1.0, 3.0));
+    CentroDeRescate centroLejano3 = new CentroDeRescate(new Ubicacion(1.5, 1.5));
+
+    RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(centroLejano);
+    RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(centroCercano);
+    RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(centroLejano1);
+    RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(centroLejano2);
+    RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(centroLejano3);
+
+    Assertions.assertEquals(centroCercano, RepositorioCentroDeRescate.getInstance().getCentroDeRescateMasCercanoA(new Ubicacion(0.0, 0.0)));
   }
 /*
   @Test

@@ -14,27 +14,21 @@ import java.security.spec.KeySpec;
 
 public class ValidadorContrasenias {
 
-  private final Integer LONGITUDMINIMA;
-  private final String PATH;
+  private static final Integer LONGITUDMINIMA = 8;
+  private static final String PATH = "src/lista_contraseñas_no_seguras/lista_contraseñas_no_seguras.txt";
 
-  public ValidadorContrasenias(Integer LONGITUDMINIMA) {
-    this.LONGITUDMINIMA = LONGITUDMINIMA;
-    this.PATH = "src/lista_contraseñas_no_seguras/lista_contraseñas_no_seguras.txt";
+
+  public static Boolean esContraseniaValida(String contrasenia) {
+    return cumpleLongitudMinima(contrasenia) && !existeContraseniaEnListaContraseniasNoSeguras(contrasenia);
   }
 
-  public void esUnaContraseniaValida(String contrasenia) {
-    if(!cumpleLongitudMinima(contrasenia) && existeContraseniaEnListaContraseniasNoSeguras(contrasenia)){
-      throw new ContraseniaInvalidaException("contrasenia no es valida");
-    }
+  public static Boolean cumpleLongitudMinima(String contrasenia){
+    return contrasenia.length() >= LONGITUDMINIMA;
   }
 
-  public Boolean cumpleLongitudMinima(String contrasenia){
-    return contrasenia.length() >= this.LONGITUDMINIMA;
-  }
+  public static Boolean existeContraseniaEnListaContraseniasNoSeguras(String contrasenia) {
 
-  public Boolean existeContraseniaEnListaContraseniasNoSeguras(String contrasenia) {
-
-    File archivoListaContrasenias = new File(this.PATH);
+    File archivoListaContrasenias = new File(PATH);
     Boolean resultadoBusqueda = false;
     try {
       FileReader fr = new FileReader(archivoListaContrasenias);

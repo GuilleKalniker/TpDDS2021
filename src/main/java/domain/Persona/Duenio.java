@@ -1,8 +1,11 @@
 package domain.Persona;
 
 
+import Funciones.ValidadorContrasenias;
+import domain.Exceptions.ContraseniaInvalidaException;
 import domain.Exceptions.IDNoSeCorrespondeException;
 import domain.Exceptions.RespuestasIncompletasException;
+import domain.Exceptions.UsuarioYaRegistradoException;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
@@ -21,15 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "duenio")
-public class Duenio {
-  @Id
-  @GeneratedValue
-  private long id;
+@DiscriminatorValue("duenio")
+public class Duenio extends Usuario {
 
-  private String nombreDeUsuario;
-  private String contrasenia;
-
+  @Embedded
   private DatosPersonales datosPersonales;
   @Transient
   private List<String> mascotasID = new ArrayList<>();
@@ -37,25 +35,11 @@ public class Duenio {
   private List<Notificador> notificadores = new ArrayList<>();
 
 
-  public Duenio(String usuario, String contrasenia,DatosPersonales datosPersonales) {
-    this.nombreDeUsuario = usuario;
-    this.contrasenia = contrasenia;
+  public Duenio(String usuario, String contrasenia, DatosPersonales datosPersonales) {
+    super(usuario, contrasenia);
     this.datosPersonales = datosPersonales;
   }
 
-  public Duenio() {}
-
-  public long getId() {
-    return id;
-  }
-
-  public String getNombreUsuario() {
-    return nombreDeUsuario;
-  }
-
-  public String getContrasenia() {
-    return contrasenia;
-  }
 
   public DatosPersonales getDatosPersonales() {
     return datosPersonales;
@@ -63,10 +47,6 @@ public class Duenio {
 
   public List<String> getMascotasID() {
     return mascotasID;
-  }
-
-  public void registrarse() {
-    RepositorioUsuarios.getInstance().registrarDuenio(this);
   }
 
   /**

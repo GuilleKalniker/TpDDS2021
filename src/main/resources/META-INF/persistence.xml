@@ -8,6 +8,7 @@
     <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+        <class>domain.Persona.Usuario</class>
         <class>domain.Persona.Duenio</class>
         <class>domain.Persona.Voluntario</class>
         <class>domain.Persona.Administrador</class>

@@ -7,21 +7,14 @@ import domain.Sistema.CentroDeRescate;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "voluntario")
-public class Voluntario{
-  @Id
-  @GeneratedValue
-  private long id;
-
-  private String nombreDeUsuario;
-  private String contrasenia;
+@DiscriminatorValue("voluntario")
+public class Voluntario extends Usuario {
 
   @Transient
   private CentroDeRescate centroDeRescate;
 
-  public Voluntario(String nombreDeUsuario, String contrasenia, CentroDeRescate centroDeRescate) {
-    this.nombreDeUsuario = nombreDeUsuario;
-    this.contrasenia = contrasenia;
+  public Voluntario(String nombreUsuario, String contrasenia, CentroDeRescate centroDeRescate) {
+    super(nombreUsuario, contrasenia);
     this.centroDeRescate = centroDeRescate;
   }
 
@@ -33,15 +26,4 @@ public class Voluntario{
     centroDeRescate.eliminarSolicitud(solicitudPublicacion);
   }
 
-  public void registrarse() {
-    RepositorioUsuarios.getInstance().registrarVoluntario(this);
-  }
-
-  public String getNombreUsuario() {
-    return nombreDeUsuario;
-  }
-
-  public String getContrasenia() {
-    return contrasenia;
-  }
 }

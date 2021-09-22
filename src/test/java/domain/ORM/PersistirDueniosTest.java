@@ -10,14 +10,13 @@ import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Persona.Duenio;
 import domain.Repositorio.AdapterJPA;
+import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Sistema.CentroDeRescate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.enterprise.inject.Typed;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +42,12 @@ public class PersistirDueniosTest {
         Duenio d = crearDuenio("Ricardo", "Arjona", "Coso 1234");
         d.getDatosPersonales().getContactos().get(0).setDuenio(d);
 
-        AdapterJPA.persistir(d);
-        AdapterJPA.persistir(d.getDatosPersonales().getContactos().get(0));
+        AdapterJPA.beginTransaction();
+        AdapterJPA.persist(d);
+        AdapterJPA.persist(d.getDatosPersonales().getContactos().get(0));
+        AdapterJPA.commit();
+
+        Assertions.assertEquals(d, AdapterJPA.entityManager().find(Duenio.class, 1));
     }
 
 
@@ -61,14 +64,24 @@ public class PersistirDueniosTest {
         m.getCaracteristicas().add(Caracteristica.RABIOSO);
         m.getCaracteristicas().add(Caracteristica.JUGUETON);
 
-
-        AdapterJPA.persistir(m);
+        AdapterJPA.beginTransaction();
+        AdapterJPA.persist(m);
+        AdapterJPA.commit();
     }
+
 
     @Test
     public void sePersistenCentros() {
         CentroDeRescate centro = new CentroDeRescate(new Ubicacion(321.04, 6542.21));
 
-        AdapterJPA.persistir(centro);
+        RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(centro);
+
+        AdapterJPA.beginTransaction();
+        centro.setUbicacion(new Ubicacion(1.0, 2.0));
+        AdapterJPA.commit();
+
+        List<CentroDeRescate> lista = RepositorioCentroDeRescate.getInstance().getCentrosDeRescateRegistrados();
+
+        Assertions.assertEquals(centro, lista.stream().filter(unCentro -> unCentro.getId() == centro.getId()).findFirst().get());
     }
 }

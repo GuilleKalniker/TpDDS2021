@@ -5,28 +5,17 @@ import domain.Exceptions.IDNoSeCorrespondeException;
 import domain.Exceptions.UsuarioYaRegistradoException;
 import domain.Persona.Administrador;
 import domain.Persona.Duenio;
+import domain.Persona.Usuario;
 import domain.Persona.Voluntario;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 public class RepositorioUsuarios {
 
-  private HashMap<Duenio, String> dueniosRegistrados;
-  private HashMap<Administrador, String> administradoresRegistrados;
-  private HashMap<Voluntario, String> voluntariosRegistrados;
-
   private static RepositorioUsuarios INSTANCE = null;
-
-  private RepositorioUsuarios() {
-    this.dueniosRegistrados = new HashMap<>();
-    this.administradoresRegistrados = new HashMap<>();
-    this.voluntariosRegistrados = new HashMap<>();
-  }
 
   public static RepositorioUsuarios getInstance() {
     if (INSTANCE == null) {
@@ -35,73 +24,68 @@ public class RepositorioUsuarios {
     return INSTANCE;
   }
 
-  public Set<Duenio> getDueniosRegistrados() {
-    return dueniosRegistrados.keySet();
+  public void registrarUsuario(Usuario usuario) {
+    AdapterJPA.beginTransaction();
+    AdapterJPA.persist(usuario);
+    AdapterJPA.commit();
   }
 
+  public void registrarDuenio(Duenio duenio) {
+    AdapterJPA.beginTransaction();
+    AdapterJPA.persist(duenio);
+    AdapterJPA.commit();
+  }
+
+  public void registrarAdministrador(Administrador administrador) {
+    AdapterJPA.beginTransaction();
+    AdapterJPA.persist(administrador);
+    AdapterJPA.commit();
+  }
+
+  public void registrarVoluntario(Voluntario voluntario) {
+    AdapterJPA.beginTransaction();
+    AdapterJPA.persist(voluntario);
+    AdapterJPA.commit();
+  }
+
+  public List<Duenio> getDueniosRegistrados() {
+    TypedQuery<Duenio> query = AdapterJPA.entityManager().createQuery("select d from Duenio d", Duenio.class);
+    return query.getResultList();
+  }
+
+  /* TODO
   public Set<Administrador> getAdministradoresRegistrados() {
     return administradoresRegistrados.keySet();
   }
 
   public Set<Voluntario> getVoluntariosRegistrados() {
     return voluntariosRegistrados.keySet();
+  }*/
+
+
+  //TODO hacerlo apto para administradores y voluntarios. Propongo crearles una superclase abstracta Usuario.
+  public Boolean existeUsuario(String nombreUsuario){
+    return getDuenioPorUsuario(nombreUsuario) != null;
   }
 
-  public void clear() {
-    this.dueniosRegistrados.clear();
-  }
 
-  public void registrarDuenio(Duenio duenio) {
-    this.validarDatosRegistro(duenio.getNombreUsuario(), duenio.getContrasenia());
-    this.dueniosRegistrados.put(duenio, ValidadorContrasenias.passwordToHash(duenio.getContrasenia()));
-  }
-
-  public void registrarAdministrador(Administrador administrador) {
-    this.validarDatosRegistro(administrador.getNombreUsuario(), administrador.getContrasenia());
-    this.administradoresRegistrados.put(administrador, ValidadorContrasenias.passwordToHash(administrador.getContrasenia()));
-  }
-
-  public void registrarVoluntario(Voluntario voluntario) {
-    this.validarDatosRegistro(voluntario.getNombreUsuario(), voluntario.getContrasenia());
-    this.voluntariosRegistrados.put(voluntario, ValidadorContrasenias.passwordToHash(voluntario.getContrasenia()));
-  }
-
-  public void existeUsuario(String nombreUsuario){
-    if (nombreUsuarioEnDuenio(nombreUsuario)
-        || nombreUsuarioEnAdministrador(nombreUsuario)
-        || nombreUsuarioEnVoluntario(nombreUsuario)){
-      throw new UsuarioYaRegistradoException("El nombre de ususario ya existe.");
-    }
-  }
-
-  // No seria mejor una func que verifique en todas las listas y devuelva el string de que es?
-  // Mucha rep de codigo, aparte que si queres saber si es admin ponele, le comparas desde donde llama a "Administrador" y listo
-  public boolean nombreUsuarioEnDuenio(String nombreUsuario) {
-    return this.dueniosRegistrados.keySet().stream().anyMatch(duenio -> duenio.getNombreUsuario() == nombreUsuario);
-  }
-
-  public boolean nombreUsuarioEnAdministrador(String nombreUsuario) {
-    return this.administradoresRegistrados.keySet().stream().anyMatch(duenio -> duenio.getNombreUsuario() == nombreUsuario);
-  }
-
-  public boolean nombreUsuarioEnVoluntario(String nombreUsuario) {
-    return this.voluntariosRegistrados.keySet().stream().anyMatch(duenio -> duenio.getNombreUsuario() == nombreUsuario);
-  }
-
-  public void validarDatosRegistro(String usuario, String contrasenia) {
-    existeUsuario(usuario);
-    ValidadorContrasenias validador = new ValidadorContrasenias(8);
-    validador.esUnaContraseniaValida(contrasenia);
-  }
-
+  //TODO recibiria una mascota como parametro
   public Duenio getDuenioPorID(String ID) {
     return getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID))
         .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException("No se encontro el duenio a partir del ID de la mascota"));
   }
 
-  public Duenio getDuenioPorUsuario(String usuario) {
-    return getDueniosRegistrados().stream()
-        .filter(duenio -> duenio.getNombreUsuario() == usuario)
-        .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException("No se encontro el duenio a partir del usuario ingresado"));
+  public Usuario getDuenioPorUsuario(String nombreUsuario) {
+    Usuario u;
+    try {
+      TypedQuery<Usuario> query = AdapterJPA.entityManager().createQuery("select d from Usuario d where d.nombreUsuario = :username", Usuario.class);
+      query.setParameter("username", nombreUsuario);
+      u = query.getSingleResult();
+    }
+    catch(Exception e) {
+      u = null;
+    }
+
+    return u;
   }
 }

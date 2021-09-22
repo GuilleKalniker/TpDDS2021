@@ -53,11 +53,18 @@ public class CentroDeRescate {
 
   public CentroDeRescate(Ubicacion ubicacion) {
     this.ubicacion = ubicacion;
-    RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(this);
   }
 
   public CentroDeRescate() {
 
+  }
+
+  public void setUbicacion(Ubicacion ubicacion) {
+    this.ubicacion = ubicacion;
+  }
+
+  public long getId() {
+    return id;
   }
 
   public void setServicioHogaresTransito(ServicioHogaresTransito servicioHogaresTransito) {

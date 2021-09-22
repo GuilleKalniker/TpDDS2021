@@ -12,7 +12,6 @@ public class RepositorioUsuariosTest {
   @BeforeEach
   public void init(){
     RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
-    repositorioUsuarios.clear();
   }
 
   @Test
@@ -24,20 +23,18 @@ public class RepositorioUsuariosTest {
 
   @Test
   public void NoEsValidaUnaContraseñaConLongitudMenosA8() {
-    assertFalse(validador.cumpleLongitudMinima("willi"));
+    assertFalse(ValidadorContrasenias.cumpleLongitudMinima("willi"));
   }
 
   @Test
   public void contraseñaEsInvalidaPorPertenecerAListaContraseñas() {
-    assertTrue(validador.existeContraseniaEnListaContraseniasNoSeguras("123456789"));
+    assertTrue(ValidadorContrasenias.existeContraseniaEnListaContraseniasNoSeguras("123456789"));
   }
 
   @Test
   public void contraseñaEsvalidaPorNoPertenecerAListaContraseñas() {
-    assertFalse(validador.existeContraseniaEnListaContraseniasNoSeguras("tpanual2021"));
+    assertFalse(ValidadorContrasenias.existeContraseniaEnListaContraseniasNoSeguras("tpanual2021"));
   }
 
   Administrador willian = new Administrador("willian","sdhasuhpfdsdhfp");
-  private ValidadorContrasenias validador = new ValidadorContrasenias(8);
-
 }
