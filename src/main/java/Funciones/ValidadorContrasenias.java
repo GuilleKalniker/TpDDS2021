@@ -45,22 +45,22 @@ public class ValidadorContrasenias {
       br.close();
     }
     catch (Exception e) {
-      throw new ContraseniaInvalidaException("Error al cargar el archivo de contrasenias");
+      throw new ContraseniaInvalidaException("Error al cargar el archivo de contraseñas.");
     }
     return resultadoBusqueda;
   }
 
-
-  public static String passwordToHash(String password){
-
-    //generamos la salt
+  public static String generarSalt() {
     SecureRandom random = new SecureRandom();
     byte[] salt = new byte[16];
     random.nextBytes(salt);
 
-    //generamos el hash
+    return new String(salt);
+  }
+
+  public static String passwordToHash(String password, String salt){
     try {
-      KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 10000, 128);
+      KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 10000, 128);
       SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
       byte[] hash = factory.generateSecret(spec).getEncoded();
       return new String(hash);

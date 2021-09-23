@@ -13,6 +13,8 @@ public class Administrador extends Usuario {
     super(usuario, contrasenia);
   }
 
+  public Administrador() {}
+
   public void agregarCaracteristica(Caracteristica caracteristica) {
     RepositorioCaracteristicas.getInstance().agregarCaracteristica(caracteristica);
   }

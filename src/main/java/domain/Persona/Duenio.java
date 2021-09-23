@@ -40,6 +40,15 @@ public class Duenio extends Usuario {
     this.datosPersonales = datosPersonales;
   }
 
+  public Duenio() {}
+
+  @Override
+  public void registrarse() {
+    RepositorioUsuarios.getInstance().registrarUsuario(this);
+    datosPersonales.getContactos().forEach(contacto -> {
+      RepositorioUsuarios.getInstance().persistirContacto(contacto);
+      contacto.setDuenio(this);});
+  }
 
   public DatosPersonales getDatosPersonales() {
     return datosPersonales;

@@ -17,7 +17,7 @@ public class RepositorioUsuariosTest {
   @Test
   public void existeUsuarioYaRegistrado() {
 
-    RepositorioUsuarios.getInstance().registrarAdministrador(willian);
+    RepositorioUsuarios.getInstance().registrarUsuario(willian);
     assertThrows(Exception.class, () -> RepositorioUsuarios.getInstance().existeUsuario(willian.getNombreUsuario()));
   }
 

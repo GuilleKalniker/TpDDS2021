@@ -10,20 +10,18 @@ import javax.persistence.*;
 @DiscriminatorValue("voluntario")
 public class Voluntario extends Usuario {
 
-  @Transient
-  private CentroDeRescate centroDeRescate;
-
-  public Voluntario(String nombreUsuario, String contrasenia, CentroDeRescate centroDeRescate) {
+  public Voluntario(String nombreUsuario, String contrasenia) {
     super(nombreUsuario, contrasenia);
-    this.centroDeRescate = centroDeRescate;
   }
+
+  public Voluntario() {}
 
   public void aprobarSolicitud(PublicacionMascotaPerdida solicitud) {
     solicitud.aceptarseEnElCentro();
   }
 
   public void rechazarSolicitud(PublicacionMascotaPerdida solicitudPublicacion){
-    centroDeRescate.eliminarSolicitud(solicitudPublicacion);
+    solicitudPublicacion.eliminarseEnElCentro();
   }
 
 }

@@ -19,7 +19,7 @@ import java.util.List;
 public class VoluntarioTest {
 
   private CentroDeRescate centroDeRescate = new CentroDeRescate(new Ubicacion(42.56, 864.23));
-  private Voluntario voluntarioPrueba = new Voluntario("panfleto32", "Sacerdocio369", centroDeRescate);
+  private Voluntario voluntarioPrueba = new Voluntario("panfleto32", "Sacerdocio369");
   private PublicacionMascotaPerdida solicitud = solicitudDePrueba();
 
   private PublicacionMascotaPerdida solicitudDePrueba() {

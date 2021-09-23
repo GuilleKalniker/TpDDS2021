@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class CentroDeRescateTest {
 
@@ -39,13 +40,11 @@ public class CentroDeRescateTest {
 
   @Test
   public void BuscamosElDueñoApartirDeUnaMascotaRegistrada(){
-    Duenio duenioDePrueba = new Duenio("juan4321", "guilloteelmaskpox2",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"), "nose 123"));
+    Duenio duenioDePrueba = new Duenio("juan4321", "guilloteelmaskpox2",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "DeNazareth"), "nose 123"));
     duenioDePrueba.registrarse();
     duenioDePrueba.registrarMascota(pepita, new CentroDeRescate(new Ubicacion(2.2,2.2)));
     assertTrue(this.centro.buscarDuenioApartirIDMascota(pepita.getID()).getNombreUsuario().equals(duenioDePrueba.getNombreUsuario()));
   }
-
-
 
   @Test
   public void identificoUnaMascotaIdentificaBien(){
@@ -71,61 +70,17 @@ public class CentroDeRescateTest {
 
     Assertions.assertEquals(centroCercano, RepositorioCentroDeRescate.getInstance().getCentroDeRescateMasCercanoA(new Ubicacion(0.0, 0.0)));
   }
-/*
-  @Test
-  public void AlNotificarSeEliminaElDatoMascotaPerdida(){
-    Duenio duenioDePrueba = new Duenio("juan4321", "guilloteelmaskpox2",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com")));
-    duenioDePrueba.registrarMascota(pepita, new CentroDeRescate());
-    pepitaPerdida.setID(pepita.getID());
-    this.centro.agregarDatosMascotaPerdida(pepitaPerdida);
-    this.centro.notificarMascotasDeLosUltimos10Dias();
-    assertTrue(this.centro.listaDatosMascotasPerdidasUltimosDiezDias().isEmpty());
-  }*/
 
-
-
-
-
-  /** Antiguos **/
-
-/*
-  @Test
-  public void seRegistroUnaMascotaCorrectamente() {
-
-    this.registrarleMascotaADuenio(duenioDePruebaUno);
-    assertEquals(RepositorioMascotas.getInstance().getMascotasRegistradas().size(), 1, 0);
-  }
-
-  @Test
-  public void listaDeIDsFuncionaAlTenerUnaMascotaRegistrada() {
-
-    this.registrarleMascotaADuenio(duenioDePruebaUno);
-    assertEquals(this.centro.obtenerListaDeIDs().size(), 1, 0);
-  }
-
-  @Test
-  public void seIdentificaCorrectamenteMascota() {
-
-    this.centro.agregarMascotaRegistrada(pepita);
-    assertEquals(CentroDeRescate.getInstance().identificarMascota(1), pepita);
-  }
-
-  @Test
-  public void siRegistroUnDuenioAumentaLaCantidad() {
-    Duenio duenio = new Duenio("juanito123", "guilloteelmaskpo",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com")));
-    assertEquals(RepositorioDuenios.getInstance().getDueniosRegistrados().size(),1);
-  }
-*/
 
   /** Funciones y definiciones **/
 
   private CentroDeRescate centro = new CentroDeRescate(new Ubicacion(2.2,2.2));
 
-  private Duenio duenioDePruebaUno = new Duenio("juanito123", "guilloteelmaskpo",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"), "nose 123"));
+  private Duenio duenioDePruebaUno = new Duenio("juanito123", "guilloteelmaskpo",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "DeNazareth"), "nose 123"));
 
-  private Duenio duenioDePruebaDos = new Duenio("pedritokpo1", "willirex777",new DatosPersonales("Pedro", "Martinez", LocalDate.now(), TipoDocumento.DNI, 20123457, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"), "nose 123"));
+  private Duenio duenioDePruebaDos = new Duenio("pedritokpo1", "willirex777",new DatosPersonales("Pedro", "Martinez", LocalDate.now(), TipoDocumento.DNI, 20123457, contactoDePrueba("Jesus", "DeNazareth"), "nose 123"));
 
-  private DatosPersonales datosRescastista = new DatosPersonales("Guillermo", "Francella", LocalDate.now(), TipoDocumento.DNI, 14235653, contactoDePrueba("Jesus", "ALSD", 1234, "ASD@hotmail.com"), "nose 123");
+  private DatosPersonales datosRescastista = new DatosPersonales("Guillermo", "Francella", LocalDate.now(), TipoDocumento.DNI, 14235653, contactoDePrueba("Jesus", "DeNazareth"), "nose 123");
 
   private FormularioMascotaPerdida pepitaPerdida = new FormularioMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<String>(), new Ubicacion(2.2,2.2), LocalDate.now(), "saasdasdasd");
 
@@ -141,9 +96,9 @@ public class CentroDeRescateTest {
     unDuenio.registrarMascota(mascota, new CentroDeRescate(new Ubicacion(2.2,2.2)));
   }
 
-  private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido, Integer telefono, String email){
+  private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido){
     ArrayList<Contacto> contactos = new ArrayList<>();
-    Contacto contacto = new Contacto(nombre, apellido, telefono, email);
+    Contacto contacto = new Contacto(nombre, apellido, 1145686431 , nombre.charAt(0) + apellido.toLowerCase() + "@frba.utn.edu.ar");
     contactos.add(contacto);
     return contactos;
   }

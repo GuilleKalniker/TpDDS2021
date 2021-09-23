@@ -1,17 +1,12 @@
 package domain.Repositorio;
 
-import Funciones.ValidadorContrasenias;
 import domain.Exceptions.IDNoSeCorrespondeException;
-import domain.Exceptions.UsuarioYaRegistradoException;
-import domain.Persona.Administrador;
+import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.Duenio;
 import domain.Persona.Usuario;
-import domain.Persona.Voluntario;
 
 import javax.persistence.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public class RepositorioUsuarios {
 
@@ -30,21 +25,9 @@ public class RepositorioUsuarios {
     AdapterJPA.commit();
   }
 
-  public void registrarDuenio(Duenio duenio) {
+  public void persistirContacto(Contacto contacto) {
     AdapterJPA.beginTransaction();
-    AdapterJPA.persist(duenio);
-    AdapterJPA.commit();
-  }
-
-  public void registrarAdministrador(Administrador administrador) {
-    AdapterJPA.beginTransaction();
-    AdapterJPA.persist(administrador);
-    AdapterJPA.commit();
-  }
-
-  public void registrarVoluntario(Voluntario voluntario) {
-    AdapterJPA.beginTransaction();
-    AdapterJPA.persist(voluntario);
+    AdapterJPA.persist(contacto);
     AdapterJPA.commit();
   }
 
@@ -62,12 +45,15 @@ public class RepositorioUsuarios {
     return voluntariosRegistrados.keySet();
   }*/
 
-
-  //TODO hacerlo apto para administradores y voluntarios. Propongo crearles una superclase abstracta Usuario.
   public Boolean existeUsuario(String nombreUsuario){
-    return getDuenioPorUsuario(nombreUsuario) != null;
+    TypedQuery<Usuario> query = AdapterJPA.entityManager().createQuery("select d from Usuario d where d.nombreUsuario = :username", Usuario.class);
+    query.setParameter("username", nombreUsuario);
+    return query.getResultList().size() > 0;
   }
 
+  public Usuario getUsuario(long id) {
+    return AdapterJPA.entityManager().find(Usuario.class, id);
+  }
 
   //TODO recibiria una mascota como parametro
   public Duenio getDuenioPorID(String ID) {
@@ -75,7 +61,7 @@ public class RepositorioUsuarios {
         .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException("No se encontro el duenio a partir del ID de la mascota"));
   }
 
-  public Usuario getDuenioPorUsuario(String nombreUsuario) {
+  public Usuario getUsuarioPorNombre(String nombreUsuario) {
     Usuario u;
     try {
       TypedQuery<Usuario> query = AdapterJPA.entityManager().createQuery("select d from Usuario d where d.nombreUsuario = :username", Usuario.class);
@@ -85,7 +71,6 @@ public class RepositorioUsuarios {
     catch(Exception e) {
       u = null;
     }
-
     return u;
   }
 }
