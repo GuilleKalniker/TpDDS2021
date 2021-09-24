@@ -48,7 +48,7 @@ public class RepositorioUsuarios {
   public Boolean existeUsuario(String nombreUsuario){
     TypedQuery<Usuario> query = AdapterJPA.entityManager().createQuery("select d from Usuario d where d.nombreUsuario = :username", Usuario.class);
     query.setParameter("username", nombreUsuario);
-    return query.getResultList().size() > 0;
+    return !query.getResultList().isEmpty();
   }
 
   public Usuario getUsuario(long id) {

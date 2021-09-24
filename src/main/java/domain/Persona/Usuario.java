@@ -3,6 +3,7 @@ package domain.Persona;
 import Funciones.ValidadorContrasenias;
 import domain.Exceptions.ContraseniaInvalidaException;
 import domain.Exceptions.UsuarioYaRegistradoException;
+import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Repositorio.RepositorioUsuarios;
 
 import javax.persistence.*;

@@ -7,37 +7,47 @@ import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioUsuarios;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
-import javax.persistence.TypedQuery;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioTest {
+public class UsuarioTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
+
+    @BeforeEach
+    public void antes() {
+        AdapterJPA.beginTransaction();
+    }
+
+    @AfterEach
+    public void despues() {
+        AdapterJPA.rollback();
+    }
+
 
     @Test
     public void sePuedeVerificarLaContraseniaHasheadaDeUnUsuario() {
         Usuario u = new Voluntario("Pepe", "churras-89-quito");
-        u.registrarse();
-
         assert(u.matcheaContrasenia("churras-89-quito"));
     }
 
     @Test
     public void unAdministradorSePersiste() {
         Usuario a = new Administrador("Juan", "juan12345_xX");
-        a.registrarse();
+        AdapterJPA.persist(a);
 
         Assertions.assertEquals(a, RepositorioUsuarios.getInstance().getUsuario(a.getId()));
     }
 
     @Test
     public void unDuenioSePersiste() {
-        Usuario d = crearDuenio("Pancho", "Picasso", "Calle Falsa 123");
-        d.registrarse();
+        Duenio d = crearDuenio("Pancho", "Picasso", "Calle Falsa 123");
+
+        AdapterJPA.persist(d);
+        d.getDatosPersonales().getContactos().forEach(contacto -> AdapterJPA.persist(contacto));
 
         Assertions.assertEquals(d, RepositorioUsuarios.getInstance().getUsuario(d.getId()));
     }
@@ -45,7 +55,8 @@ public class UsuarioTest {
     @Test
     public void noSePuedenCrearUsuariosRepetidos() {
         Usuario a = new Voluntario("marcelin", "Churrascoide!!777");
-        RepositorioUsuarios.getInstance().registrarUsuario(a);
+
+        AdapterJPA.persist(a);
 
         Assertions.assertThrows(UsuarioYaRegistradoException.class, () -> {new Administrador("marcelin", "adsajsj12_@12");});
     }
