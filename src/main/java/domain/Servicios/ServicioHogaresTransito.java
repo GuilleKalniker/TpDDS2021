@@ -1,7 +1,7 @@
 package domain.Servicios;
 
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
+//import com.google.gson.Gson;
+//import com.google.gson.stream.JsonReader;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 import domain.Repositorio.RepositorioMascotas;
@@ -12,7 +12,7 @@ import domain.Servicios.ClasesParaLaConsulta.UsuariosResponse;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+//import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.File;
 import java.io.FileReader;
@@ -31,11 +31,11 @@ public class ServicioHogaresTransito {
   private String token;
 
   private ServicioHogaresTransito() {
-    this.retrofit = new Retrofit.Builder()
+    /*this.retrofit = new Retrofit.Builder()
         .baseUrl(urlApi)
         .addConverterFactory(GsonConverterFactory.create())
         .build();
-    this.token = getToken("src/lista_contraseñas_no_seguras/bearer_token.json");
+    this.token = getToken("src/lista_contraseñas_no_seguras/bearer_token.json");*/
   }
 
   public static ServicioHogaresTransito getInstance() {
@@ -86,7 +86,7 @@ public class ServicioHogaresTransito {
   }
 
   private String getToken(String path) {
-    try {
+    /*try {
       File bearerTokenFile = new File(path);
       Gson gson = new Gson();
       JsonReader reader = new JsonReader(new FileReader(bearerTokenFile));
@@ -94,7 +94,9 @@ public class ServicioHogaresTransito {
       return token.getToken();
     } catch (Exception e) {
       throw new RuntimeException("No se encontro el archivo");
-    }
+    }*/
+
+    return "Cerro el server :(";
   }
 
   public List<HogarTransitoAdaptado> filtrarHogaresPara(FormularioMascotaPerdida formularioMascotaPerdida, Double radio){

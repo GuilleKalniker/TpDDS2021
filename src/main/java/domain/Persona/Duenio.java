@@ -31,6 +31,7 @@ public class Duenio extends Usuario {
   private DatosPersonales datosPersonales;
   @Transient
   private List<String> mascotasID = new ArrayList<>();
+
   @Transient
   private List<Notificador> notificadores = new ArrayList<>();
 
@@ -56,6 +57,10 @@ public class Duenio extends Usuario {
 
   public List<String> getMascotasID() {
     return mascotasID;
+  }
+
+  public void setNotificadores(List<Notificador> notificadores) {
+    this.notificadores = notificadores;
   }
 
   /**

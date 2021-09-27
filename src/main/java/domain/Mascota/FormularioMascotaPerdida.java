@@ -38,7 +38,7 @@ public class FormularioMascotaPerdida {
   public FormularioMascotaPerdida() {}
 
   public DatosPersonales getDatosRescastista() {
-    return getDatosRescastista();
+    return datosRescastista;
   }
 
   public FormularioMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<String> fotosEncuentro, Ubicacion lugarEncuentro, LocalDate fechaEncuentro) {

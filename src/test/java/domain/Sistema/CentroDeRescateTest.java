@@ -1,5 +1,6 @@
 package domain.Sistema;
 
+import domain.Exceptions.RespuestaInvalidaException;
 import domain.Mascota.*;
 import domain.Mascota.AtributosMascota.Sexo;
 import domain.Mascota.AtributosMascota.TipoMascota;
@@ -8,23 +9,38 @@ import domain.Persona.*;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
+import domain.Pregunta.Pregunta;
+import domain.Publicacion.PublicacionAdopcion;
+import domain.Publicacion.PublicacionAdoptante;
+import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
+import domain.Servicios.Notificadores.Mail.Mensaje;
+import domain.Servicios.Notificadores.Notificador;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class CentroDeRescateTest {
 
+  Notificador notificadorMock = mock(Notificador.class);
+
   @BeforeEach
   void init() {
     //TODO borrar la base de datos de prueba ¿?
+
+    centro.setNotificador(notificadorMock);
+    List<Notificador> notificadores = new ArrayList<>();
+    notificadores.add(notificadorMock);
+    duenioDePruebaUno.setNotificadores(notificadores);
   }
 
   /** Nuevos **/
@@ -71,6 +87,75 @@ public class CentroDeRescateTest {
     Assertions.assertEquals(centroCercano, RepositorioCentroDeRescate.getInstance().getCentroDeRescateMasCercanoA(new Ubicacion(0.0, 0.0)));
   }
 
+  @Test
+  public void seEnviaNotificacionSemanal() {
+    // Necesito agregar un interesado en adoptar, o sea, una publicacion adoptante
+
+    PublicacionAdoptante interesado = new PublicacionAdoptante(duenioDePruebaUno, centro);
+    centro.nuevoInteresadoEnAdoptar(interesado);
+
+    List<Pregunta> preguntas = new ArrayList<>();
+    preguntas.add(preguntaValida);
+
+    centro.generarPublicacionAdopcion(preguntas, "1");
+
+    centro.notificacionSemanal();
+
+    verify(notificadorMock).notificar(any());
+  }
+
+  @Test
+  public void seAvisaSiSeEncontroMascota() {
+    // Necesito unos datos de duenio y una publicacion mascota perdida
+
+    DatosPersonales datosDuenio = new DatosPersonales("Pedro", "Martinez", LocalDate.now(), TipoDocumento.DNI, 20123457, contactoDePrueba("Jesus", "DeNazareth"), "nose 123");
+    PublicacionMascotaPerdida publicacionMascotaPerdida = new PublicacionMascotaPerdida(new FormularioMascotaPerdida(datosRescastista, "?", new ArrayList<String>(), new Ubicacion(5.0, 5.0), LocalDate.now(), "1"));
+
+    centro.publicacionMascotaPerdidaMatcheada(datosDuenio, publicacionMascotaPerdida);
+
+    verify(notificadorMock).notificarRescatista(datosRescastista, datosDuenio);
+  }
+
+  @Test
+  public void seAvisaSiAlguienDeseaAdoptarMascota() {
+    // Necesito datos de algun adoptante y una publicacion de adopcion
+
+    List<Pregunta> preguntas = new ArrayList<>();
+    preguntas.add(preguntaValida);
+
+    // TODO: FALTA AGREGAR COMPORTAMIENTO CON SQL EN REPO, ADEMAS DE ASOCIAR EL ID
+    duenioDePruebaUno.registrarMascota(pepita, centro);
+    pepita.setID("1");
+
+    PublicacionAdopcion publicacionAdopcion = new PublicacionAdopcion(preguntas, "1");
+    centro.publicacionAdopcionMatcheada(datosRescastista, publicacionAdopcion);
+
+    verify(notificadorMock).notificar(any());
+  }
+
+  // Temporales hasta cambio de preguntas
+  @Test
+  public void seAgregaPreguntaValida() {
+    centro.agregarPregunta(preguntaValida);
+
+    assertEquals(centro.getPreguntasDeAdopcion().size(), 1, 0);
+  }
+
+  @Test
+  public void soloSeAgregaPreguntaSiTieneRespuestas() {
+
+    centro.agregarPregunta(preguntaInvalida);
+    assertThrows(RespuestaInvalidaException.class, () -> {centro.agregarPregunta(preguntaInvalida);});
+  }
+
+  @Test
+  public void seQuitaPregunta() {
+    centro.agregarPregunta(preguntaValida);
+    centro.quitarPregunta(preguntaValida);
+
+    assertEquals(centro.getPreguntasDeAdopcion().size(), 0, 0);
+  }
+
 
   /** Funciones y definiciones **/
 
@@ -89,6 +174,19 @@ public class CentroDeRescateTest {
   private MascotaRegistrada pepita = new MascotaRegistrada(TipoMascota.PERRO, "Pepita", "Pepisauria", 9, Sexo.FEMENINO, "Perra corgi muy linda", new ArrayList<String>(),new ArrayList<>());
 
   private MascotaRegistrada chinchulin = new MascotaRegistrada(TipoMascota.PERRO, "Chinchulin", "Asadito", 9, Sexo.MASCULINO, "Perro shiba muy lindo", new ArrayList<String>(),new ArrayList<>());
+
+  private List<String> respuestas() {
+    List<String> respuestas = new ArrayList<>();
+    respuestas.add("Si");
+    respuestas.add("No");
+    respuestas.add("Mas o menos");
+
+    return respuestas;
+  }
+
+  private Pregunta preguntaValida = new Pregunta("Es lindo?", respuestas(), false);
+
+  private Pregunta preguntaInvalida = new Pregunta("Es lindo?", new ArrayList<String>(), false);
 
 
   void registrarleMascotaADuenio(Duenio unDuenio) {

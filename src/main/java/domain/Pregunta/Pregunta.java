@@ -16,9 +16,9 @@ public class Pregunta {
 
   public Pregunta(String pregunta, List<String> posiblesRespuestas, Boolean esObligatoria) {
 
-    if (posiblesRespuestas.size() <= 1)
+    /*if (posiblesRespuestas.size() <= 1)
       throw new RespuestaInvalidaException("La cantidad minima de respuestas debe ser 2");
-
+    */
     this.pregunta = pregunta;
     this.esObligatoria = esObligatoria;
     this.posiblesRespuestas = posiblesRespuestas.stream().map(value -> value.toLowerCase().trim()).collect(Collectors.toList());
