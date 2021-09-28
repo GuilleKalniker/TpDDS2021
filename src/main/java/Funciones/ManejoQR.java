@@ -10,11 +10,12 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.FileInputStream;
+import java.lang.reflect.Array;
 import java.util.HashMap;
 
 public class ManejoQR {
 
-  public static String generarQR(String data, String fileName, Integer weidth, Integer height) {
+  public static String generarQR(long data, String fileName, Integer weidth, Integer height) {
 
     String ubicacionQr = "src/lista_contraseñas_no_seguras/QRs";
     String qrcodeFormat = "png";
@@ -23,7 +24,7 @@ public class ManejoQR {
       HashMap<EncodeHintType, String> hints = new HashMap<>();
       hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
       QRCodeWriter writer = new QRCodeWriter();
-      BitMatrix bitMatrix = writer.encode(data, BarcodeFormat.QR_CODE, weidth, height, hints);
+      BitMatrix bitMatrix = writer.encode(String.valueOf(data), BarcodeFormat.QR_CODE, weidth, height, hints);
 
       File file = new File(ubicacionQr, fileName+"."+qrcodeFormat);
       MatrixToImageWriter.writeToPath(bitMatrix, qrcodeFormat, file.toPath());

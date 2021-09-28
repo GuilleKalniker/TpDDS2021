@@ -43,7 +43,7 @@ public class PersistirCosasTest {
         contactos.add(c);
         DatosPersonales dp = new DatosPersonales("Rocket", "Launcher", LocalDate.of(1998, 12, 2), TipoDocumento.DNI, 38642215, contactos, "Johto 1995");
 
-        FormularioMascotaPerdida f = new FormularioMascotaPerdida(dp, "Hecho mierda", new ArrayList<>(), new Ubicacion(214.83,53.75), LocalDate.of(2021, 9, 22), "3");
+        FormularioMascotaPerdida f = new FormularioMascotaPerdida(dp, "Hecho mierda", new ArrayList<>(), new Ubicacion(214.83,53.75), LocalDate.of(2021, 9, 22), 3);
 
         return new PublicacionMascotaPerdida(f);
 

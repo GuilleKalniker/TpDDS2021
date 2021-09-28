@@ -1,18 +1,13 @@
 package domain.Persona;
 
 
-import Funciones.ValidadorContrasenias;
-import domain.Exceptions.ContraseniaInvalidaException;
 import domain.Exceptions.IDNoSeCorrespondeException;
 import domain.Exceptions.RespuestasIncompletasException;
-import domain.Exceptions.UsuarioYaRegistradoException;
-import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Pregunta.Pregunta;
-import domain.Publicacion.PublicacionAdopcion;
 import domain.Publicacion.PublicacionAdoptante;
-import domain.Repositorio.RepositorioCentroDeRescate;
+import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
 import domain.Servicios.Notificadores.Mail.Mensaje;
@@ -22,6 +17,7 @@ import domain.Sistema.CentroDeRescate;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @DiscriminatorValue("duenio")
@@ -29,8 +25,8 @@ public class Duenio extends Usuario {
 
   @Embedded
   private DatosPersonales datosPersonales;
-  @Transient
-  private List<String> mascotasID = new ArrayList<>();
+  @OneToMany(mappedBy = "duenio")
+  private List<MascotaRegistrada> mascotas = new ArrayList<>();
 
   @Transient
   private List<Notificador> notificadores = new ArrayList<>();
@@ -55,8 +51,8 @@ public class Duenio extends Usuario {
     return datosPersonales;
   }
 
-  public List<String> getMascotasID() {
-    return mascotasID;
+  public List<MascotaRegistrada> getMascotas() {
+    return mascotas;
   }
 
   public void setNotificadores(List<Notificador> notificadores) {
@@ -67,12 +63,15 @@ public class Duenio extends Usuario {
   * registrarMascota(1)
   * Agrega a la mascota recien registrada a la lista de mascotas del duenio y del centro de rescate.
   */
-  public void registrarMascota(MascotaRegistrada mascota, CentroDeRescate centroDeRescate){
-    this.mascotasID.add(RepositorioMascotas.getInstance().registrarMascota(mascota));
+  public void registrarMascota(MascotaRegistrada mascota){
+    RepositorioMascotas.getInstance().registrarMascota(mascota);
+    AdapterJPA.beginTransaction();
+    this.mascotas.add(mascota);
+    AdapterJPA.commit();
   }
 
-  public boolean tieneA(String IDMascota){
-    return this.getMascotasID().contains(IDMascota);
+  public boolean tieneA(long IDMascota){
+    return this.getMascotas().stream().map(mascota -> mascota.getID()).collect(Collectors.toList()).contains(IDMascota);
   }
 
   /**
@@ -108,8 +107,8 @@ public class Duenio extends Usuario {
     });
   }
 
-  public void darEnAdopcionA(String ID, CentroDeRescate centroDeRescate) {
-    if (!mascotasID.contains(ID)) {
+  public void darEnAdopcionA(MascotaRegistrada mascota, CentroDeRescate centroDeRescate) {
+    if (!mascotas.contains(mascota)) {
       throw new IDNoSeCorrespondeException("El ID de la mascota enviado no pertenece a una mascota propia");
     }
 
@@ -122,7 +121,7 @@ public class Duenio extends Usuario {
       throw new RespuestasIncompletasException();
     }
 
-    centroDeRescate.generarPublicacionAdopcion(preguntasCentro, ID);
+    centroDeRescate.generarPublicacionAdopcion(preguntasCentro, mascota);
   }
 
   public void contestarPregunta(Pregunta pregunta) {

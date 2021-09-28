@@ -4,7 +4,9 @@ import domain.Exceptions.IDInvalidoException;
 import domain.Exceptions.IDNoSeCorrespondeException;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
+import domain.Persona.Duenio;
 
+import javax.persistence.TypedQuery;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -14,20 +16,16 @@ import java.util.stream.Collectors;
 
 public class RepositorioMascotas {
 
-  private List<MascotaRegistrada> mascotasRegistradas = new ArrayList<>();
-  private List<FormularioMascotaPerdida> datosMascotasPerdidas = new ArrayList<>();
   private static final RepositorioMascotas INSTANCE = new RepositorioMascotas();
 
   public static RepositorioMascotas getInstance() {
     return INSTANCE;
   }
 
-  public void addMascota(MascotaRegistrada mascota){
-    this.getMascotasRegistradas().add(mascota);
-  }
-
   public List<MascotaRegistrada> getMascotasRegistradas() {
-    return this.mascotasRegistradas;
+
+    TypedQuery<MascotaRegistrada> query = AdapterJPA.entityManager().createQuery("select m from MascotaRegistrada m", MascotaRegistrada.class);
+    return query.getResultList();
   }
 
   public void agregarDatosMascotaPerdida(FormularioMascotaPerdida datos) {
@@ -35,33 +33,30 @@ public class RepositorioMascotas {
   }
 
   public List<FormularioMascotaPerdida> getDatosMascotasPerdidas() {
-    return datosMascotasPerdidas;
+
+    TypedQuery<FormularioMascotaPerdida> query = AdapterJPA.entityManager().createQuery("select m from FormularioMascotaPerdida m", FormularioMascotaPerdida.class);
+    return query.getResultList();
   }
 
   /** MASCOTAS REGISTRADAS **/
 
-  public String registrarMascota(MascotaRegistrada mascota){
-    mascota.setID(this.generarId());
-    this.addMascota(mascota);
-    return mascota.getID();
+  public void registrarMascota(MascotaRegistrada mascota){
+    AdapterJPA.beginTransaction();
+    AdapterJPA.persist(mascota);
+    AdapterJPA.commit();
   }
 
-  public MascotaRegistrada buscarMascotaPorID(String ID) {
-    if (ID == null) {
-      throw new IDInvalidoException();
-    } else {
-        return this.getMascotasRegistradas()
-          .stream().filter(mascota -> mascota.coincideID(ID))
-          .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException("No se encontro la mascota por el ID"));
-    }
+  public MascotaRegistrada buscarMascotaPorID(long ID) {
+    return AdapterJPA.entityManager().find(MascotaRegistrada.class, ID);
+
   }
 
-  public Boolean existeMascota(String ID) {
+  public Boolean existeMascota(long ID) {
     return this.buscarMascotaPorID(ID).getID() == ID;
   }
 
   /** DATOS MASCOTAS PERDIDAS **/
-
+/*
   public void eliminarDatosMascotaPerdida(String ID) {
     this.getDatosMascotasPerdidas()
         .removeIf(datosMascotaPerdida -> datosMascotaPerdida.getIDMascotaPerdida() == ID);
@@ -77,7 +72,7 @@ public class RepositorioMascotas {
     return this.getDatosMascotasPerdidas().stream()
         .filter(datosMascotaPerdida -> this.pasoCantidadDiasEntre(datosMascotaPerdida.getFechaEncuentro(), LocalDate.now(), 10))
         .collect(Collectors.toList());
-  }
+  }*/
 
   /**
    * Boolean pasoCantidadDiasEntre(fecha1, fecha2, cantidadDias)
@@ -87,8 +82,5 @@ public class RepositorioMascotas {
     return ChronoUnit.DAYS.between(unaFecha, otraFecha) <= cantidadDias;
   }
 
-  public static String generarId(){
-    return UUID.randomUUID().toString().replace("-", "");
-  }
 
 }

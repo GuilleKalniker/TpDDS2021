@@ -18,7 +18,6 @@ public class MascotaTest {
 
   @Test
   public void reconocePropioQR() {
-    pepita.setID("1");
     pepita.generarQR();
 
     assert(pepita.esMiQR("1"));

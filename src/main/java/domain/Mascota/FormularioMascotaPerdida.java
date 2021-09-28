@@ -3,15 +3,17 @@ package domain.Mascota;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Persona.AtributosPersona.DatosPersonales;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Embeddable
+@Entity
+@Table(name = "formularioMascotaPerdida")
 public class FormularioMascotaPerdida {
+  @Id
+  @GeneratedValue
+  private long id;
+
   @Embedded
   private DatosPersonales datosRescastista;
   private String descripcionEstado;
@@ -24,9 +26,11 @@ public class FormularioMascotaPerdida {
 
   @Column(columnDefinition = "DATE")
   private LocalDate fechaEncuentro;
-  private String mascotaID;
 
-  public FormularioMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<String> fotosEncuentro, Ubicacion lugarEncuentro, LocalDate fechaEncuentro, String mascotaID) {
+  // TODO: Esto puede ser NULL
+  private long mascotaID;
+
+  public FormularioMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<String> fotosEncuentro, Ubicacion lugarEncuentro, LocalDate fechaEncuentro, long mascotaID) {
     this.datosRescastista = datosRescastista;
     this.descripcionEstado = descripcionEstado;
     this.fotosEncuentro = fotosEncuentro;
@@ -37,10 +41,6 @@ public class FormularioMascotaPerdida {
 
   public FormularioMascotaPerdida() {}
 
-  public DatosPersonales getDatosRescastista() {
-    return datosRescastista;
-  }
-
   public FormularioMascotaPerdida(DatosPersonales datosRescastista, String descripcionEstado, List<String> fotosEncuentro, Ubicacion lugarEncuentro, LocalDate fechaEncuentro) {
     this.datosRescastista = datosRescastista;
     this.descripcionEstado = descripcionEstado;
@@ -48,8 +48,10 @@ public class FormularioMascotaPerdida {
     this.lugarEncuentro = lugarEncuentro;
     this.fechaEncuentro = fechaEncuentro;
   }
-
-  public String getIDMascotaPerdida() {
+  public DatosPersonales getDatosRescastista() {
+    return datosRescastista;
+  }
+  public long getIDMascotaPerdida() {
     return this.mascotaID;
   }
 

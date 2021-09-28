@@ -4,6 +4,7 @@ import Funciones.ManejoQR;
 import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Mascota.AtributosMascota.Sexo;
 import domain.Mascota.AtributosMascota.TipoMascota;
+import domain.Persona.Duenio;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,8 +18,6 @@ public class MascotaRegistrada {
   @GeneratedValue
   private long id;
 
-  private String ID;
-
   @Enumerated
   private TipoMascota tipo;
 
@@ -26,6 +25,8 @@ public class MascotaRegistrada {
   private String apodo;
   private Integer edad;
 
+  @ManyToOne
+  private Duenio duenio;
   @Enumerated
   private Sexo sexo;
 
@@ -67,16 +68,13 @@ public class MascotaRegistrada {
     fotos.add(url);
   }
 
-  public void setID(String ID) {
-    this.ID = ID;
+
+  public long getID(){
+    return this.id;
   }
 
-  public String getID(){
-    return this.ID;
-  }
-
-  public Boolean coincideID(String ID) {
-    return this.ID == ID;
+  public Boolean coincideID(long ID) {
+    return this.getID() == ID;
   }
 
   public String generarQR() {
@@ -88,6 +86,10 @@ public class MascotaRegistrada {
   }
 
   public Boolean esMiQR(String pathQR){
-    return this.leerQR(pathQR) == this.getID();
+    return this.leerQR(pathQR) == String.valueOf(this.getID());
+  }
+
+  public Duenio getDuenio() {
+    return duenio;
   }
 }

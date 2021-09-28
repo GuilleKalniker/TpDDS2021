@@ -1,6 +1,7 @@
 package domain.Repositorio;
 
 import domain.Exceptions.IDNoSeCorrespondeException;
+import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.Duenio;
 import domain.Persona.Usuario;
@@ -55,10 +56,13 @@ public class RepositorioUsuarios {
     return AdapterJPA.entityManager().find(Usuario.class, id);
   }
 
-  //TODO recibiria una mascota como parametro
-  public Duenio getDuenioPorID(String ID) {
-    return getDueniosRegistrados().stream().filter(duenio -> duenio.tieneA(ID))
-        .findFirst().orElseThrow(() -> new IDNoSeCorrespondeException("No se encontro el duenio a partir del ID de la mascota"));
+  public Duenio getDuenioPorID(long ID) {
+    try {
+      MascotaRegistrada mascota = AdapterJPA.entityManager().find(MascotaRegistrada.class, ID);
+      return mascota.getDuenio();
+    } catch (NullPointerException e){
+      throw new IDNoSeCorrespondeException("No se encontro el duenio a partir del ID de la mascota");
+    }
   }
 
   public Usuario getUsuarioPorNombre(String nombreUsuario) {

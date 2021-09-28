@@ -101,17 +101,17 @@ public class CentroDeRescate {
 
   /** FUNCIONES PARA MASCOTAS REGISTRADAS */
 
-  public MascotaRegistrada buscarMascota(String ID){
+  public MascotaRegistrada buscarMascota(long ID){
     return RepositorioMascotas.getInstance().buscarMascotaPorID(ID);
   }
 
-  public Boolean existeMascota(String ID) {
+  public Boolean existeMascota(long ID) {
     return RepositorioMascotas.getInstance().existeMascota(ID);
   }
 
   /** FUNCIONES QUE SE COMUNICAN CON EL ADAPATER DE REPOSITORIO USUARIOS */
 
-  public Duenio buscarDuenioApartirIDMascota(String ID){ // TODO: Pensar si un try-catch tiene sentido
+  public Duenio buscarDuenioApartirIDMascota(long ID){ // TODO: Pensar si un try-catch tiene sentido
     return RepositorioUsuarios.getInstance().getDuenioPorID(ID);
   }
 
@@ -145,7 +145,7 @@ public class CentroDeRescate {
   }
 
   public void publicacionAdopcionMatcheada(DatosPersonales datosAdoptante, PublicacionAdopcion publicacionAdopcion) {
-    Duenio duenio = buscarDuenioApartirIDMascota(publicacionAdopcion.getId());
+    Duenio duenio = buscarDuenioApartirIDMascota(publicacionAdopcion.getID());
     duenio.notificar("A un adoptante le interesó su publicacion de adopción de su mascota...",
         "El adoptante se llama" + datosAdoptante.getNombre() + datosAdoptante.getApellido()); // Deberia pasarle contacto
   }
@@ -171,8 +171,8 @@ public class CentroDeRescate {
     interesadosEnAdoptar.remove(adoptante);
   }
 
-  public void generarPublicacionAdopcion(List<Pregunta> preguntasRespondidas, String id) {
-    publicacionesAdopcion.add(new PublicacionAdopcion(preguntasRespondidas, id));
+  public void generarPublicacionAdopcion(List<Pregunta> preguntasRespondidas, MascotaRegistrada mascota) {
+    publicacionesAdopcion.add(new PublicacionAdopcion(preguntasRespondidas, mascota));
   }
 
   public void notificacionSemanal() {

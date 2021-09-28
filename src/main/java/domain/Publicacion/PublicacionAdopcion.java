@@ -2,6 +2,7 @@ package domain.Publicacion;
 
 import domain.Exceptions.PublicacionAdopcionInvalidaException;
 import domain.Exceptions.SinContactosException;
+import domain.Mascota.MascotaRegistrada;
 import domain.Pregunta.Pregunta;
 import domain.Sistema.CentroDeRescate;
 
@@ -9,22 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PublicacionAdopcion {
-  private String id;
+  private MascotaRegistrada mascota;
   private List<Pregunta> preguntas;
 
-  public PublicacionAdopcion(List<Pregunta> preguntasRespondidas, String id) {
+  public PublicacionAdopcion(List<Pregunta> preguntasRespondidas, MascotaRegistrada mascota) {
 
     if(!preguntasRespondidas.stream().allMatch(pregunta -> pregunta.esValida()))
       throw new PublicacionAdopcionInvalidaException("Alguna pregunta obligatoria no fue respondida");
 
     this.preguntas = preguntasRespondidas;
-    this.id = id;
+    this.mascota = mascota;
   }
 
-  public String getId() {
-    return id;
+  public MascotaRegistrada getMascota() {
+    return mascota;
   }
-
+  public long getID(){
+    return mascota.getID();
+  }
   public List<Pregunta> getPreguntas() {
     return preguntas;
   }

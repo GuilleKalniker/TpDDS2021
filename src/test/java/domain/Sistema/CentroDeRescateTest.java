@@ -47,26 +47,19 @@ public class CentroDeRescateTest {
 
   @Test
   public void obtenemosUnaListaDeIDsAcordeALasMascotasRegistradas(){
-    String id_pepita = RepositorioMascotas.getInstance().registrarMascota(pepita);
-    String id_chinchulin = RepositorioMascotas.getInstance().registrarMascota(chinchulin);
+    RepositorioMascotas.getInstance().registrarMascota(pepita);
+    RepositorioMascotas.getInstance().registrarMascota(chinchulin);
 
-    assertTrue(this.centro.existeMascota(id_pepita));
-    assertTrue(this.centro.existeMascota(id_chinchulin));
+    assertTrue(this.centro.existeMascota(pepita.getID()));
+    assertTrue(this.centro.existeMascota(chinchulin.getID()));
   }
 
   @Test
   public void BuscamosElDueñoApartirDeUnaMascotaRegistrada(){
     Duenio duenioDePrueba = new Duenio("juan4321", "guilloteelmaskpox2",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "DeNazareth"), "nose 123"));
     duenioDePrueba.registrarse();
-    duenioDePrueba.registrarMascota(pepita, new CentroDeRescate(new Ubicacion(2.2,2.2)));
+    duenioDePrueba.registrarMascota(pepita);
     assertTrue(this.centro.buscarDuenioApartirIDMascota(pepita.getID()).getNombreUsuario().equals(duenioDePrueba.getNombreUsuario()));
-  }
-
-  @Test
-  public void identificoUnaMascotaIdentificaBien(){
-    String id = RepositorioMascotas.getInstance().registrarMascota(pepita);
-    MascotaRegistrada mascotaEncontrada = this.centro.buscarMascota(id);
-    assertEquals(pepita.getID(), mascotaEncontrada.getID());
   }
 
 
@@ -97,7 +90,7 @@ public class CentroDeRescateTest {
     List<Pregunta> preguntas = new ArrayList<>();
     preguntas.add(preguntaValida);
 
-    centro.generarPublicacionAdopcion(preguntas, "1");
+    centro.generarPublicacionAdopcion(preguntas, pepita);
 
     centro.notificacionSemanal();
 
@@ -109,7 +102,7 @@ public class CentroDeRescateTest {
     // Necesito unos datos de duenio y una publicacion mascota perdida
 
     DatosPersonales datosDuenio = new DatosPersonales("Pedro", "Martinez", LocalDate.now(), TipoDocumento.DNI, 20123457, contactoDePrueba("Jesus", "DeNazareth"), "nose 123");
-    PublicacionMascotaPerdida publicacionMascotaPerdida = new PublicacionMascotaPerdida(new FormularioMascotaPerdida(datosRescastista, "?", new ArrayList<String>(), new Ubicacion(5.0, 5.0), LocalDate.now(), "1"));
+    PublicacionMascotaPerdida publicacionMascotaPerdida = new PublicacionMascotaPerdida(new FormularioMascotaPerdida(datosRescastista, "?", new ArrayList<String>(), new Ubicacion(5.0, 5.0), LocalDate.now(), 1));
 
     centro.publicacionMascotaPerdidaMatcheada(datosDuenio, publicacionMascotaPerdida);
 
@@ -124,10 +117,11 @@ public class CentroDeRescateTest {
     preguntas.add(preguntaValida);
 
     // TODO: FALTA AGREGAR COMPORTAMIENTO CON SQL EN REPO, ADEMAS DE ASOCIAR EL ID
-    duenioDePruebaUno.registrarMascota(pepita, centro);
-    pepita.setID("1");
+    // TODO: Hace falta registrar?
+    duenioDePruebaUno.registrarMascota(pepita);
 
-    PublicacionAdopcion publicacionAdopcion = new PublicacionAdopcion(preguntas, "1");
+
+    PublicacionAdopcion publicacionAdopcion = new PublicacionAdopcion(preguntas, pepita);
     centro.publicacionAdopcionMatcheada(datosRescastista, publicacionAdopcion);
 
     verify(notificadorMock).notificar(any());
@@ -167,9 +161,9 @@ public class CentroDeRescateTest {
 
   private DatosPersonales datosRescastista = new DatosPersonales("Guillermo", "Francella", LocalDate.now(), TipoDocumento.DNI, 14235653, contactoDePrueba("Jesus", "DeNazareth"), "nose 123");
 
-  private FormularioMascotaPerdida pepitaPerdida = new FormularioMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<String>(), new Ubicacion(2.2,2.2), LocalDate.now(), "saasdasdasd");
+  private FormularioMascotaPerdida pepitaPerdida = new FormularioMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<String>(), new Ubicacion(2.2,2.2), LocalDate.now(), 123123123);
 
-  private FormularioMascotaPerdida chinchulinPerdido = new FormularioMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<String>(), new Ubicacion(2.2,2.2), LocalDate.now().minusDays(11), "asdsadadsaads");
+  private FormularioMascotaPerdida chinchulinPerdido = new FormularioMascotaPerdida(datosRescastista, "Bastante saludable", new ArrayList<String>(), new Ubicacion(2.2,2.2), LocalDate.now().minusDays(11), 212);
 
   private MascotaRegistrada pepita = new MascotaRegistrada(TipoMascota.PERRO, "Pepita", "Pepisauria", 9, Sexo.FEMENINO, "Perra corgi muy linda", new ArrayList<String>(),new ArrayList<>());
 
@@ -191,7 +185,7 @@ public class CentroDeRescateTest {
 
   void registrarleMascotaADuenio(Duenio unDuenio) {
     MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<String>(), new ArrayList<>());
-    unDuenio.registrarMascota(mascota, new CentroDeRescate(new Ubicacion(2.2,2.2)));
+    unDuenio.registrarMascota(mascota);
   }
 
   private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido){

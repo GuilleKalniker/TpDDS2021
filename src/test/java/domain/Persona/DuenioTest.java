@@ -1,19 +1,13 @@
 package domain.Persona;
 
 import domain.Exceptions.ContraseniaInvalidaException;
-import domain.Exceptions.NoHayPublicacionAptaException;
 import domain.Mascota.AtributosMascota.*;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
-import domain.Repositorio.RepositorioCentroDeRescate;
-import domain.Repositorio.RepositorioMascotas;
-import domain.Repositorio.RepositorioUsuarios;
-import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
-import domain.Sistema.ActivadorSemanal;
 import domain.Sistema.CentroDeRescate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -41,20 +34,20 @@ public class DuenioTest {
 
   @Test
   public void duenioInicialNoTieneMascotas() {
-    assert(duenioDePruebaUno.getMascotasID().isEmpty());
+    assert(duenioDePruebaUno.getMascotas().isEmpty());
   }
 
   @Test
   public void alAgregarleUnaMascotaAUnDuenioSuListaPoseeUnaMascota() {
     registrarleMascotaADuenio(duenioDePruebaUno);
-    assertEquals(duenioDePruebaUno.getMascotasID().size(), 1, 0);
+    assertEquals(duenioDePruebaUno.getMascotas().size(), 1, 0);
   }
 
   @Test
   public void unDuenioPuedeRegistrarMasDeUnaMascota() {
     registrarleMascotaADuenio(duenioDePruebaUno);
     registrarleOtraMascotaADuenio(duenioDePruebaUno);
-    assertEquals(duenioDePruebaUno.getMascotasID().size(), 2,0);
+    assertEquals(duenioDePruebaUno.getMascotas().size(), 2,0);
   }
 
   @Test
@@ -80,8 +73,8 @@ public class DuenioTest {
   @Test
   public void seGeneranLasPublicacionesDeAdopcion() {
     registrarleMascotaADuenio(duenioDePruebaUno);
-    String id = duenioDePruebaUno.getMascotasID().get(0);
-    duenioDePruebaUno.darEnAdopcionA(id, centroDeRescateDePrueba);
+    MascotaRegistrada mascota = duenioDePruebaUno.getMascotas().get(0);
+    duenioDePruebaUno.darEnAdopcionA(mascota, centroDeRescateDePrueba);
 
     assertEquals(1, centroDeRescateDePrueba.getPublicacionesAdopcion().size());
   }
@@ -103,12 +96,12 @@ public class DuenioTest {
 
   public void registrarleMascotaADuenio(Duenio unDuenio) {
     MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<String>(),new ArrayList<>());
-    unDuenio.registrarMascota(mascota, centroDeRescateDePrueba);
+    unDuenio.registrarMascota(mascota);
   }
 
   public void registrarleOtraMascotaADuenio(Duenio unDuenio) {
     MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Jorgito", "Alfajor", 10, Sexo.MASCULINO, "Perro labrador muy lindo", new ArrayList<String>(), new ArrayList<>());
-    unDuenio.registrarMascota(mascota, centroDeRescateDePrueba);
+    unDuenio.registrarMascota(mascota);
   }
 
   private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido, Integer telefono, String email){
