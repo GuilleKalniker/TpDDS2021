@@ -6,10 +6,11 @@ import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Publicacion.PublicacionMascotaPerdida;
-import domain.Repositorio.RepositorioCentroDeRescate;
+import domain.Repositorio.AdapterJPA;
 import domain.Sistema.CentroDeRescate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -33,14 +34,18 @@ public class VoluntarioTest {
 
   @BeforeEach
   public void init() {
-    RepositorioCentroDeRescate.getInstance().getCentrosDeRescateRegistrados().clear();
-
-    RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(centroDeRescate);
-
     centroDeRescate.getSolicitudesPublicacion().clear();
     centroDeRescate.getPublicacionesMascotaPerdidasSinID().clear();
 
     centroDeRescate.generarSolicitud(solicitud);
+
+    AdapterJPA.persist(centroDeRescate);
+    AdapterJPA.persist(solicitud);
+  }
+
+  @AfterEach
+  public void deinit() {
+    AdapterJPA.rollback();
   }
 
   @Test

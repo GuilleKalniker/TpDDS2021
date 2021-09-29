@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domain.Exceptions.PublicacionAdopcionInvalidaException;
+import domain.Mascota.AtributosMascota.Caracteristica;
+import domain.Mascota.AtributosMascota.Sexo;
+import domain.Mascota.AtributosMascota.TipoMascota;
+import domain.Mascota.MascotaRegistrada;
 import domain.Pregunta.Pregunta;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,26 +16,33 @@ import org.junit.jupiter.api.Test;
 
 public class PublicacionAdopcionTest {
 
+  public MascotaRegistrada crearMascota(String nombre) {
+    ArrayList<String> fotos = new ArrayList<>();
+    fotos.add("https://foto.com.ar");
+    fotos.add("https://foto2.com.gov");
+    return new MascotaRegistrada(TipoMascota.PERRO, nombre, nombre.substring(0, 2) + nombre.substring(0, 2).toLowerCase(),4, Sexo.FEMENINO, "Muerta de hambre", fotos, new ArrayList<Caracteristica>());
+  }
+
   @Test
   public void sePuedeCrearUnaPublicacionDeAdopcionCorrectamente() {
-    PublicacionAdopcion publicacion = new PublicacionAdopcion(listaPreguntas(false), "");
+    PublicacionAdopcion publicacion = new PublicacionAdopcion(listaPreguntas(false), crearMascota("pepita"));
     assertEquals(publicacion.getClass(), PublicacionAdopcion.class);
   }
 
   @Test
   public void noSePuedeCrearUnaPublicacionSiAlMenosUnaDeLasPreguntasObligatoriasNoFueRespondida() {
-    assertThrows(PublicacionAdopcionInvalidaException.class, () ->{ new PublicacionAdopcion(listaPreguntas(true), "");});
+    assertThrows(PublicacionAdopcionInvalidaException.class, () ->{ new PublicacionAdopcion(listaPreguntas(true), crearMascota("pepita"));});
   }
 
   @Test
   public void sePuedenObtenerLasRespuestasDeLasPreguntasDeLaPublicacion() {
-    PublicacionAdopcion publicacionAdopcion = new PublicacionAdopcion(listaDeDosPreguntas(), "");
+    PublicacionAdopcion publicacionAdopcion = new PublicacionAdopcion(listaDeDosPreguntas(), crearMascota("pepita"));
     assertEquals(publicacionAdopcion.obtenerRespuestas().size(), 2);
   }
 
   @Test
   public void sePuedeSaberSiUnaPublicacionMatcheaConTodosLosFiltros() {
-    PublicacionAdopcion publicacionAdopcion = new PublicacionAdopcion(listaDeDosPreguntas(), "");
+    PublicacionAdopcion publicacionAdopcion = new PublicacionAdopcion(listaDeDosPreguntas(), crearMascota("pepita"));
     List<String> filtros = new ArrayList<>();
     filtros.add("Gato");
     filtros.add("Patio");

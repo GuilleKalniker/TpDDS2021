@@ -65,9 +65,8 @@ public class DuenioTest {
 
   @Test
   public void unDuenioNoSePuedeCrearConContraseniasYUsuarioInvalido() {
-    Duenio duenio = new Duenio("moreeee", "12345",
-        new DatosPersonales("Morena", "Sisro", LocalDate.now(), TipoDocumento.DNI, 123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com"), "nose 123"));
-    Assertions.assertThrows(ContraseniaInvalidaException.class, () -> {duenio.registrarse();});
+    Assertions.assertThrows(ContraseniaInvalidaException.class, () -> {Duenio duenio = new Duenio("moreeee", "12345",
+        new DatosPersonales("Morena", "Sisro", LocalDate.now(), TipoDocumento.DNI, 123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com"), "nose 123"));;});
   }
 
   @Test

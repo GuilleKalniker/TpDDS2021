@@ -16,14 +16,15 @@ public class PublicacionMascotaPerdida {
     @Transient
     private CentroDeRescate centro;
 
-    @Embedded
+    @OneToOne
     private FormularioMascotaPerdida formularioMascotaPerdida;
-
 
     public PublicacionMascotaPerdida(FormularioMascotaPerdida formularioMascotaPerdida) {
        filtrarInformacionSensible(formularioMascotaPerdida);
        this.formularioMascotaPerdida = formularioMascotaPerdida;
     }
+
+    public PublicacionMascotaPerdida(){}
 
     public void aceptarseEnElCentro() {
          centro.aceptarSolicitud(this);

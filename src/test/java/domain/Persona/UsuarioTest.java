@@ -27,7 +27,6 @@ public class UsuarioTest extends AbstractPersistenceTest implements WithGlobalEn
         AdapterJPA.rollback();
     }
 
-
     @Test
     public void sePuedeVerificarLaContraseniaHasheadaDeUnUsuario() {
         Usuario u = new Voluntario("Pepe", "churras-89-quito");

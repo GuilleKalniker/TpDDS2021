@@ -5,6 +5,8 @@ import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.Duenio;
 import domain.Persona.Usuario;
+import domain.Persona.Voluntario;
+import domain.Persona.Administrador;
 
 import javax.persistence.*;
 import java.util.List;
@@ -37,14 +39,15 @@ public class RepositorioUsuarios {
     return query.getResultList();
   }
 
-  /* TODO
-  public Set<Administrador> getAdministradoresRegistrados() {
-    return administradoresRegistrados.keySet();
+  public List<Administrador> getAdministradoresRegistrados() {
+    TypedQuery<Administrador> query = AdapterJPA.entityManager().createQuery("select a from Administrador a", Administrador.class);
+    return query.getResultList();
   }
 
-  public Set<Voluntario> getVoluntariosRegistrados() {
-    return voluntariosRegistrados.keySet();
-  }*/
+  public List<Voluntario> getVoluntariosRegistrados() {
+    TypedQuery<Voluntario> query = AdapterJPA.entityManager().createQuery("select v from Voluntario v", Voluntario.class);
+    return query.getResultList();
+  }
 
   public Boolean existeUsuario(String nombreUsuario){
     TypedQuery<Usuario> query = AdapterJPA.entityManager().createQuery("select d from Usuario d where d.nombreUsuario = :username", Usuario.class);
