@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @Entity
 @DiscriminatorValue("duenio")
 public class Duenio extends Usuario {
-
   @Embedded
   private DatosPersonales datosPersonales;
   @OneToMany(mappedBy = "duenio")

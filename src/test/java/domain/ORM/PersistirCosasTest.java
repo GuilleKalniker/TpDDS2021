@@ -14,15 +14,27 @@ import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Sistema.CentroDeRescate;
+import net.bytebuddy.build.BuildLogger;
 import org.hibernate.mapping.Formula;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.jupiter.api.*;
+import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class PersistirCosasTest {
+    @BeforeEach
+    public void setup() {
+        AdapterJPA.beginTransaction();
+    }
+
+    @AfterEach
+    public void teardown() {
+        AdapterJPA.rollback();
+    }
 
     public Duenio crearDuenio(String nombre, String apellido, String direccion) {
         Contacto c = new Contacto("Andres", "Calamaro", 1138636324, "andres_calamaro@hotmail.com.ar");
@@ -54,10 +66,8 @@ public class PersistirCosasTest {
         Duenio d = crearDuenio("Ricardo", "Arjona", "Coso 1234");
         d.getDatosPersonales().getContactos().get(0).setDuenio(d);
 
-        AdapterJPA.beginTransaction();
         AdapterJPA.persist(d);
         AdapterJPA.persist(d.getDatosPersonales().getContactos().get(0));
-        AdapterJPA.commit();
 
         Assertions.assertEquals(d, AdapterJPA.entityManager().find(Duenio.class, d.getId()));
     }
@@ -76,9 +86,7 @@ public class PersistirCosasTest {
         m.getCaracteristicas().add(Caracteristica.RABIOSO);
         m.getCaracteristicas().add(Caracteristica.JUGUETON);
 
-        AdapterJPA.beginTransaction();
         AdapterJPA.persist(m);
-        AdapterJPA.commit();
     }
 
 
@@ -88,9 +96,7 @@ public class PersistirCosasTest {
 
         RepositorioCentroDeRescate.getInstance().registrarCentroDeRescate(centro);
 
-        AdapterJPA.beginTransaction();
         centro.setUbicacion(new Ubicacion(1.0, 2.0));
-        AdapterJPA.commit();
 
         List<CentroDeRescate> lista = RepositorioCentroDeRescate.getInstance().getCentrosDeRescateRegistrados();
 
@@ -101,8 +107,6 @@ public class PersistirCosasTest {
     public void sePersistenPublicacionesMascotasPerdidas() {
         PublicacionMascotaPerdida p = crearPublicacion();
 
-        AdapterJPA.beginTransaction();
         AdapterJPA.persist(p);
-        AdapterJPA.commit();
     }
 }
