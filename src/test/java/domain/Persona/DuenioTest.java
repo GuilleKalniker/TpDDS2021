@@ -78,6 +78,25 @@ public class DuenioTest {
     assertEquals(1, centroDeRescateDePrueba.getPublicacionesAdopcion().size());
   }
 
+  @Test
+  public void seAnotaComoAdoptante() {
+    duenioDePruebaUno.mostrarIntencionDeAdopcion(centroDeRescateDePrueba);
+
+    assertEquals(centroDeRescateDePrueba.getInteresadosEnAdoptar().size(), 1, 0);
+  }
+
+  @Test
+  public void tieneUnaMascota() {
+
+    MascotaRegistrada pepito = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<String>(),new ArrayList<>());
+
+    duenioDePruebaUno.registrarMascota(pepito);
+
+    long idPepito = pepito.getID();
+
+    assert(duenioDePruebaUno.tieneA(idPepito));
+  }
+
   //TODO ver como testear luego de quitar la excepcion
   /*
   @Test

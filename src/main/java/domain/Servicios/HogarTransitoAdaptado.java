@@ -45,6 +45,7 @@ public class HogarTransitoAdaptado {
   public Boolean admiteTipo(TipoMascota tipo){
     return this.tiposMascotaAdmitidos.contains(tipo);
   }
+
   public Boolean admiteTamanio(List<Caracteristica> caracteristicasMascota){
     if(!this.tienePatio){
       return caracteristicasMascota.contains(Caracteristica.CHICO);

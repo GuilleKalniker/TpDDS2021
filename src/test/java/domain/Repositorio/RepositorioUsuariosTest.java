@@ -7,6 +7,8 @@ import domain.Persona.Administrador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 public class RepositorioUsuariosTest {
 
   @BeforeEach

@@ -99,6 +99,10 @@ public class CentroDeRescate {
     return publicacionesAdopcion;
   }
 
+  public List<PublicacionAdoptante> getInteresadosEnAdoptar() {
+    return interesadosEnAdoptar;
+  }
+
   /** FUNCIONES PARA MASCOTAS REGISTRADAS */
 
   public MascotaRegistrada buscarMascota(long ID){
