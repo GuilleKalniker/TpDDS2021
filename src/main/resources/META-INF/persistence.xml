@@ -15,7 +15,7 @@
         <class>domain.Persona.AtributosPersona.Contacto</class>
         <class>domain.Mascota.MascotaRegistrada</class>
         <class>domain.Sistema.CentroDeRescate</class>
-        <class>converters.LocalDateAttributeConverter.java</class>
+        <class>converters.LocalDateAttributeConverter</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
@@ -23,7 +23,7 @@
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/rescate_de_patitas?serverTimezone=UTC" />
             <property name="hibernate.connection.username" value="root" />
-            <property name="hibernate.connection.password" value="morena99" />
+            <property name="hibernate.connection.password" value="guille99" />
 
             <property name="hibernate.show_sql" value="true" />
             <!-- Enable the logging of all the generated SQL statements to the console -->

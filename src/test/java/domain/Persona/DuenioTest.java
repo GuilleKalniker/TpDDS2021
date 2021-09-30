@@ -6,9 +6,11 @@ import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
+import domain.Repositorio.AdapterJPA;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
 import domain.Sistema.CentroDeRescate;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,11 +27,16 @@ public class DuenioTest {
 
   @BeforeEach
   void init() {
+    AdapterJPA.beginTransaction();
     ServicioHogaresTransito servicioMock = mock(ServicioHogaresTransito.class);
     Notificador notificadorMock = mock(Notificador.class);
 
     centroDeRescateDePrueba.setServicioHogaresTransito(servicioMock);
     centroDeRescateDePrueba.setNotificador(notificadorMock);
+  }
+  @AfterEach
+  void deinit(){
+    AdapterJPA.rollback();
   }
 
   @Test

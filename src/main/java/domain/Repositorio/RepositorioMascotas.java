@@ -41,9 +41,7 @@ public class RepositorioMascotas {
   /** MASCOTAS REGISTRADAS **/
 
   public void registrarMascota(MascotaRegistrada mascota){
-    AdapterJPA.beginTransaction();
     AdapterJPA.persist(mascota);
-    AdapterJPA.commit();
   }
 
   public MascotaRegistrada buscarMascotaPorID(long ID) {

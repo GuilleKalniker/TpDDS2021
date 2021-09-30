@@ -64,6 +64,8 @@ public class Duenio extends Usuario {
   public void registrarMascota(MascotaRegistrada mascota){
     RepositorioMascotas.getInstance().registrarMascota(mascota);
     this.mascotas.add(mascota);
+    mascota.setDuenio(this);
+
   }
 
   public boolean tieneA(long IDMascota){
@@ -126,7 +128,7 @@ public class Duenio extends Usuario {
   }
 
   public void mostrarIntencionDeAdopcion(CentroDeRescate centroDeRescate) {
-    PublicacionAdoptante publicacionAdoptante = new PublicacionAdoptante(this, centroDeRescate);
+    PublicacionAdoptante publicacionAdoptante = new PublicacionAdoptante(this);
     centroDeRescate.nuevoInteresadoEnAdoptar(publicacionAdoptante);
   }
 }

@@ -77,7 +77,8 @@ public class MascotaRegistrada {
     return this.getID() == ID;
   }
 
-  public String generarQR() {
+  //TODO: Ver que hacemos con esto
+ /* public String generarQR() {
     return ManejoQR.generarQR(this.getID(), this.getNombre(), 500, 500);
   }
 
@@ -88,8 +89,12 @@ public class MascotaRegistrada {
   public Boolean esMiQR(String pathQR){
     return this.leerQR(pathQR) == String.valueOf(this.getID());
   }
-
+  */
   public Duenio getDuenio() {
     return duenio;
+  }
+
+  public void setDuenio(Duenio duenio) {
+    this.duenio = duenio;
   }
 }

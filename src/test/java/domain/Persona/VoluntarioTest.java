@@ -34,6 +34,7 @@ public class VoluntarioTest {
 
   @BeforeEach
   public void init() {
+    AdapterJPA.beginTransaction();
     centroDeRescate.getSolicitudesPublicacion().clear();
     centroDeRescate.getPublicacionesMascotaPerdidasSinID().clear();
 

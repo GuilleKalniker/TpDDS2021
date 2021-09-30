@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import Funciones.ValidadorContrasenias;
 import domain.Persona.Administrador;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,14 +14,23 @@ public class RepositorioUsuariosTest {
 
   @BeforeEach
   public void init(){
+
+    AdapterJPA.beginTransaction();
     RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
+  }
+
+  @AfterEach
+  public void deinit(){
+    AdapterJPA.rollback();
   }
 
   @Test
   public void existeUsuarioYaRegistrado() {
 
-    RepositorioUsuarios.getInstance().registrarUsuario(willian);
-    assertThrows(Exception.class, () -> RepositorioUsuarios.getInstance().existeUsuario(willian.getNombreUsuario()));
+    //RepositorioUsuarios.getInstance().registrarUsuario(willian);
+    willian.registrarse();
+    assertThrows(Exception.class, () ->new Administrador(willian.getNombreUsuario(),"iansdaida23"));
+
   }
 
   @Test

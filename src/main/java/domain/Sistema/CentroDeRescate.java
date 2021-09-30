@@ -177,7 +177,10 @@ public class CentroDeRescate {
   }
 
   public void generarPublicacionAdopcion(List<Pregunta> preguntasRespondidas, MascotaRegistrada mascota) {
-    publicacionesAdopcion.add(new PublicacionAdopcion(preguntasRespondidas, mascota));
+    PublicacionAdopcion publicacion = new PublicacionAdopcion(preguntasRespondidas, mascota);
+    publicacionesAdopcion.add(publicacion);
+    RepositorioCentroDeRescate.getInstance().registrarPublicacionAdopcion(publicacion);
+
   }
 
   public void notificacionSemanal() {

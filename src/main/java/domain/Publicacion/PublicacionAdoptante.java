@@ -24,13 +24,12 @@ public class PublicacionAdoptante {
   private Duenio duenioAsociado;
   @ElementCollection
   private List<String> preferencias = new ArrayList<>();
-  @ManyToOne
-  private CentroDeRescate centroDeRescate;
 
-  public PublicacionAdoptante(Duenio duenioAsociado, CentroDeRescate centroDeRescate) {
+  public PublicacionAdoptante(Duenio duenioAsociado) {
     this.duenioAsociado = duenioAsociado;
-    this.centroDeRescate = centroDeRescate;
+
   }
+  public PublicacionAdoptante(){}
 
   public List<String> getPreferencias() {
     return preferencias;
@@ -45,7 +44,7 @@ public class PublicacionAdoptante {
 
   public void recibirSugerenciaAdopcion(PublicacionAdopcion publicacionAdopcion) {
     if(publicacionAdopcion == null) {
-      //TODO: crear una notificacion que indique que no se encontraron publicaciones acordes a su gusto :p
+      duenioAsociado.notificar("Nueva sugerencia semanal", "No hay :(");
     }
     duenioAsociado.notificar("Nueva sugerencia semanal", "Aca tenes una mascota que podrias estar interesado en adoptar");
   }

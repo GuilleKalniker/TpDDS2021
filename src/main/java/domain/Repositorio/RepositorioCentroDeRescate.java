@@ -3,6 +3,8 @@ package domain.Repositorio;
 import domain.Exceptions.NoExisteCentroException;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.FormularioMascotaPerdida;
+import domain.Pregunta.Pregunta;
+import domain.Publicacion.PublicacionAdopcion;
 import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Sistema.CentroDeRescate;
 
@@ -43,4 +45,7 @@ public class RepositorioCentroDeRescate {
     AdapterJPA.persist(centroMasCercano.generarSolicitud(new PublicacionMascotaPerdida(formulario)));
   }
 
+  public void registrarPublicacionAdopcion(PublicacionAdopcion publicacion){
+    AdapterJPA.persist(publicacion);
+  }
 }
