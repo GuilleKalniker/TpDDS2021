@@ -23,15 +23,11 @@ public class RepositorioUsuarios {
   }
 
   public void registrarUsuario(Usuario usuario) {
-    AdapterJPA.beginTransaction();
     AdapterJPA.persist(usuario);
-    AdapterJPA.commit();
   }
 
   public void persistirContacto(Contacto contacto) {
-    AdapterJPA.beginTransaction();
     AdapterJPA.persist(contacto);
-    AdapterJPA.commit();
   }
 
   public List<Duenio> getDueniosRegistrados() {

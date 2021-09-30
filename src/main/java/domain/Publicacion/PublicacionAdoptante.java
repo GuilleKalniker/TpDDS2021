@@ -5,10 +5,26 @@ import domain.Sistema.CentroDeRescate;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "publicacionAdoptante")
 public class PublicacionAdoptante {
+
+  @Id
+  @GeneratedValue
+  private long id;
+
+  @ManyToOne
   private Duenio duenioAsociado;
+  @ElementCollection
   private List<String> preferencias = new ArrayList<>();
+  @ManyToOne
   private CentroDeRescate centroDeRescate;
 
   public PublicacionAdoptante(Duenio duenioAsociado, CentroDeRescate centroDeRescate) {
@@ -23,7 +39,6 @@ public class PublicacionAdoptante {
   public void agregarPreferencia(String preferencia) {
     preferencias.add(preferencia);
   }
-
   public void quitarPreferencia(String preferencia) {
     preferencias.remove(preferencia);
   }

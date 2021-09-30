@@ -30,10 +30,10 @@ public class CentroDeRescate {
   @Embedded
   private Ubicacion ubicacion;
 
-  @Transient
+  @OneToMany(mappedBy = "centro")
   private List<PublicacionMascotaPerdida> solicitudesPublicacion = new ArrayList<>(); //Los aceptan los voluntarios
 
-  @Transient
+  @OneToMany(mappedBy = "centro")
   private List<PublicacionMascotaPerdida> publicacionesMascotaPerdidasSinID = new ArrayList<>();
 
   @Transient
@@ -134,9 +134,10 @@ public class CentroDeRescate {
     getSolicitudesPublicacion().remove(solicitud);
   }
 
-  public void generarSolicitud(PublicacionMascotaPerdida solicitud){
+  public PublicacionMascotaPerdida generarSolicitud(PublicacionMascotaPerdida solicitud){
     getSolicitudesPublicacion().add(solicitud);
     solicitud.setCentro(this);
+    return solicitud;
   }
 
   public List<HogarTransitoAdaptado> hogaresAdecuadosParaMascota(FormularioMascotaPerdida formulario, Double radio){

@@ -13,14 +13,13 @@ public class PublicacionMascotaPerdida {
     @GeneratedValue
     private long id;
 
-    @Transient
+    @ManyToOne
     private CentroDeRescate centro;
 
     @OneToOne
     private FormularioMascotaPerdida formularioMascotaPerdida;
 
     public PublicacionMascotaPerdida(FormularioMascotaPerdida formularioMascotaPerdida) {
-       filtrarInformacionSensible(formularioMascotaPerdida);
        this.formularioMascotaPerdida = formularioMascotaPerdida;
     }
 
@@ -37,10 +36,6 @@ public class PublicacionMascotaPerdida {
     public void setCentro(CentroDeRescate centro) {
          this.centro = centro;
      }
-
-    private void filtrarInformacionSensible(FormularioMascotaPerdida formularioMascotaPerdida) {
-        // TODO
-    }
 
       public FormularioMascotaPerdida getFormularioMascotaPerdida() {
        return formularioMascotaPerdida;

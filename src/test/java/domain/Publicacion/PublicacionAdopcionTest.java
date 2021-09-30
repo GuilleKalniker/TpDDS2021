@@ -10,11 +10,24 @@ import domain.Mascota.AtributosMascota.Sexo;
 import domain.Mascota.AtributosMascota.TipoMascota;
 import domain.Mascota.MascotaRegistrada;
 import domain.Pregunta.Pregunta;
+import domain.Repositorio.AdapterJPA;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class PublicacionAdopcionTest {
+
+  @BeforeEach
+  public void setup() {
+    AdapterJPA.beginTransaction();
+  }
+
+  @AfterEach
+  public void teardown() {
+    AdapterJPA.rollback();
+  }
 
   public MascotaRegistrada crearMascota(String nombre) {
     ArrayList<String> fotos = new ArrayList<>();

@@ -22,10 +22,8 @@ public class Rescatista {
     duenio.notificarContactos("", "");     // el mensaje se armar a partir del  formulario
   }
 
-  public void generarSolicitudPublicacion(FormularioMascotaPerdida formulario){
-    CentroDeRescate centroMasCercano = RepositorioCentroDeRescate.getInstance().getCentroDeRescateMasCercanoA(formulario.getLugarEncuentro());
-
-    centroMasCercano.generarSolicitud(new PublicacionMascotaPerdida(formulario));
+  public void generarSolicitudPublicacion(FormularioMascotaPerdida formulario) {
+    RepositorioCentroDeRescate.getInstance().generarPublicacion(formulario);
   }
 
   //TODO: Preguntar que hacer con el centro, xq el rescatista no tiene por que saber que centros hay pero tampoco sabemos si poner la logica

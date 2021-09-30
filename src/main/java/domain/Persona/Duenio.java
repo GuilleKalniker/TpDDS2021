@@ -30,7 +30,6 @@ public class Duenio extends Usuario {
   @Transient
   private List<Notificador> notificadores = new ArrayList<>();
 
-
   public Duenio(String usuario, String contrasenia, DatosPersonales datosPersonales) {
     super(usuario, contrasenia);
     this.datosPersonales = datosPersonales;
@@ -64,9 +63,7 @@ public class Duenio extends Usuario {
   */
   public void registrarMascota(MascotaRegistrada mascota){
     RepositorioMascotas.getInstance().registrarMascota(mascota);
-    AdapterJPA.beginTransaction();
     this.mascotas.add(mascota);
-    AdapterJPA.commit();
   }
 
   public boolean tieneA(long IDMascota){

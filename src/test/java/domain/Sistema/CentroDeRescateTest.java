@@ -13,12 +13,12 @@ import domain.Pregunta.Pregunta;
 import domain.Publicacion.PublicacionAdopcion;
 import domain.Publicacion.PublicacionAdoptante;
 import domain.Publicacion.PublicacionMascotaPerdida;
+import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
-import domain.Repositorio.RepositorioUsuarios;
-import domain.Servicios.Notificadores.Mail.Mensaje;
 import domain.Servicios.Notificadores.Notificador;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,7 +27,6 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class CentroDeRescateTest {
 
@@ -41,6 +40,12 @@ public class CentroDeRescateTest {
     List<Notificador> notificadores = new ArrayList<>();
     notificadores.add(notificadorMock);
     duenioDePruebaUno.setNotificadores(notificadores);
+    AdapterJPA.beginTransaction();
+  }
+
+  @AfterEach
+  public void teardown() {
+    AdapterJPA.rollback();
   }
 
   /** Nuevos **/
@@ -55,13 +60,12 @@ public class CentroDeRescateTest {
   }
 
   @Test
-  public void BuscamosElDueñoApartirDeUnaMascotaRegistrada(){
+  public void seEncuentraElDueñoAPartirDeUnaMascotaRegistrada(){
     Duenio duenioDePrueba = new Duenio("juan4321", "guilloteelmaskpox2",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "DeNazareth"), "nose 123"));
     duenioDePrueba.registrarse();
     duenioDePrueba.registrarMascota(pepita);
     assertTrue(this.centro.buscarDuenioApartirIDMascota(pepita.getID()).getNombreUsuario().equals(duenioDePrueba.getNombreUsuario()));
   }
-
 
   @Test
   public void seEncuentraElCentroMasCercanoAUnaUbicacion() {
@@ -137,7 +141,6 @@ public class CentroDeRescateTest {
 
   @Test
   public void soloSeAgregaPreguntaSiTieneRespuestas() {
-
     centro.agregarPregunta(preguntaInvalida);
     assertThrows(RespuestaInvalidaException.class, () -> {centro.agregarPregunta(preguntaInvalida);});
   }

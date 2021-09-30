@@ -14,11 +14,7 @@ import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Sistema.CentroDeRescate;
-import net.bytebuddy.build.BuildLogger;
-import org.hibernate.mapping.Formula;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
-import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

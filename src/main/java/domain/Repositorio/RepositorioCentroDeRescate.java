@@ -2,6 +2,8 @@ package domain.Repositorio;
 
 import domain.Exceptions.NoExisteCentroException;
 import domain.Mascota.AtributosMascota.Ubicacion;
+import domain.Mascota.FormularioMascotaPerdida;
+import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Sistema.CentroDeRescate;
 
 import javax.persistence.*;
@@ -17,9 +19,7 @@ public class RepositorioCentroDeRescate {
 
 
   public void registrarCentroDeRescate(CentroDeRescate centroDeRescate) {
-    AdapterJPA.beginTransaction();
     AdapterJPA.persist(centroDeRescate);
-    AdapterJPA.commit();
   }
 
   public List<CentroDeRescate> getCentrosDeRescateRegistrados() {
@@ -36,6 +36,11 @@ public class RepositorioCentroDeRescate {
     return getCentrosDeRescateRegistrados().stream()
         .sorted(Comparator.comparing(centro -> centro.getUbicacion().calcularDistanciaA(ubicacion)))
         .findFirst().orElseThrow(() -> new NoExisteCentroException());
+  }
+
+  public void generarPublicacion(FormularioMascotaPerdida formulario) {
+    CentroDeRescate centroMasCercano = getCentroDeRescateMasCercanoA(formulario.getLugarEncuentro());
+    AdapterJPA.persist(centroMasCercano.generarSolicitud(new PublicacionMascotaPerdida(formulario)));
   }
 
 }
