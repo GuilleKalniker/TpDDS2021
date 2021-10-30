@@ -1,3 +1,4 @@
+import controllers.AdopcionController;
 import controllers.HomeController;
 import controllers.PruebaController;
 import controllers.RegistrarseController;
@@ -11,6 +12,7 @@ public class Router {
 
         HomeController homeController = new HomeController();
         RegistrarseController registrarseController = new RegistrarseController();
+        AdopcionController adopcionController = new AdopcionController();
         PruebaController pruebaController = new PruebaController();
 
 
@@ -20,6 +22,8 @@ public class Router {
 
         Spark.get("/", (req, res) -> homeController.index(req, res), te);
         Spark.get("/me", (req, res) -> pruebaController.index(req, res), te);
+        Spark.get("/adoptar", (req, res) -> adopcionController.index(req, res), te);
+        Spark.post("/adoptar", (req, res) -> adopcionController.publicar(req, res), te);
         Spark.get("/registrarse", (req, res) -> registrarseController.index(req, res), te);
         Spark.post("/registrarse", (req, res) -> registrarseController.registrar(req, res), te);
     }

@@ -19,9 +19,9 @@ public class RepositorioPreguntasObligatorias {
     return INSTANCE;
   }
 
-  private void agregarPregunta(Pregunta pregunta) {
+  private void agregarPregunta(Pregunta pregunta) {/*
     if(!pregunta.esObligatoria())
-      throw new PreguntaNoObligatoriaException("La pregunta no es obligatoria.");
+      throw new PreguntaNoObligatoriaException("La pregunta no es obligatoria.");*/
     this.preguntas.add(pregunta);
   }
 

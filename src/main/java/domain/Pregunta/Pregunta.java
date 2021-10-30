@@ -1,54 +1,45 @@
 package domain.Pregunta;
 
-import domain.Exceptions.RespuestaInvalidaException;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
-
 public class Pregunta {
+  protected String tipo;
+  protected String pregunta;
+  protected String respuesta;
 
-  private String pregunta;
-
-  private Boolean esObligatoria;
-  private List<String> posiblesRespuestas;
-  private String respuesta;
-
-  public Pregunta(String pregunta, List<String> posiblesRespuestas, Boolean esObligatoria) {
-
-    /*if (posiblesRespuestas.size() <= 1)
-      throw new RespuestaInvalidaException("La cantidad minima de respuestas debe ser 2");
-    */
+  public Pregunta(String pregunta, String tipo) {
     this.pregunta = pregunta;
-    this.esObligatoria = esObligatoria;
-    this.posiblesRespuestas = posiblesRespuestas.stream().map(value -> value.toLowerCase().trim()).collect(Collectors.toList());
+    this.tipo = tipo;
   }
 
   public String getPregunta() {
     return pregunta;
   }
 
+  public void setRespuesta(String respuesta) {
+    this.respuesta = respuesta;
+  }
+
   public String getRespuesta() {
     return respuesta;
   }
 
-  public void setRespuesta(String respuesta) {
-    if (!posiblesRespuestas.contains(respuesta.toLowerCase().trim()))
-      throw new RespuestaInvalidaException("La respuesta es inválida");
-    this.respuesta = respuesta.toLowerCase().trim();
+  public Boolean getAbierta() {
+    return tipo.equals("abierta");
   }
 
-  public Boolean esObligatoria() {
-    return esObligatoria;
+  public Boolean getBooleana() {
+    return tipo.equals("booleana");
   }
 
-  public Boolean estaRespondida() {
-    return respuesta != null;
+  public Boolean getOpcionMultiple() {
+    return tipo.equals("multiple");
+  }
+
+  public String getTipo() {
+    return tipo;
   }
 
   public Boolean esValida() {
-    return (this.esObligatoria() && this.estaRespondida()) || !this.esObligatoria;
-    //TODO darle expresividad ;)
+    return true;
   }
 
 }

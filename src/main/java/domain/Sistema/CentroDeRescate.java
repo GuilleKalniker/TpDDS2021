@@ -5,6 +5,9 @@ import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.Duenio;
+import domain.Pregunta.Abierta;
+import domain.Pregunta.Booleana;
+import domain.Pregunta.OpcionMultiple;
 import domain.Pregunta.Pregunta;
 import domain.Publicacion.PublicacionAdopcion;
 import domain.Publicacion.PublicacionAdoptante;
@@ -16,7 +19,9 @@ import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
 
 import javax.persistence.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -92,7 +97,7 @@ public class CentroDeRescate {
     List<Pregunta> totalPreguntas = new ArrayList<>();
     totalPreguntas.addAll(RepositorioPreguntasObligatorias.getInstance().getPreguntas());
     totalPreguntas.addAll(preguntasDeAdopcion);
-    return preguntasDeAdopcion;
+    return Arrays.asList(new OpcionMultiple("¿Tiene vacunas?",Arrays.asList("Sinopharm", "Astrazeneca", "Pfizer", "Sputnik", "Moderna", "Ninguna")), new Abierta("Descripción de tu mascota"), new Booleana("¿Esta castrade?"));
   }
 
   public List<PublicacionAdopcion> getPublicacionesAdopcion() {

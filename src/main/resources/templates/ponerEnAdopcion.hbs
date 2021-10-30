@@ -1,0 +1,32 @@
+{{#partial "contenido"}}
+    <form action="/adoptar" method="POST">
+        {{#each preguntasDeAdopcion}}
+
+        {{#if abierta}}
+          <div class="form-group">
+            <label for={{pregunta}}>{{pregunta}}</label>
+            <input type="text" class="form-control" id={{pregunta}} placeholder="Respuesta" name="respuesta">
+          </div>
+        {{/if}}
+        {{#if booleana}}
+          <div class="form-group">
+            <input type="checkbox" value="checkbox" {{!-- class="form-control" --}} id="pregunta2" name="respuesta">
+            <label for="pregunta2">{{pregunta}}</label>
+          </div>
+        {{/if}}
+        {{#if opcionMultiple}}
+          <div class="form-group">
+            <label for="pregunta3">{{pregunta}}</label>
+            <select class="form-control" id="pregunta3" name="respuesta">
+            {{#each opciones}}
+                <option value={{this}}>{{this}}</option>
+            {{/each}}
+            </select>
+          </div>
+        {{/if}}
+        {{/each}}
+        <button type="submit" class="btn btn-primary">Publicar</button>
+    </form>
+{{/partial}}
+
+{{>layout.hbs}}

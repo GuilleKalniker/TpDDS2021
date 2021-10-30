@@ -118,10 +118,10 @@ public class Duenio extends Usuario {
     preguntasCentro.forEach(pregunta -> {
       contestarPregunta(pregunta);
     });
-
+    /*
     if (!preguntasCentro.stream().allMatch(pregunta -> pregunta.esValida())) {
       throw new RespuestasIncompletasException();
-    }
+    }*/
 
     centroDeRescate.generarPublicacionAdopcion(preguntasCentro, mascota);
   }
