@@ -49,6 +49,10 @@ public class Duenio extends Usuario {
     return datosPersonales;
   }
 
+  public String getNombre() { return getDatosPersonales().getNombre();}
+
+  public String getApellido() { return getDatosPersonales().getApellido();}
+
   public List<MascotaRegistrada> getMascotas() {
     return mascotas;
   }
