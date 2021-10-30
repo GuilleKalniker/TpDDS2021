@@ -21,6 +21,8 @@ public class RegistrarseController {
 
     public ModelAndView registrar(Request req, Response res) {
 
+        System.out.println(req.queryParams("contrasenia"));
+
         List<Contacto> contactos = new ArrayList<>();
         contactos.add(new Contacto("Facundo", "Pittaluga", 1138636324, "facupitta@hotmail.com"));
         Duenio model = new Duenio(req.queryParams("usuario"),
@@ -30,6 +32,8 @@ public class RegistrarseController {
         AdapterJPA.beginTransaction();
         RepositorioUsuarios.getInstance().registrarUsuario(model);
         AdapterJPA.commit();
+
+        AdapterJPA.entityManager().clear();
 
         return new ModelAndView(model,"usuario.hbs");
     }

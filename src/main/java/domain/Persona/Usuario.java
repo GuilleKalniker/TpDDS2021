@@ -26,7 +26,7 @@ public class Usuario {
         validarDatosRegistro(nombreUsuario, contrasenia);
         this.nombreUsuario = nombreUsuario;
         this.salt = ValidadorContrasenias.generarSalt();
-        this.contraseniaHasheada = ValidadorContrasenias.passwordToHash(contrasenia, salt);
+        this.contraseniaHasheada = ValidadorContrasenias.passwordToHash(contrasenia, getSalt());
     }
 
     public Usuario() {}
@@ -38,6 +38,8 @@ public class Usuario {
     public String getNombreUsuario() {
         return nombreUsuario;
     }
+
+    public String getContraseniaHasheada() { return contraseniaHasheada; }
 
     public long getId() {
         return id;

@@ -1,0 +1,15 @@
+{{#partial "contenido"}}
+    <form action="/iniciarSesion" method="POST">
+      <div class="form-group">
+        <label for="usuario">Nombre de usuario</label>
+        <input type="text" class="form-control" id="usuario" placeholder="Usuario" name="usuario">
+      </div>
+      <div class="form-group">
+        <label for="constrasenia">Password</label>
+        <input type="password" class="form-control" id="contrasenia" placeholder="Contraseña" name="contrasenia">
+
+      <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+    </form>
+{{/partial}}
+
+{{>layout.hbs}}
