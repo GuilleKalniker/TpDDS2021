@@ -29,15 +29,7 @@ public class LoginController {
 
         Usuario u = RepositorioUsuarios.getInstance().getUsuarioPorNombre(user);
 
-        System.out.println(u.getNombreUsuario());
-
-        System.out.println("Contrasenia del chabon: " + u.getContraseniaHasheada());
-        System.out.println("Hash del chabon: " + u.getSalt());
-
-        System.out.println("Contrasenia recibida: " + ValidadorContrasenias.passwordToHash(req.queryParams("contrasenia"), u.getSalt()));
-
         if (u.matcheaContrasenia(req.queryParams("contrasenia"))) {
-            System.out.println("Entre al if");
             res.cookie("usuario_logueado", user);
         } else {
             return new ModelAndView(null, "login.hbs");

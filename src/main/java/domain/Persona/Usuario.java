@@ -7,6 +7,8 @@ import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Repositorio.RepositorioUsuarios;
 
 import javax.persistence.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 
 @Entity
@@ -19,19 +21,19 @@ public class Usuario {
     private long id;
 
     protected String nombreUsuario;
-    protected String salt;
-    protected String contraseniaHasheada;
+    protected byte[] salt;
+    protected byte[] contraseniaHasheada;
 
     public Usuario(String nombreUsuario, String contrasenia) {
         validarDatosRegistro(nombreUsuario, contrasenia);
         this.nombreUsuario = nombreUsuario;
         this.salt = ValidadorContrasenias.generarSalt();
-        this.contraseniaHasheada = ValidadorContrasenias.passwordToHash(contrasenia, getSalt());
+        this.contraseniaHasheada = ValidadorContrasenias.passwordToHash(contrasenia, salt);
     }
 
     public Usuario() {}
 
-    public String getSalt() {
+    public byte[] getSalt() {
         return salt;
     };
 
@@ -39,7 +41,7 @@ public class Usuario {
         return nombreUsuario;
     }
 
-    public String getContraseniaHasheada() { return contraseniaHasheada; }
+    public byte[] getContraseniaHasheada() { return contraseniaHasheada; }
 
     public long getId() {
         return id;
@@ -53,7 +55,8 @@ public class Usuario {
     }
 
     public Boolean matcheaContrasenia(String contrasenia) {
-        return ValidadorContrasenias.passwordToHash(contrasenia, getSalt()).equals(contraseniaHasheada);
+
+        return Arrays.equals(ValidadorContrasenias.passwordToHash(contrasenia, getSalt()), contraseniaHasheada);
     }
 
     public void registrarse() {

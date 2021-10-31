@@ -12,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.Arrays;
 
 public class ValidadorContrasenias {
 
@@ -51,20 +52,25 @@ public class ValidadorContrasenias {
     return resultadoBusqueda;
   }
 
-  public static String generarSalt() {
+  public static byte[] generarSalt() {
+    /*TODO: ver por que no funca bien
     SecureRandom random = new SecureRandom();
     byte[] salt = new byte[16];
     random.nextBytes(salt);
-
     return new String(salt);
+    */
+    byte[] salt = new byte[16];
+    Arrays.fill(salt, (byte) 'F');
+    return salt;
   }
 
-  public static String passwordToHash(String password, String salt){
+  public static byte[] passwordToHash(String password, byte[] salt){
     try {
-      KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 10000, 128);
+      KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 10000, 128);
       SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
       byte[] hash = factory.generateSecret(spec).getEncoded();
-      return new String(hash);
+
+      return hash;
     }
     catch (NoSuchAlgorithmException | InvalidKeySpecException e){
       e.printStackTrace();
