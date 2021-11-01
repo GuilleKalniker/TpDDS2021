@@ -1,0 +1,33 @@
+h1{
+    color: red;
+}
+.func-principales{
+    margin-top: 20px;
+
+}
+.func-principales a{
+    text-decoration: none;
+}
+
+.func-principales p{
+    font-size: 1.8rem;
+    color: #5DEFE6;
+}
+.func-principales p:hover{
+    color: #00d5c8;
+}
+.row{
+    margin: 10px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.func-principales .col{
+    width: 300px;
+    margin: 40px;
+
+}
+.func-principales img{
+    width: 15rem;
+    height: 15rem;
+}

@@ -1,0 +1,45 @@
+* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    font-size: 15px;
+    font-family:  vogue;
+    font-weight: 700;
+    scroll-behavior: smooth ;
+}
+body{
+    background-color: #FDFFE3;
+}
+ .nav-link{
+     font-family: "Mongolian Baiti", "Arial Rounded MT Bold";
+     color: #0b0947;
+     font-size: 1.5rem;
+     transition: opacity 1s;
+}
+.nav-link:hover{
+    font-family: "Mongolian Baiti", "Arial Rounded MT Bold";
+    opacity: 0.9;
+
+}
+nav, ul{
+    padding-top: 20px ;
+}
+ header{
+     width: 100%;
+     background-color: #F8B551;
+ }
+#footer{
+    text-align: center;
+    color: black;
+    background-color: #f8cb99;
+    padding-bottom: 40px;
+    position:absolute;
+    bottom:0;
+    width:100%;
+       /* Height of the footer */
+
+}
+#footer .texto{
+    margin-top: 20px;
+}
