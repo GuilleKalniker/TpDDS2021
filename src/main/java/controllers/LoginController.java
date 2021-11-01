@@ -17,15 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginController {
+
     public ModelAndView index(Request req, Response res) {
         return new ModelAndView(null, "login.hbs");
     }
 
     public ModelAndView loguearse(Request req, Response res) {
         String user = req.queryParams("usuario");
-
-        System.out.println(user);
-        System.out.println(req.queryParams("contrasenia"));
 
         Usuario u = RepositorioUsuarios.getInstance().getUsuarioPorNombre(user);
 
