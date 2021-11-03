@@ -9,6 +9,9 @@
         <input type="password" class="form-control" id="contrasenia" placeholder="Contraseña" name="contrasenia">
 
       <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+      {{#if credenciales_invalidas}}
+        <p style="color: red;">Datos erróneos. Intentá de nuevo.</p>
+      {{/if}}
     </form>
 {{/partial}}
 

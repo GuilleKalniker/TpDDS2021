@@ -1,13 +1,11 @@
 {{#partial "contenido"}}
-    {{#each this}}
     <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="images/facu.png" alt="Card image cap">
+        <img class="card-img-top" src="/images/facu.png" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">{{nombre}} {{apellido}}</h5>
-            <p class="card-text">{{nombreUsuario}}</p>
+            <h5 class="card-title">{{usuario_logueado.nombre}} {{usuario_logueado.apellido}}</h5>
+            <p class="card-text">{{usuario_logueado.nombreUsuario}}</p>
         </div>
     </div>
-    {{/each}}
 {{/partial}}
 
 {{>layout.hbs}}

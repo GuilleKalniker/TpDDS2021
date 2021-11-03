@@ -1,37 +1,39 @@
 package controllers;
 
-import Funciones.ValidadorContrasenias;
-import domain.Persona.AtributosPersona.Contacto;
-import domain.Persona.AtributosPersona.DatosPersonales;
-import domain.Persona.AtributosPersona.TipoDocumento;
-import domain.Persona.Duenio;
+
 import domain.Persona.Usuario;
 import domain.Repositorio.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-public class LoginController {
+public class LoginController extends BaseController {
 
     public ModelAndView index(Request req, Response res) {
-        return new ModelAndView(null, "login.hbs");
+        setUsuarioLogueado(req);
+        set("credenciales_invalidas", false);
+        return new ModelAndView(getDiccionario(), "login.hbs");
     }
 
     public ModelAndView loguearse(Request req, Response res) {
+        setUsuarioLogueado(req);
         String user = req.queryParams("usuario");
 
         Usuario u = RepositorioUsuarios.getInstance().getUsuarioPorNombre(user);
 
-        if (u.matcheaContrasenia(req.queryParams("contrasenia"))) {
+        if (u != null && u.matcheaContrasenia(req.queryParams("contrasenia"))) {
             res.cookie("usuario_logueado", user);
         } else {
-            return new ModelAndView(null, "login.hbs");
+            set("credenciales_invalidas", true);
+            return new ModelAndView(getDiccionario(), "login.hbs");
         }
-        return new ModelAndView(null, "home.hbs");
+        res.redirect("/");
+        return null;
+    }
+
+    public ModelAndView desloguearse(Request req, Response res) {
+        res.removeCookie("usuario_logueado");
+        res.redirect("/");
+        return null;
     }
 }

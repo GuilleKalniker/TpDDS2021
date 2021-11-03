@@ -16,14 +16,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdopcionController {
+public class AdopcionController extends BaseController {
     public ModelAndView index(Request req, Response res) {
+        setUsuarioLogueado(req);
         CentroDeRescate model = new CentroDeRescate(new Ubicacion(0.0,0.0));
-        return new ModelAndView(model, "ponerEnAdopcion.hbs");
+        setModelo(model);
+        return new ModelAndView(getDiccionario(), "ponerEnAdopcion.hbs");
     }
 
     public ModelAndView publicar(Request req, Response res) {
-
+        setUsuarioLogueado(req);
         List<Contacto> contactos = new ArrayList<>();
         contactos.add(new Contacto("Facundo", "Pittaluga", 1138636324, "facupitta@hotmail.com"));
         Duenio model = new Duenio(req.queryParams("usuario"),
@@ -34,6 +36,7 @@ public class AdopcionController {
         RepositorioUsuarios.getInstance().registrarUsuario(model);
         AdapterJPA.commit();
 
-        return new ModelAndView(model,"usuario.hbs");
+        setModelo(model);
+        return new ModelAndView(getDiccionario(),"home.hbs");
     }
 }

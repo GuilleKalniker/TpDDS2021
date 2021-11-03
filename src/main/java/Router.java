@@ -24,10 +24,12 @@ public class Router {
         Spark.after("/*", (req, res) -> AdapterJPA.entityManager().clear());
 
         Spark.get("/", (req, res) -> homeController.index(req, res), te);
-        Spark.get("/me", (req, res) -> pruebaController.index(req, res), te);
+        Spark.get("/usuarios", (req, res) -> pruebaController.todos(req, res), te);
+        Spark.get("/usuarios/me", (req, res) -> pruebaController.me(req, res), te);
 
         Spark.get("/iniciarSesion", (req, res) -> loginController.index(req, res), te);
         Spark.post("/iniciarSesion", (req, res) -> loginController.loguearse(req, res), te);
+        Spark.get("/cerrarSesion", (req, res) -> loginController.desloguearse(req, res), te);
 
         Spark.get("/adoptar", (req, res) -> adopcionController.index(req, res), te);
         Spark.post("/adoptar", (req, res) -> adopcionController.publicar(req, res), te);

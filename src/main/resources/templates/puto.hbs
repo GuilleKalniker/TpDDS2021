@@ -1,0 +1,17 @@
+{{#partial "contenido"}}
+    <div class="row">
+        {{#each modelo}}
+        <div class="col-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="/images/facu.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{nombre}} {{apellido}}</h5>
+                    <p class="card-text">{{nombreUsuario}}</p>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+{{/partial}}
+
+{{>layout.hbs}}

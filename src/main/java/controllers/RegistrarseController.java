@@ -14,14 +14,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegistrarseController {
+public class RegistrarseController extends BaseController {
     public ModelAndView index(Request req, Response res) {
-        return new ModelAndView(null, "registrarse.hbs");
+        setUsuarioLogueado(req);
+        return new ModelAndView(getDiccionario(), "registrarse.hbs");
     }
 
     public ModelAndView registrar(Request req, Response res) {
-
-        System.out.println(req.queryParams("contrasenia"));
+        setUsuarioLogueado(req);
 
         List<Contacto> contactos = new ArrayList<>();
         contactos.add(new Contacto("Facundo", "Pittaluga", 1138636324, "facupitta@hotmail.com"));
@@ -35,6 +35,7 @@ public class RegistrarseController {
 
         AdapterJPA.entityManager().clear();
 
-        return new ModelAndView(model,"usuario.hbs");
+        setModelo(model);
+        return new ModelAndView(getDiccionario(),"usuario.hbs");
     }
 }

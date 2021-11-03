@@ -1,22 +1,29 @@
 package controllers;
 
-import domain.Persona.AtributosPersona.Contacto;
-import domain.Persona.AtributosPersona.DatosPersonales;
-import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Persona.Duenio;
-import domain.Persona.Usuario;
 import domain.Repositorio.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+
 import java.util.List;
 
-public class PruebaController {
-    public ModelAndView index(Request req, Response res) {
+public class PruebaController extends BaseController {
+
+    public ModelAndView todos(Request req, Response res) {
+        setUsuarioLogueado(req);
         List<Duenio> model = RepositorioUsuarios.getInstance().getDueniosRegistrados();
-        return new ModelAndView(model, "usuario.hbs");
+        setModelo(model);
+        return new ModelAndView(getDiccionario(), "puto.hbs");
+    }
+
+    public ModelAndView me(Request req, Response res) {
+        setUsuarioLogueado(req);
+        if (getDiccionario().get("usuario_logueado") == null) {
+            res.redirect("/");
+        }
+        setModelo(null);
+        return new ModelAndView(getDiccionario(), "usuario.hbs");
     }
 }
