@@ -17,8 +17,26 @@
           <input type="text" class="form-control" id="apellido" placeholder="Apellido" name="apellido">
       </div>
       <div class="form-group">
+          <label for="nacimiento">Fecha de nacimiento</label>
+          <input type="date" class="form-control" id="nacimiento" name="nacimiento">
+      </div>
+      <div class="form-group">
           <label for="direccion">Dirección</label>
           <input type="text" class="form-control" id="direccion" placeholder="Dirección" name="direccion">
+      </div>
+      <div class="form-group">
+          <label for="tipo_doc">Tipo de documento</label>
+          <select class="form-control" id="tipo_doc" name="tipo_doc">
+            <option value="DNI">DNI</option>
+            <option value="LC">LC</option>
+            <option value="LE">LE</option>
+            <option value="CI">CI</option>
+          </select>
+
+      </div>
+      <div class="form-group">
+          <label for="num_doc">Número de documento</label>
+          <input type="text" class="form-control" id="num_doc" placeholder="Número" name="num_doc">
       </div>
       <button type="submit" class="btn btn-primary">Registrarse</button>
     </form>

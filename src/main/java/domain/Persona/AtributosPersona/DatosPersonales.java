@@ -40,6 +40,10 @@ public class DatosPersonales {
   public DatosPersonales() {
   }
 
+  public LocalDate getFechaDeNacimiento() {
+    return fechaDeNacimiento;
+  }
+
   public TipoDocumento getTipoDocumento() {
     return tipoDocumento;
   }

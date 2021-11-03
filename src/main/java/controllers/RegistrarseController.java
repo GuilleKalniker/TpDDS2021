@@ -1,5 +1,6 @@
 package controllers;
 
+import Funciones.StringDate;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
@@ -25,9 +26,10 @@ public class RegistrarseController extends BaseController {
 
         List<Contacto> contactos = new ArrayList<>();
         contactos.add(new Contacto("Facundo", "Pittaluga", 1138636324, "facupitta@hotmail.com"));
+        LocalDate fechaNac = StringDate.stringToLocalDate(req.queryParams("nacimiento"));
         Duenio model = new Duenio(req.queryParams("usuario"),
                 req.queryParams("contrasenia"),
-                new DatosPersonales(req.queryParams("nombre"), req.queryParams("apellido"), LocalDate.now(), TipoDocumento.DNI, 42375218, contactos, req.queryParams("direccion")));
+                new DatosPersonales(req.queryParams("nombre"), req.queryParams("apellido"), fechaNac, stringToTipoDocumento(req.queryParams("tipo_doc")), Integer.valueOf(req.queryParams("num_doc")), contactos, req.queryParams("direccion")));
 
         AdapterJPA.beginTransaction();
         RepositorioUsuarios.getInstance().registrarUsuario(model);
@@ -37,5 +39,16 @@ public class RegistrarseController extends BaseController {
 
         setModelo(model);
         return new ModelAndView(getDiccionario(),"usuario.hbs");
+    }
+
+    private TipoDocumento stringToTipoDocumento(String s) {
+        TipoDocumento tipo = TipoDocumento.DNI;
+        switch (s) {
+            case "DNI": tipo = TipoDocumento.DNI;
+            case "LC": tipo = TipoDocumento.LC;
+            case "LE": tipo = TipoDocumento.LE;
+            case "CI": tipo = TipoDocumento.CI;
+        }
+        return tipo;
     }
 }
