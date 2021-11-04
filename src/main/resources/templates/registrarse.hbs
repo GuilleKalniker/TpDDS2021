@@ -27,10 +27,9 @@
       <div class="form-group">
           <label for="tipo_doc">Tipo de documento</label>
           <select class="form-control" id="tipo_doc" name="tipo_doc">
-            <option value="DNI">DNI</option>
-            <option value="LC">LC</option>
-            <option value="LE">LE</option>
-            <option value="CI">CI</option>
+          {{#each tipos_documento}}
+            <option value={{this}}>{{this}}</option>
+          {{/each}}
           </select>
 
       </div>

@@ -1,15 +1,16 @@
 package domain.Repositorio;
 
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+
 import java.util.function.*;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 public class AdapterJPA {
 
+    /*
     private static EntityManagerFactory emf;
 
     private static ThreadLocal<EntityManager> threadLocal;
@@ -21,26 +22,21 @@ public class AdapterJPA {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public static EntityManager entityManager() {
         return getEntityManager();
     }
 
     public static EntityManager getEntityManager() {
-        EntityManager manager = threadLocal.get();
-        if (manager == null || !manager.isOpen()) {
-            manager = emf.createEntityManager();
-            threadLocal.set(manager);
-        }
-        return manager;
+        return PerThreadEntityManagers.getEntityManager();
     }
-
+/*
     public static void closeEntityManager() {
         EntityManager em = threadLocal.get();
         threadLocal.set(null);
         em.close();
-    }
+    }*/
 
     public static void beginTransaction() {
         EntityManager em = AdapterJPA.getEntityManager();

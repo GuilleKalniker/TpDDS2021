@@ -1,0 +1,14 @@
+{{#partial "contenido"}}
+    <ul>
+        {{#each modelo}}
+            <li>
+                <p>{{nombre}}</p>
+                <p>{{apellido}}</p>
+                <p>{{telefono}}</p>
+                <p>{{email}}</p>
+            </li>
+        {{/each}}
+    </ul>
+{{/partial}}
+
+{{>layout.hbs}}

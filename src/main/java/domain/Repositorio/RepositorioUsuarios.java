@@ -76,4 +76,9 @@ public class RepositorioUsuarios {
     }
     return u;
   }
+
+    public Duenio getDuenio(long id) {
+      System.out.println("Id que llego: " + id);
+      return AdapterJPA.entityManager().find(Duenio.class, id);
+    }
 }

@@ -13,11 +13,13 @@ import spark.Response;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RegistrarseController extends BaseController {
     public ModelAndView index(Request req, Response res) {
         setUsuarioLogueado(req);
+        set("tipos_documento", TipoDocumento.values());
         return new ModelAndView(getDiccionario(), "registrarse.hbs");
     }
 
@@ -32,23 +34,18 @@ public class RegistrarseController extends BaseController {
                 new DatosPersonales(req.queryParams("nombre"), req.queryParams("apellido"), fechaNac, stringToTipoDocumento(req.queryParams("tipo_doc")), Integer.valueOf(req.queryParams("num_doc")), contactos, req.queryParams("direccion")));
 
         AdapterJPA.beginTransaction();
-        RepositorioUsuarios.getInstance().registrarUsuario(model);
+        model.registrarse();
         AdapterJPA.commit();
 
+        AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
         AdapterJPA.entityManager().clear();
+        AdapterJPA.entityManager().close();
 
         setModelo(model);
         return new ModelAndView(getDiccionario(),"usuario.hbs");
     }
 
     private TipoDocumento stringToTipoDocumento(String s) {
-        TipoDocumento tipo = TipoDocumento.DNI;
-        switch (s) {
-            case "DNI": tipo = TipoDocumento.DNI;
-            case "LC": tipo = TipoDocumento.LC;
-            case "LE": tipo = TipoDocumento.LE;
-            case "CI": tipo = TipoDocumento.CI;
-        }
-        return tipo;
+        return Arrays.stream(TipoDocumento.values()).filter(tipo -> tipo.name().equals(s)).findFirst().get();
     }
 }
