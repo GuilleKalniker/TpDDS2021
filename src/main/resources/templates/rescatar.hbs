@@ -1,0 +1,67 @@
+{{#partial "contenido"}}
+    <!--Estilos CSS-->
+    <link rel="stylesheet" href="main.css">
+
+    <h1 class="titulo">Datos de la mascota perdida</h1>
+    <form action="/rescatar" method="POST">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-12">
+                    <h3 class="subtitulo">Contanos sobre la mascota que encontraste</h3>
+
+                    <label for="chapita" class="form-label">Chapita</label>
+                    <input type="text" class="form-control" id="chapita"  placeholder="¡Si no tiene no te preocupes!">
+
+                    <label for="fechaencuentro" class="form-label">Fecha de encuentro</label>
+                    <input type="date" class="form-control" id="fechaencuentro">
+
+                    <label for="fotos" class="form-label">Fotos</label>
+                    <input type="file" class="form-control" id="fotos">
+
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea class="form-control" id="descripcion" rows="5"> </textarea>
+
+                    <label for="lugarEncuentro" class="form-label">Lugar de encuentro</label>
+                    <input type="address" class="form-control" id="lugarEncuentro">
+
+                </div>
+                <div class="col-md-5 col-12">
+                    <h3 class="subtitulo">¡También necesitamos tus datos!</h3>
+
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre">
+
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="apellido">
+
+                    <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
+                    <input type="datetime" class="form-control" id="fechaNacimiento">
+
+                    <label for="tipo_doc">Tipo de documento</label>
+                    <select class="form-control" id="tipo_doc" name="tipo_doc">
+                        {{#each tipos_documento}}
+                            <option value={{this}}>{{this}}</option>
+                        {{/each}}
+                    </select>
+                    <input type="text" class="form-control" id="num_doc" name="num_doc">
+
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="direccion">
+
+                    <label for="contacto1" class="form-label">Tel. Contacto 1</label>
+                    <input type="text" class="form-control" id="contacto1">
+
+                    <label for="contacto2" class="form-label">Tel. Contacto 2</label>
+                    <input type="text" class="form-control" id="contacto2">
+
+                </div>
+                <div class="col-md-2 col-12">
+                    <img src="/images/gatito.webp" alt="gatito_sonriente">
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+{{/partial}}
+
+{{>layout.hbs}}

@@ -4,7 +4,6 @@
     box-sizing: border-box;
     overflow-x: hidden;
     font-size: 15px;
-    font-family:  vogue;
     font-weight: 700;
     scroll-behavior: smooth ;
 }
@@ -42,4 +41,12 @@ nav, ul{
 }
 #footer .texto{
     margin-top: 20px;
+}
+
+ion-icon{
+    color: white;
+    font-size: 30px;
+}
+.navbar-toggler:focus{
+    outline: none;
 }

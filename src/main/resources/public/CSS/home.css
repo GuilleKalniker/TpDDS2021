@@ -1,5 +1,5 @@
-h1{
-    color: red;
+*{
+    font-family: "Mongolian Baiti", "Arial Rounded MT Bold";
 }
 .func-principales{
     margin-top: 20px;
@@ -10,6 +10,7 @@ h1{
 }
 
 .func-principales p{
+
     font-size: 1.8rem;
     color: #5DEFE6;
 }
@@ -19,15 +20,34 @@ h1{
 .row{
     margin: 10px auto;
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
+
 }
-.func-principales .col{
+.func-principales .col-img{
+    display: flex;
+    justify-items: center;
+    justify-content: center;
     width: 300px;
     margin: 40px;
+    transition: transform 0.75s;
 
+}
+.func-principales .col-img:hover {
+    transform: scale(1.1,1.1);
 }
 .func-principales img{
     width: 15rem;
     height: 15rem;
+}
+.carousel-item img{
+    width: 500px;
+    height: 250px;
+}
+
+h4{
+    color: #5DEFE6;
+    font-weight: bold;
 }
