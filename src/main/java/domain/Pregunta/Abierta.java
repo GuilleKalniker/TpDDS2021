@@ -10,6 +10,7 @@ public class Abierta extends Pregunta {
     public Abierta(String pregunta) {
         super(pregunta);
     }
+    public Abierta() {}
 
     public Boolean getBooleana() {
         return false;

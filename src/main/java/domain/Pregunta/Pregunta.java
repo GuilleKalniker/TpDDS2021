@@ -28,6 +28,10 @@ public abstract class Pregunta {
     this.pregunta = pregunta;
   }
 
+  public void setCentro(CentroDeRescate centro) {
+    this.centro = centro;
+  }
+
   public Pregunta() {}
 
   public String getPregunta() {

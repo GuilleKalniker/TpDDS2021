@@ -1,35 +1,30 @@
 package domain.Repositorio;
 
-import domain.Exceptions.PreguntaNoObligatoriaException;
 import domain.Pregunta.Pregunta;
 
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioPreguntasObligatorias {
 
-  private List<Pregunta> preguntas;
   private static final RepositorioPreguntasObligatorias INSTANCE = new RepositorioPreguntasObligatorias();
-
-  public RepositorioPreguntasObligatorias() {
-    this.preguntas = new ArrayList<>();
-  }
 
   public static RepositorioPreguntasObligatorias getInstance() {
     return INSTANCE;
   }
 
-  private void agregarPregunta(Pregunta pregunta) {/*
-    if(!pregunta.esObligatoria())
-      throw new PreguntaNoObligatoriaException("La pregunta no es obligatoria.");*/
-    this.preguntas.add(pregunta);
+  public void agregarPregunta(Pregunta pregunta) {
+    AdapterJPA.persist(pregunta);
   }
 
   public List<Pregunta> getPreguntas() {
-    return preguntas;
+    TypedQuery<Pregunta> query = AdapterJPA.entityManager().createQuery("select p from Pregunta p", Pregunta.class);
+    return query.getResultList();
   }
 
-  public void eliminarPregunta(Pregunta pregunta) {
-    this.preguntas.remove(pregunta);
+  public List<Pregunta> getPreguntasObligatorias() {
+    //TODO implementar
+    return new ArrayList<>();
   }
 }

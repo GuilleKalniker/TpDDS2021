@@ -92,10 +92,10 @@ public class CentroDeRescate {
     return ubicacion;
   }
 
-  //Devuelve las propias + las obligatorias
+  //Devuelve las propias + las comunes a todos los centros
   public List<Pregunta> getPreguntasDeAdopcion() {
     List<Pregunta> totalPreguntas = new ArrayList<>();
-    totalPreguntas.addAll(RepositorioPreguntasObligatorias.getInstance().getPreguntas());
+    totalPreguntas.addAll(RepositorioPreguntasObligatorias.getInstance().getPreguntasObligatorias());
     totalPreguntas.addAll(preguntasDeAdopcion);
     return totalPreguntas;
   }
@@ -164,9 +164,11 @@ public class CentroDeRescate {
     publicacionesAdopcion.remove(publicacionAdopcion);
   }
 
-  /** FUNCIONES PARA EL MANEJO DE ADOPCIONES */
+  /** METODOS PARA EL MANEJO DE ADOPCIONES */
   public void agregarPregunta(Pregunta pregunta) {
     preguntasDeAdopcion.add(pregunta);
+    pregunta.setCentro(this);
+    RepositorioPreguntasObligatorias.getInstance().agregarPregunta(pregunta);
   }
 
   public void quitarPregunta(Pregunta pregunta) {

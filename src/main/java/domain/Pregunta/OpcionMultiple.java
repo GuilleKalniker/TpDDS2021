@@ -16,6 +16,7 @@ public class OpcionMultiple extends Pregunta {
         super(pregunta);
         this.opciones = opciones;
     }
+    public OpcionMultiple() {}
 
     public List<String> getOpciones() {
         return opciones;
