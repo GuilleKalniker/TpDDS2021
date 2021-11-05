@@ -14,7 +14,7 @@ public class Router {
         RegistrarseController registrarseController = new RegistrarseController();
         AdopcionController adopcionController = new AdopcionController();
         UsuarioController usuarioController = new UsuarioController();
-
+        RescatarController rescatarController = new RescatarController();
 
         DebugScreen.enableDebugScreen();
 
@@ -44,5 +44,8 @@ public class Router {
 
         Spark.get("/registrarse", (req, res) -> registrarseController.index(req, res), engine);
         Spark.post("/registrarse", (req, res) -> registrarseController.registrar(req, res), engine);
+
+        Spark.get("/rescatar", (req, res) -> rescatarController.index(req, res), engine);
+        Spark.post("/rescatar", (req, res) -> rescatarController.rescatar(req, res), engine);
     }
 }
