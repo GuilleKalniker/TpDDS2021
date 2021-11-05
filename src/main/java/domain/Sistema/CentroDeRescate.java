@@ -9,6 +9,7 @@ import domain.Pregunta.Abierta;
 import domain.Pregunta.Booleana;
 import domain.Pregunta.OpcionMultiple;
 import domain.Pregunta.Pregunta;
+import domain.Pregunta.PreguntaResuelta;
 import domain.Publicacion.PublicacionAdopcion;
 import domain.Publicacion.PublicacionAdoptante;
 import domain.Publicacion.PublicacionMascotaPerdida;
@@ -41,9 +42,10 @@ public class CentroDeRescate {
   @OneToMany(mappedBy = "centro")
   private List<PublicacionMascotaPerdida> publicacionesMascotaPerdidasSinID = new ArrayList<>();
 
-  @Transient
+  @OneToMany(mappedBy = "centro")
   private List<Pregunta> preguntasDeAdopcion = new ArrayList<>();
 
+  //@OneToMany(mappedBy = "centro")
   @Transient
   private List<PublicacionAdopcion> publicacionesAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
 
@@ -60,9 +62,7 @@ public class CentroDeRescate {
     this.ubicacion = ubicacion;
   }
 
-  public CentroDeRescate() {
-
-  }
+  public CentroDeRescate() {}
 
   public void setUbicacion(Ubicacion ubicacion) {
     this.ubicacion = ubicacion;
@@ -97,7 +97,7 @@ public class CentroDeRescate {
     List<Pregunta> totalPreguntas = new ArrayList<>();
     totalPreguntas.addAll(RepositorioPreguntasObligatorias.getInstance().getPreguntas());
     totalPreguntas.addAll(preguntasDeAdopcion);
-    return Arrays.asList(new OpcionMultiple("¿Tiene vacunas?",Arrays.asList("Sinopharm", "Astrazeneca", "Pfizer", "Sputnik", "Moderna", "Ninguna")), new Abierta("Descripción de tu mascota"), new Booleana("¿Esta castrade?"));
+    return totalPreguntas;
   }
 
   public List<PublicacionAdopcion> getPublicacionesAdopcion() {
@@ -181,11 +181,10 @@ public class CentroDeRescate {
     interesadosEnAdoptar.remove(adoptante);
   }
 
-  public void generarPublicacionAdopcion(List<Pregunta> preguntasRespondidas, MascotaRegistrada mascota) {
+  public void generarPublicacionAdopcion(List<PreguntaResuelta> preguntasRespondidas, MascotaRegistrada mascota) {
     PublicacionAdopcion publicacion = new PublicacionAdopcion(preguntasRespondidas, mascota);
     publicacionesAdopcion.add(publicacion);
     RepositorioCentroDeRescate.getInstance().registrarPublicacionAdopcion(publicacion);
-
   }
 
   public void notificacionSemanal() {

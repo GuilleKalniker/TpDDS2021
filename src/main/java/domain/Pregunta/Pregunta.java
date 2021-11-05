@@ -1,43 +1,44 @@
 package domain.Pregunta;
 
-public class Pregunta {
-  protected String tipo;
-  protected String pregunta;
-  protected String respuesta;
+import domain.Sistema.CentroDeRescate;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-  public Pregunta(String pregunta, String tipo) {
+@Entity
+@Table(name = "pregunta")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo")
+public abstract class Pregunta {
+  protected String pregunta;
+
+  @Id
+  @GeneratedValue
+  private long id;
+
+  @ManyToOne
+  private CentroDeRescate centro;
+
+  public Pregunta(String pregunta) {
     this.pregunta = pregunta;
-    this.tipo = tipo;
   }
+
+  public Pregunta() {}
 
   public String getPregunta() {
     return pregunta;
   }
 
-  public void setRespuesta(String respuesta) {
-    this.respuesta = respuesta;
-  }
+  public abstract Boolean getAbierta();
+  public abstract Boolean getBooleana();
+  public abstract Boolean getOpcionMultiple();
 
-  public String getRespuesta() {
-    return respuesta;
-  }
-
-  public Boolean getAbierta() {
-    return tipo.equals("abierta");
-  }
-
-  public Boolean getBooleana() {
-    return tipo.equals("booleana");
-  }
-
-  public Boolean getOpcionMultiple() {
-    return tipo.equals("multiple");
-  }
-
-  public String getTipo() {
-    return tipo;
-  }
-
+  //TODO: volarlo ta deprecado
   public Boolean esValida() {
     return true;
   }

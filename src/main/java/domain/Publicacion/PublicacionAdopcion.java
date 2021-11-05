@@ -4,6 +4,7 @@ import domain.Exceptions.PublicacionAdopcionInvalidaException;
 import domain.Exceptions.SinContactosException;
 import domain.Mascota.MascotaRegistrada;
 import domain.Pregunta.Pregunta;
+import domain.Pregunta.PreguntaResuelta;
 import domain.Sistema.CentroDeRescate;
 
 import java.util.ArrayList;
@@ -26,14 +27,11 @@ public class PublicacionAdopcion {
   @OneToOne
   private MascotaRegistrada mascota;
   @Transient
-  private List<Pregunta> preguntas;
+  private List<PreguntaResuelta> preguntasResueltas;
 
-  public PublicacionAdopcion(List<Pregunta> preguntasRespondidas, MascotaRegistrada mascota) {
+  public PublicacionAdopcion(List<PreguntaResuelta> preguntasRespondidas, MascotaRegistrada mascota) {
 
-    if(!preguntasRespondidas.stream().allMatch(pregunta -> pregunta.esValida()))
-      throw new PublicacionAdopcionInvalidaException("Alguna pregunta obligatoria no fue respondida");
-
-    this.preguntas = preguntasRespondidas;
+    this.preguntasResueltas = preguntasRespondidas;
     this.mascota = mascota;
   }
 
@@ -43,14 +41,14 @@ public class PublicacionAdopcion {
   public long getID(){
     return mascota.getID();
   }
-  public List<Pregunta> getPreguntas() {
-    return preguntas;
+  public List<PreguntaResuelta> getPreguntas() {
+    return preguntasResueltas;
   }
 
   public Boolean matcheaConRespuesta(String respuesta) {
     return this.getPreguntas().stream()
         .anyMatch(pregunta ->
-          pregunta.getRespuesta().equals(respuesta.toLowerCase())
+            pregunta.getRespuesta().equals(respuesta.toLowerCase())
         );
   }
 

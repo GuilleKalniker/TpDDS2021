@@ -7,6 +7,7 @@ import domain.Exceptions.RespuestasIncompletasException;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Pregunta.Pregunta;
+import domain.Pregunta.PreguntaResuelta;
 import domain.Publicacion.PublicacionAdoptante;
 import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioMascotas;
@@ -114,21 +115,12 @@ public class Duenio extends Usuario {
     });
   }
 
-  public void darEnAdopcionA(MascotaRegistrada mascota, CentroDeRescate centroDeRescate) {
+  public void darEnAdopcionA(MascotaRegistrada mascota, CentroDeRescate centroDeRescate, List<PreguntaResuelta> preguntasResueltas) {
     if (!mascotas.contains(mascota)) {
       throw new IDNoSeCorrespondeException("El ID de la mascota enviado no pertenece a una mascota propia");
     }
 
-    List<Pregunta> preguntasCentro = centroDeRescate.getPreguntasDeAdopcion();
-    preguntasCentro.forEach(pregunta -> {
-      contestarPregunta(pregunta);
-    });
-    /*
-    if (!preguntasCentro.stream().allMatch(pregunta -> pregunta.esValida())) {
-      throw new RespuestasIncompletasException();
-    }*/
-
-    centroDeRescate.generarPublicacionAdopcion(preguntasCentro, mascota);
+    centroDeRescate.generarPublicacionAdopcion(preguntasResueltas, mascota);
   }
 
   public void contestarPregunta(Pregunta pregunta) {

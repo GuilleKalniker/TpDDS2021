@@ -80,7 +80,7 @@ public class DuenioTest {
   public void seGeneranLasPublicacionesDeAdopcion() {
     registrarleMascotaADuenio(duenioDePruebaUno);
     MascotaRegistrada mascota = duenioDePruebaUno.getMascotas().get(0);
-    duenioDePruebaUno.darEnAdopcionA(mascota, centroDeRescateDePrueba);
+    //duenioDePruebaUno.darEnAdopcionA(mascota, centroDeRescateDePrueba);
 
     assertEquals(1, centroDeRescateDePrueba.getPublicacionesAdopcion().size());
   }
