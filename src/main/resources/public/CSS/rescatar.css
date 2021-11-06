@@ -1,0 +1,55 @@
+.formulario-rescatar{
+    border-radius: 4px;
+    border: none;
+    background-color: #60c4bc;
+    color: white;
+    transition: background-color 400ms;
+}
+
+.formulario-rescatar:focus{
+    background-color: #8eeee5;
+    border:none;
+    box-shadow: none;
+}
+
+.centrar-dni {
+    display:flex;
+    justify-content: space-between;
+}
+
+.dni {
+    width: 20%;
+}
+
+.dni-num {
+    width: 70%;
+}
+
+.titulo-rescatar{
+    margin-top: 2rem;
+    padding-left: 11.25px;
+    height: 4rem;
+}
+
+.subtitulo-rescatar{
+    height: 3.5rem;
+    font-size: 1.7rem;
+}
+
+.centrar-boton-rescatar{
+    margin: 2rem 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.boton-rescatar{
+    padding: 0.5rem 1.8rem;
+    border-radius: 4px;
+    border: none;
+    background-color: #50a6e3;
+    transition: background-color 300ms;
+}
+
+.boton-rescatar:hover{
+    background-color: #1b9fef;
+}

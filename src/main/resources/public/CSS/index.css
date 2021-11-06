@@ -8,7 +8,7 @@
     scroll-behavior: smooth ;
 }
 body{
-    background-color: #FDFFE3;
+    background-color: #fdffe3 !important;
 }
  .nav-link{
      font-family: "Mongolian Baiti", "Arial Rounded MT Bold";
@@ -21,6 +21,7 @@ body{
     opacity: 0.9;
 
 }
+
 nav, ul{
     padding-top: 20px ;
 }
@@ -28,18 +29,14 @@ nav, ul{
      width: 100%;
      background-color: #F8B551;
  }
-#footer{
+
+footer{
     text-align: center;
     color: black;
     background-color: #f8cb99;
     padding-bottom: 40px;
-    position:absolute;
-    bottom:0;
-    width:100%;
-       /* Height of the footer */
-
 }
-#footer .texto{
+footer .texto{
     margin-top: 20px;
 }
 
@@ -49,4 +46,5 @@ ion-icon{
 }
 .navbar-toggler:focus{
     outline: none;
+    box-shadow: none;
 }
