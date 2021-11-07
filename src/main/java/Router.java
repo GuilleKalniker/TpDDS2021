@@ -18,7 +18,8 @@ public class Router {
 
         DebugScreen.enableDebugScreen();
 
-        Spark.staticFiles.location("public");
+        //Spark.staticFiles.location("public");
+        Spark.staticFiles.externalLocation(System.getProperty("user.dir") + "/src/main/resources/public");
 
         Spark.before((req, res) -> {
             AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();

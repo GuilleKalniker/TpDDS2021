@@ -2,7 +2,6 @@ package controllers;
 
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.Duenio;
-import domain.Persona.Usuario;
 import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioUsuarios;
 import spark.ModelAndView;
@@ -15,9 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.List;
 
 public class UsuarioController extends BaseController {
@@ -75,7 +72,7 @@ public class UsuarioController extends BaseController {
         }
 
         AdapterJPA.beginTransaction();
-        d.setUrlFotoPerfil(nuevaUrl);
+        d.setUrlFotoPerfil("/" + nuevaUrl);
         AdapterJPA.commit();
 
         setModelo(d);
