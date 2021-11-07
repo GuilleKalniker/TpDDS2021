@@ -1,7 +1,7 @@
 package domain.Servicios;
 
 import domain.Servicios.ClasesParaLaConsulta.ListadoHogaresTransito;
-import domain.Servicios.ClasesParaLaConsulta.Request;
+import domain.Servicios.ClasesParaLaConsulta.UsuariosRequest;
 import domain.Servicios.ClasesParaLaConsulta.UsuariosResponse;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -16,5 +16,5 @@ public interface HogaresTransitoService {
   Call<ListadoHogaresTransito> getHogares(@Header("Authorization") String token, @Query("offset") int offset);
 
   @POST("usuarios")
-  Call<UsuariosResponse> getToken(@Body Request request);
+  Call<UsuariosResponse> getToken(@Body UsuariosRequest request);
 }

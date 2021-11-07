@@ -1,6 +1,5 @@
 import controllers.*;
 import domain.Repositorio.AdapterJPA;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -15,6 +14,7 @@ public class Router {
         AdopcionController adopcionController = new AdopcionController();
         UsuarioController usuarioController = new UsuarioController();
         RescatarController rescatarController = new RescatarController();
+        CentrosController centrosController = new CentrosController();
 
         DebugScreen.enableDebugScreen();
 
@@ -30,22 +30,26 @@ public class Router {
             AdapterJPA.entityManager().close();
         });
 
-        Spark.get("/", (req, res) -> homeController.index(req, res), engine);
-        Spark.get("/usuarios", (req, res) -> usuarioController.todos(req, res), engine);
-        Spark.get("/usuarios/me", (req, res) -> usuarioController.me(req, res), engine);
-        Spark.get("/usuarios/:id/contactos", (req, res) -> usuarioController.contactos(req, res), engine);
+        Spark.get("/", homeController::index, engine);
+        Spark.get("/usuarios", usuarioController::todos, engine);
+        Spark.get("/usuarios/me", usuarioController::me, engine);
+        Spark.post("/usuarios/me", usuarioController::cambiarFotoPerfil, engine);
+        Spark.get("/usuarios/:id/contactos", usuarioController::contactos, engine);
 
-        Spark.get("/iniciarSesion", (req, res) -> loginController.index(req, res), engine);
-        Spark.post("/iniciarSesion", (req, res) -> loginController.loguearse(req, res), engine);
-        Spark.get("/cerrarSesion", (req, res) -> loginController.desloguearse(req, res), engine);
+        Spark.get("/iniciarSesion", loginController::index, engine);
+        Spark.post("/iniciarSesion", loginController::loguearse, engine);
+        Spark.get("/cerrarSesion", loginController::desloguearse, engine);
 
-        Spark.get("/adoptar", (req, res) -> adopcionController.index(req, res), engine);
-        Spark.post("/adoptar", (req, res) -> adopcionController.publicar(req, res), engine);
+        Spark.get("/centros/nuevo", centrosController::nuevoCentro, engine);
+        Spark.post("/centros/nuevo", centrosController::crearCentro, engine);
 
-        Spark.get("/registrarse", (req, res) -> registrarseController.index(req, res), engine);
-        Spark.post("/registrarse", (req, res) -> registrarseController.registrar(req, res), engine);
+        Spark.get("/adoptar", adopcionController::index, engine);
+        Spark.post("/adoptar", adopcionController::publicar, engine);
 
-        Spark.get("/rescatar", (req, res) -> rescatarController.index(req, res), engine);
-        Spark.post("/rescatar", (req, res) -> rescatarController.rescatar(req, res), engine);
+        Spark.get("/registrarse", registrarseController::index, engine);
+        Spark.post("/registrarse", registrarseController::registrar, engine);
+
+        Spark.get("/rescatar", rescatarController::index, engine);
+        Spark.post("/rescatar", rescatarController::rescatar, engine);
     }
 }

@@ -2,12 +2,22 @@ package controllers;
 
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.Duenio;
+import domain.Persona.Usuario;
+import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
 
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import javax.servlet.http.Part;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class UsuarioController extends BaseController {
@@ -37,6 +47,39 @@ public class UsuarioController extends BaseController {
             res.redirect("/");
         }
         setModelo(null);
+        return new ModelAndView(getDiccionario(), "usuario.hbs");
+    }
+
+    public ModelAndView cambiarFotoPerfil(Request req, Response res) throws ServletException, IOException {
+        MultipartConfigElement config = new MultipartConfigElement(
+                "imagenes",
+                1000000,
+                1000000,
+                1024);
+
+        req.raw().setAttribute("org.eclipse.jetty.multipartConfig", config);
+
+        Part uploadedFile = req.raw().getPart("foto");
+
+        Duenio d = RepositorioUsuarios.getInstance().getDuenioPorNombre(req.cookie("usuario_logueado"));
+
+        String nuevaUrl = generateProfilePath(d) + getFormat(uploadedFile.getSubmittedFileName());
+
+        Path out = Paths.get(getPublicPath() + nuevaUrl);
+
+        try (final InputStream in = uploadedFile.getInputStream()) {
+            Files.copy(in, out);
+            uploadedFile.delete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        AdapterJPA.beginTransaction();
+        d.setUrlFotoPerfil(nuevaUrl);
+        AdapterJPA.commit();
+
+        setModelo(d);
+
         return new ModelAndView(getDiccionario(), "usuario.hbs");
     }
 }

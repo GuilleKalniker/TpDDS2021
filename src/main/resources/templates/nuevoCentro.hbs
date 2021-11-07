@@ -1,0 +1,16 @@
+{{#partial "contenido"}}
+    <form action="/centros/nuevo" method="POST">
+      <div class="form-group">
+        <label for="lat">Latitud</label>
+        <input type="text" class="form-control" id="lat" placeholder="Latitud" name="lat">
+      </div>
+      <div class="form-group">
+        <label for="lon">Longitud</label>
+        <input type="text" class="form-control" id="lon" placeholder="Longitud" name="lon">
+
+        <button type="submit" class="btn btn-primary">Crear</button>
+      </div>
+    </form>
+{{/partial}}
+
+{{>layout.hbs}}

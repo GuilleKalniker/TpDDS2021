@@ -3,39 +3,39 @@
     <link type="text/css" rel="stylesheet" href="CSS/rescatar.css">
 
     <h1 class="titulo-rescatar">Datos de la mascota perdida</h1>
-    <form action="/rescatar" method="POST">
+    <form action="/rescatar" method="POST" enctype="multipart/form-data">
         <div class="container">
             <div class="row align-items-start">
                 <div class="col-md-5 col-12">
                     <h3 class="subtitulo-rescatar">Contanos sobre la mascota que encontraste</h3>
 
                     <label for="chapita" class="form-label">Chapita</label>
-                    <input type="text" class="form-control formulario-rescatar" id="chapita"  placeholder="¡Si no tiene no te preocupes!">
+                    <input formenctype="text/plain" type="text" class="form-control formulario-rescatar" id="chapita" name="chapita" placeholder="¡Si no tiene no te preocupes!">
 
                     <label for="fechaencuentro" class="form-label">Fecha de encuentro</label>
-                    <input type="date" class="form-control formulario-rescatar" id="fechaencuentro">
+                    <input formenctype="application/x-www-form-urlencoded" type="date" class="form-control formulario-rescatar" id="fechaencuentro" name="fecha_encuentro">
 
                     <label for="fotos" class="form-label">Fotos</label>
-                    <input type="file" class="form-control formulario-rescatar" id="fotos">
+                    <input type="file" class="form-control formulario-rescatar" id="fotos" name="fotos" accept="image/*">
 
                     <label for="descripcion" class="form-label">Descripción</label>
-                    <textarea class="form-control formulario-rescatar" id="descripcion" rows="5"> </textarea>
+                    <textarea formenctype="text/plain" class="form-control formulario-rescatar" id="descripcion" rows="5" name="descripcion"> </textarea>
 
                     <label for="lugarEncuentro" class="form-label">Lugar de encuentro</label>
-                    <input type="address" class="form-control formulario-rescatar" id="lugarEncuentro">
+                    <input formenctype="text/plain" type="address" class="form-control formulario-rescatar" id="lugarEncuentro" name="lugarEncuentro">
 
                 </div>
                 <div class="col-md-5 col-12">
                     <h3 class="subtitulo-rescatar">¡También necesitamos tus datos!</h3>
 
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control formulario-rescatar" id="nombre">
+                    <input formenctype="text/plain" type="text" class="form-control formulario-rescatar" id="nombre" name="nombre">
 
                     <label for="apellido" class="form-label">Apellido</label>
-                    <input type="text" class="form-control formulario-rescatar" id="apellido">
+                    <input formenctype="text/plain" type="text" class="form-control formulario-rescatar" id="apellido" name="apellido">
 
                     <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
-                    <input type="date" class="form-control formulario-rescatar" id="fechaNacimiento">
+                    <input formenctype="application/x-www-form-urlencoded" type="date" class="form-control formulario-rescatar" id="fechaNacimiento" name="fechaNacimiento">
 
                     <label for="tipo_doc">Tipo de documento</label>
                     <div class="centrar-dni">
@@ -44,18 +44,18 @@
                             <option value={{this}}>{{this}}</option>
                         {{/each}}
                         </select>
-                        <input type="text" class="form-control formulario-rescatar dni-num col-4" id="num_doc" name="num_doc">
+                        <input formenctype="text/plain" type="text" class="form-control formulario-rescatar dni-num col-4" id="num_doc" name="num_doc">
                     </div>
 
 
                     <label for="direccion" class="form-label">Dirección</label>
-                    <input type="text" class="form-control formulario-rescatar" id="direccion">
+                    <input formenctype="text/plain" type="text" class="form-control formulario-rescatar" id="direccion" name="direccion">
 
                     <label for="contacto1" class="form-label">Tel. Contacto 1</label>
-                    <input type="text" class="form-control formulario-rescatar" id="contacto1">
+                    <input formenctype="text/plain" type="text" class="form-control formulario-rescatar" id="contacto1" name="contacto1">
 
                     <label for="contacto2" class="form-label">Tel. Contacto 2</label>
-                    <input type="text" class="form-control formulario-rescatar" id="contacto2">
+                    <input formenctype="text/plain" type="text" class="form-control formulario-rescatar" id="contacto2" name="contacto2">
 
                     <div class="centrar-boton-rescatar">
                         <button type="submit" class="btn btn-primary boton-rescatar justify-content-end">Registrar</button>

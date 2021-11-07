@@ -42,6 +42,7 @@ public class RepositorioCentroDeRescate {
 
   public void generarPublicacion(FormularioMascotaPerdida formulario) {
     CentroDeRescate centroMasCercano = getCentroDeRescateMasCercanoA(formulario.getLugarEncuentro());
+    AdapterJPA.persist(formulario);
     AdapterJPA.persist(centroMasCercano.generarSolicitud(new PublicacionMascotaPerdida(formulario)));
   }
 

@@ -77,8 +77,20 @@ public class RepositorioUsuarios {
     return u;
   }
 
+  public Duenio getDuenioPorNombre(String nombreUsuario) {
+    Duenio u;
+    try {
+      TypedQuery<Duenio> query = AdapterJPA.entityManager().createQuery("select d from Duenio d where d.nombreUsuario = :username", Duenio.class);
+      query.setParameter("username", nombreUsuario);
+      u = query.getSingleResult();
+    }
+    catch(Exception e) {
+      u = null;
+    }
+    return u;
+  }
+
     public Duenio getDuenio(long id) {
-      System.out.println("Id que llego: " + id);
       return AdapterJPA.entityManager().find(Duenio.class, id);
     }
 }

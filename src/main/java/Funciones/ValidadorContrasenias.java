@@ -53,14 +53,9 @@ public class ValidadorContrasenias {
   }
 
   public static byte[] generarSalt() {
-    /*TODO: ver por que no funca bien
     SecureRandom random = new SecureRandom();
     byte[] salt = new byte[16];
     random.nextBytes(salt);
-    return new String(salt);
-    */
-    byte[] salt = new byte[16];
-    Arrays.fill(salt, (byte) 'F');
     return salt;
   }
 

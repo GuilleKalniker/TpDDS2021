@@ -1,11 +1,15 @@
 {{#partial "contenido"}}
     <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="/images/facu.png" alt="Card image cap">
+        <img class="card-img-top" src="{{usuario_logueado.urlFotoPerfil}}" alt="{{usuarios_logueado.urlFotoPerfil}}">
         <div class="card-body">
             <h5 class="card-title">{{usuario_logueado.nombre}} {{usuario_logueado.apellido}}</h5>
             <p class="card-text">{{usuario_logueado.nombreUsuario}}</p>
             <p class="card-text">{{usuario_logueado.fechaNacimiento}}</p>
         </div>
+        <form action="/usuarios/me" method="POST" enctype="multipart/form-data">
+            <input type="file" class="form-control" name="foto" accept="image/*">Elegir foto de perfil</input>>
+            <button type="submit">Guardar</button>
+        </form>
     </div>
 {{/partial}}
 

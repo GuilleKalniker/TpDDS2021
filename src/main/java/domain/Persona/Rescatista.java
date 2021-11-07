@@ -1,7 +1,6 @@
 package domain.Persona;
 
 import domain.Mascota.FormularioMascotaPerdida;
-import domain.Publicacion.PublicacionMascotaPerdida;
 import domain.Repositorio.RepositorioCentroDeRescate;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
@@ -23,6 +22,7 @@ public class Rescatista {
   }
 
   public void generarSolicitudPublicacion(FormularioMascotaPerdida formulario) {
+
     RepositorioCentroDeRescate.getInstance().generarPublicacion(formulario);
   }
 

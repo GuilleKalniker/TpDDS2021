@@ -1,15 +1,13 @@
 package domain.Persona;
 
 
-import Funciones.StringDate;
+import Funciones.Utils;
 import domain.Exceptions.IDNoSeCorrespondeException;
-import domain.Exceptions.RespuestasIncompletasException;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Pregunta.Pregunta;
 import domain.Pregunta.PreguntaResuelta;
 import domain.Publicacion.PublicacionAdoptante;
-import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
 import domain.Servicios.Notificadores.Mail.Mensaje;
@@ -17,6 +15,7 @@ import domain.Servicios.Notificadores.Notificador;
 import domain.Sistema.CentroDeRescate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +27,8 @@ public class Duenio extends Usuario {
   private DatosPersonales datosPersonales;
   @OneToMany(mappedBy = "duenio")
   private List<MascotaRegistrada> mascotas = new ArrayList<>();
+
+  private String urlFotoPerfil;
 
   @Transient
   private List<Notificador> notificadores = new ArrayList<>();
@@ -56,11 +57,19 @@ public class Duenio extends Usuario {
   public String getApellido() { return getDatosPersonales().getApellido();}
 
   public String getFechaNacimiento() {
-    return StringDate.localDateToString(datosPersonales.getFechaDeNacimiento());
+    return Utils.localDateToString(datosPersonales.getFechaDeNacimiento());
   }
 
   public List<MascotaRegistrada> getMascotas() {
     return mascotas;
+  }
+
+  public String getUrlFotoPerfil() {
+    return urlFotoPerfil;
+  }
+
+  public void setUrlFotoPerfil(String urlFotoPerfil) {
+    this.urlFotoPerfil = urlFotoPerfil;
   }
 
   public void setNotificadores(List<Notificador> notificadores) {
@@ -132,4 +141,6 @@ public class Duenio extends Usuario {
     PublicacionAdoptante publicacionAdoptante = new PublicacionAdoptante(this);
     centroDeRescate.nuevoInteresadoEnAdoptar(publicacionAdoptante);
   }
+
+
 }

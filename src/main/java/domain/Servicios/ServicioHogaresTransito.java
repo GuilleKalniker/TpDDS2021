@@ -7,15 +7,13 @@ import domain.Mascota.MascotaRegistrada;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Servicios.ClasesParaLaConsulta.HogarTransito;
 import domain.Servicios.ClasesParaLaConsulta.ListadoHogaresTransito;
-import domain.Servicios.ClasesParaLaConsulta.Request;
+import domain.Servicios.ClasesParaLaConsulta.UsuariosRequest;
 import domain.Servicios.ClasesParaLaConsulta.UsuariosResponse;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 //import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +74,7 @@ public class ServicioHogaresTransito {
   private String requestToken(String email) {
     try {
       HogaresTransitoService refugiosService = this.retrofit.create(HogaresTransitoService.class);
-      Call<UsuariosResponse> requestToken = refugiosService.getToken(new Request("Saitteld1987@fleckens.hu"));
+      Call<UsuariosResponse> requestToken = refugiosService.getToken(new UsuariosRequest("Saitteld1987@fleckens.hu"));
       Response<UsuariosResponse> responseTokenUsuarios = requestToken.execute();
       return responseTokenUsuarios.body().getToken();
     }

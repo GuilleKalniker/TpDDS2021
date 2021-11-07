@@ -1,10 +1,10 @@
 package domain.Servicios.ClasesParaLaConsulta;
 
-public class Request {
+public class UsuariosRequest {
 
   public String email;
 
-  public Request(String email){
+  public UsuariosRequest(String email){
     this.email = email;
   }
 }
