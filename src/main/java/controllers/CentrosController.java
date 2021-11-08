@@ -1,8 +1,10 @@
 package controllers;
 
 import domain.Mascota.AtributosMascota.Ubicacion;
+import domain.Persona.Administrador;
 import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioCentroDeRescate;
+import domain.Repositorio.RepositorioUsuarios;
 import domain.Sistema.CentroDeRescate;
 import spark.ModelAndView;
 import spark.Request;
@@ -11,6 +13,9 @@ import spark.Response;
 public class CentrosController extends BaseController {
     public ModelAndView nuevoCentro(Request req, Response res) {
         setUsuarioLogueado(req);
+        Administrador admin = RepositorioUsuarios.getInstance().getAdministradorPorNombre(req.cookie("usuario_logueado"));
+        if (admin == null)
+            res.redirect("/");
         return new ModelAndView(getDiccionario(), "nuevoCentro.hbs");
     }
 

@@ -90,6 +90,32 @@ public class RepositorioUsuarios {
     return u;
   }
 
+  public Administrador getAdministradorPorNombre(String nombreUsuario) {
+    Administrador u;
+    try {
+      TypedQuery<Administrador> query = AdapterJPA.entityManager().createQuery("select a from Administrador a where a.nombreUsuario = :username", Administrador.class);
+      query.setParameter("username", nombreUsuario);
+      u = query.getSingleResult();
+    }
+    catch(Exception e) {
+      u = null;
+    }
+    return u;
+  }
+
+  public Voluntario getVoluntarioPorNombre(String nombreUsuario) {
+    Voluntario u;
+    try {
+      TypedQuery<Voluntario> query = AdapterJPA.entityManager().createQuery("select v from Voluntario v where v.nombreUsuario = :username", Voluntario.class);
+      query.setParameter("username", nombreUsuario);
+      u = query.getSingleResult();
+    }
+    catch(Exception e) {
+      u = null;
+    }
+    return u;
+  }
+
     public Duenio getDuenio(long id) {
       return AdapterJPA.entityManager().find(Duenio.class, id);
     }
