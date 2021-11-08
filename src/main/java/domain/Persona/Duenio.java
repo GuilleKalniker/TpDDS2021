@@ -77,12 +77,12 @@ public class Duenio extends Usuario {
   }
 
   /**
-  * registrarMascota(1)
+  * registrarMascota.hbs(1)
   * Agrega a la mascota recien registrada a la lista de mascotas del duenio y del centro de rescate.
   */
   public void registrarMascota(MascotaRegistrada mascota){
-    RepositorioMascotas.getInstance().registrarMascota(mascota);
     this.mascotas.add(mascota);
+    RepositorioMascotas.getInstance().registrarMascota(mascota);
     mascota.setDuenio(this);
 
   }

@@ -1,5 +1,8 @@
 package controllers;
 
+import domain.Mascota.AtributosMascota.Caracteristica;
+import domain.Mascota.AtributosMascota.Sexo;
+import domain.Mascota.AtributosMascota.TipoMascota;
 import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Persona.Duenio;
 import domain.Persona.Usuario;
@@ -48,6 +51,18 @@ public class BaseController {
 
     protected TipoDocumento stringToTipoDocumento(String s) {
         return Arrays.stream(TipoDocumento.values()).filter(tipo -> tipo.name().equals(s)).findFirst().get();
+    }
+
+    protected TipoMascota stringToTipoMascota(String s) {
+        return Arrays.stream(TipoMascota.values()).filter(tipo -> tipo.name().equals(s)).findFirst().get();
+    }
+
+    protected Sexo stringToSexo(String s) {
+        return Arrays.stream(Sexo.values()).filter(tipo -> tipo.name().equals(s)).findFirst().get();
+    }
+
+    protected Caracteristica stringToCaracteristica(String s) {
+        return Arrays.stream(Caracteristica.values()).filter(tipo -> tipo.name().equals(s)).findFirst().get();
     }
 
     protected String generatePath() {

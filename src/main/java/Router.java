@@ -15,6 +15,7 @@ public class Router {
         UsuarioController usuarioController = new UsuarioController();
         RescatarController rescatarController = new RescatarController();
         CentrosController centrosController = new CentrosController();
+        MascotasController mascotasController = new MascotasController();
 
         DebugScreen.enableDebugScreen();
 
@@ -22,11 +23,13 @@ public class Router {
         Spark.staticFiles.externalLocation(System.getProperty("user.dir") + "/src/main/resources/public");
 
         Spark.before((req, res) -> {
+            AdapterJPA.entityManager().clear();
             AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
             AdapterJPA.entityManager().close();
         });
 
         Spark.after((req, res) -> {
+            AdapterJPA.entityManager().clear();
             AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
             AdapterJPA.entityManager().close();
         });
@@ -36,6 +39,9 @@ public class Router {
         Spark.get("/usuarios/me", usuarioController::me, engine);
         Spark.post("/usuarios/me", usuarioController::cambiarFotoPerfil, engine);
         Spark.get("/usuarios/:id/contactos", usuarioController::contactos, engine);
+
+        Spark.get("/mascotas/nueva", mascotasController::registroMascota, engine);
+        Spark.post("/mascotas/nueva", mascotasController::registrarMascota, engine);
 
         Spark.get("/iniciarSesion", loginController::index, engine);
         Spark.post("/iniciarSesion", loginController::loguearse, engine);

@@ -41,7 +41,6 @@ public class RegistrarseController extends BaseController {
         AdapterJPA.entityManager().clear();
         AdapterJPA.entityManager().close();
 
-
         setModelo(model);
         res.redirect("/");
         return null;

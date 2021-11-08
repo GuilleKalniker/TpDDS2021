@@ -1,0 +1,55 @@
+{{#partial "contenido"}}
+    <form action="/mascotas/nueva" method="POST" enctype="multipart/form-data">
+        <label for="especie">Especie</label>
+        <select id="especie" name="especie">
+            {{#each tipos_mascota}}
+                <option value={{this}}>{{this}}</option>
+            {{/each}}
+        </select>
+
+        <div>
+            <label for="nombre">Nombre</label>
+            <input formenctype="application/x-www-form-urlencoded" type="text" id="nombre" name="nombre">
+        </div>
+
+        <div>
+            <label for="apodo">Apodo</label>
+            <input formenctype="application/x-www-form-urlencoded" type="text" id="apodo" name="apodo">
+        </div>
+
+        <div>
+            <label for="edad">Edad (aproximada)</label>
+            <input formenctype="application/x-www-form-urlencoded" type="text" id="edad" name="edad">
+        </div>
+
+        <div>
+            <label for="sexo">Especie</label>
+            <select id="sexo" name="sexo">
+                {{#each sexos}}
+                    <option value={{this}}>{{this}}</option>
+                {{/each}}
+            </select>
+        </div>
+
+        <div>
+            <label for="foto">Fotos</label>
+            <input type="file" id="foto" name="foto" accept="image/*">
+        </div>
+
+        <div>
+            <label for="descripcion">Descripción física</label>
+            <input formenctype="application/x-www-form-urlencoded" type="text" id="descripcion" name="descripcion">
+        </div>
+
+        <div>
+            {{#each caracteristicas}}
+                <label for={{this}}>{{this}}</label>
+                <input formenctype="application/x-www-form-urlencoded" id={{this}} name={{this}} type="checkbox" value="si">
+            {{/each}}
+        </div>
+
+        <button type="submit">Registrar mascota</button>
+    </form>
+{{/partial}}
+
+{{>layout.hbs}}

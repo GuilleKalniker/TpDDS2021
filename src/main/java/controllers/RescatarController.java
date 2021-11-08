@@ -1,6 +1,5 @@
 package controllers;
 
-import Funciones.Utils;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Persona.AtributosPersona.Contacto;
@@ -9,11 +8,9 @@ import domain.Persona.AtributosPersona.TipoDocumento;
 
 import domain.Persona.Rescatista;
 import domain.Repositorio.AdapterJPA;
-import domain.Sistema.CentroDeRescate;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
@@ -25,8 +22,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collection;
-
 
 public class RescatarController extends BaseController{
   public ModelAndView index(Request req, Response res) {
@@ -54,31 +49,23 @@ public class RescatarController extends BaseController{
       e.printStackTrace();
     }
 
-
     setUsuarioLogueado(req);
     String chapitaOpcional = req.queryParams("chapita");
-
-    System.out.println("Fecha 1: " + req.queryParams("fecha_encuentro"));
 
     String descripcion = req.queryParams("descripcion");
     String lugarEncuentro = req.queryParams("lugarEncuentro");
 
-    System.out.println(descripcion);
-    System.out.println(lugarEncuentro);
     LocalDate fechaEncuentro = stringToLocalDate(req.queryParams("fecha_encuentro"));
 
     String nombre = req.queryParams("nombre");
     String apellido = req.queryParams("apellido");
     LocalDate fechaNacimiento = stringToLocalDate(req.queryParams("fechaNacimiento"));
 
-    System.out.println("Fecha 2: " + stringToLocalDate(req.queryParams("fechaNacimiento")));
-
     TipoDocumento tipoDocumento = stringToTipoDocumento(req.queryParams("tipo_doc"));
     Integer nroDocumento = Integer.parseInt(req.queryParams("num_doc"));
     String direccion = req.queryParams("direccion");
     Contacto contacto1 = new Contacto(nombre, apellido, Integer.parseInt(req.queryParams("contacto1")), null);
     Contacto contacto2 = new Contacto(nombre, apellido, Integer.parseInt(req.queryParams("contacto2")), null);
-
 
     DatosPersonales dp = new DatosPersonales(nombre, apellido, fechaNacimiento, tipoDocumento, nroDocumento, Arrays.asList(contacto1, contacto2), direccion);
 
@@ -91,8 +78,6 @@ public class RescatarController extends BaseController{
     AdapterJPA.beginTransaction();
     (new Rescatista()).generarSolicitudPublicacion(formulario);
     AdapterJPA.commit();
-
-
 
     AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
     AdapterJPA.entityManager().clear();

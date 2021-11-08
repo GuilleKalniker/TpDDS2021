@@ -51,8 +51,8 @@ public class CentroDeRescateTest {
 
   @Test
   public void obtenemosUnaListaDeIDsAcordeALasMascotasRegistradas(){
-    RepositorioMascotas.getInstance().registrarMascota(pepita);
-    RepositorioMascotas.getInstance().registrarMascota(chinchulin);
+    RepositorioMascotas.getInstance().registrarMascota.hbs(pepita);
+    RepositorioMascotas.getInstance().registrarMascota.hbs(chinchulin);
 
     assertTrue(this.centro.existeMascota(pepita.getID()));
     assertTrue(this.centro.existeMascota(chinchulin.getID()));
@@ -62,7 +62,7 @@ public class CentroDeRescateTest {
   public void seEncuentraElDueñoAPartirDeUnaMascotaRegistrada(){
     Duenio duenioDePrueba = new Duenio("juan4321", "guilloteelmaskpox2",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "DeNazareth"), "nose 123"));
     duenioDePrueba.registrarse();
-    duenioDePrueba.registrarMascota(pepita);
+    duenioDePrueba.registrarMascota.hbs(pepita);
     assertTrue(this.centro.buscarDuenioApartirIDMascota(pepita.getID()).getNombreUsuario().equals(duenioDePrueba.getNombreUsuario()));
   }
 
@@ -121,7 +121,7 @@ public class CentroDeRescateTest {
 
     // TODO: FALTA AGREGAR COMPORTAMIENTO CON SQL EN REPO, ADEMAS DE ASOCIAR EL ID
     // TODO: Hace falta registrar?
-    duenioDePruebaUno.registrarMascota(pepita);
+    duenioDePruebaUno.registrarMascota.hbs(pepita);
 
 
     PublicacionAdopcion publicacionAdopcion = new PublicacionAdopcion(preguntas, pepita);
@@ -183,7 +183,7 @@ public class CentroDeRescateTest {
 
   void registrarleMascotaADuenio(Duenio unDuenio) {
     MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<String>(), new ArrayList<>());
-    unDuenio.registrarMascota(mascota);
+    unDuenio.registrarMascota.hbs(mascota);
   }
 
   private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido){
