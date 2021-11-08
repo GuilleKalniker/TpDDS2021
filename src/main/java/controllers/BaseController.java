@@ -29,7 +29,7 @@ public class BaseController {
 
     public void setUsuarioLogueado(Request req) {
         Usuario usuario = RepositorioUsuarios.getInstance().getUsuarioPorNombre(req.cookie("usuario_logueado"));
-        System.out.println("Usuario logueado: " + usuario==null?usuario.getNombreUsuario():"undefined");
+        System.out.println("Usuario logueado: " + (usuario!=null?usuario.getNombreUsuario():"undefined"));
         diccionario.put("usuario_logueado", usuario);
     }
 

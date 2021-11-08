@@ -62,5 +62,4 @@ public class Usuario {
     public void registrarse() {
         RepositorioUsuarios.getInstance().registrarUsuario(this);
     }
-
 }

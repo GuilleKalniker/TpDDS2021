@@ -38,13 +38,4 @@ public abstract class Pregunta {
     return pregunta;
   }
 
-  public abstract Boolean getAbierta();
-  public abstract Boolean getBooleana();
-  public abstract Boolean getOpcionMultiple();
-
-  //TODO: volarlo ta deprecado
-  public Boolean esValida() {
-    return true;
-  }
-
 }

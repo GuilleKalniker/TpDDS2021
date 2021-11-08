@@ -23,4 +23,8 @@ public class Administrador extends Usuario {
     RepositorioCaracteristicas.getInstance().sacarCaracteristica(caracteristica);
   }
 
+  public Boolean getEsAdministrador() {
+    return true;
+  }
+
 }

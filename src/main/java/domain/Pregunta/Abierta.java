@@ -11,15 +11,7 @@ public class Abierta extends Pregunta {
         super(pregunta);
     }
     public Abierta() {}
-
-    public Boolean getBooleana() {
-        return false;
-    }
-
     public Boolean getAbierta() {
         return true;
-    }
-    public Boolean getOpcionMultiple() {
-        return false;
     }
 }

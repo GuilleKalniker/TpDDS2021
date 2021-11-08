@@ -1,12 +1,13 @@
 package controllers;
 
-import Funciones.Utils;
 import Funciones.ValidadorContrasenias;
+import domain.Persona.Administrador;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Persona.Duenio;
 import domain.Repositorio.AdapterJPA;
+import domain.Repositorio.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -20,6 +21,11 @@ public class RegistrarseController extends BaseController {
         setUsuarioLogueado(req);
         set("tipos_documento", TipoDocumento.values());
         return new ModelAndView(getDiccionario(), "registrarse.hbs");
+    }
+
+    public ModelAndView admin(Request req, Response res) {
+        setUsuarioLogueado(req);
+        return new ModelAndView(getDiccionario(), "registrarseAdmin.hbs");
     }
 
     public ModelAndView registrar(Request req, Response res) {
@@ -81,7 +87,41 @@ public class RegistrarseController extends BaseController {
         AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
         AdapterJPA.entityManager().close();
 
-        setModelo(model);
+        res.redirect("/");
+        return null;
+    }
+
+    public ModelAndView registrarAdmin(Request req, Response res) {
+        setUsuarioLogueado(req);
+        Boolean hayErrores = false;
+
+        String usuario = req.queryParams("usuario");
+        String contrasenia = req.queryParams("contrasenia");
+
+
+        if (usuario.isEmpty() || contrasenia.isEmpty()) {
+            set("campos_incompletos", true);
+            hayErrores = true;
+        }
+        if (!ValidadorContrasenias.esContraseniaValida(contrasenia)) {
+            set("contrasenia_invalida", true);
+            hayErrores = true;
+        }
+
+        if (hayErrores) {
+            return new ModelAndView(getDiccionario(), "registrarseAdmin.hbs");
+        }
+
+        Administrador admin = new Administrador(usuario, contrasenia);
+
+        AdapterJPA.beginTransaction();
+        RepositorioUsuarios.getInstance().registrarUsuario(admin);
+        AdapterJPA.commit();
+
+        AdapterJPA.entityManager().clear();
+        AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
+        AdapterJPA.entityManager().close();
+
         res.redirect("/");
         return null;
     }

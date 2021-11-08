@@ -25,13 +25,46 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="nav justify-content-end">
                         {{#if usuario_logueado}}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/usuarios/me">{{usuario_logueado.nombreUsuario}}</a>
-                            </li>
+                            {{#if usuario_logueado.esDuenio}}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/usuarios/me">{{usuario_logueado.nombreUsuario}}</a>
+                                </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="/cerrarSesion">Cerrar sesión</a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/cerrarSesion">Cerrar sesión</a>
+                                </li>
+                            {{/if}}
+                            {{#if usuario_logueado.esAdministrador}}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Características</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Registrar centro</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Registrar administrador</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Registrar voluntario</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/cerrarSesion">Cerrar sesión</a>
+                                </li>
+                            {{/if}}
+                            {{#if usuario_logueado.esVoluntario}}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Moderar publicaciones</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/cerrarSesion">Cerrar sesión</a>
+                                </li>
+                            {{/if}}
+
                         {{else}}
                             <li class="nav-item">
                                 <a class="nav-link" href="/iniciarSesion">Iniciar sesión</a>

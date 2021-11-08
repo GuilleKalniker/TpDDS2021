@@ -142,5 +142,9 @@ public class Duenio extends Usuario {
     centroDeRescate.nuevoInteresadoEnAdoptar(publicacionAdoptante);
   }
 
+  public Boolean getEsDuenio() {
+    return true;
+  }
+
 
 }

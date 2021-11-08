@@ -17,17 +17,8 @@ public class OpcionMultiple extends Pregunta {
         this.opciones = opciones;
     }
     public OpcionMultiple() {}
-
     public List<String> getOpciones() {
         return opciones;
-    }
-
-    public Boolean getBooleana() {
-        return false;
-    }
-
-    public Boolean getAbierta() {
-        return false;
     }
     public Boolean getOpcionMultiple() {
         return true;

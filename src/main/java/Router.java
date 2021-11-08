@@ -55,6 +55,8 @@ public class Router {
 
         Spark.get("/registrarse", registrarseController::index, engine);
         Spark.post("/registrarse", registrarseController::registrar, engine);
+        Spark.get("/registrarse/admin", registrarseController::admin, engine);
+        Spark.post("/registrarse/admin", registrarseController::registrarAdmin, engine);
 
         Spark.get("/rescatar", rescatarController::index, engine);
         Spark.post("/rescatar", rescatarController::rescatar, engine);

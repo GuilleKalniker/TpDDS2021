@@ -24,4 +24,8 @@ public class Voluntario extends Usuario {
     solicitudPublicacion.eliminarseEnElCentro();
   }
 
+  public Boolean getEsVoluntario() {
+    return true;
+  }
+
 }
