@@ -1,6 +1,7 @@
 package controllers;
 
 import Funciones.Utils;
+import Funciones.ValidadorContrasenias;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
@@ -23,22 +24,61 @@ public class RegistrarseController extends BaseController {
 
     public ModelAndView registrar(Request req, Response res) {
         setUsuarioLogueado(req);
+        Boolean hayErrores = false;
+
 
         List<Contacto> contactos = new ArrayList<>();
-        contactos.add(new Contacto("Facundo", "Pittaluga", 1138636324, "facupitta@hotmail.com"));
-        LocalDate fechaNac = stringToLocalDate(req.queryParams("nacimiento"));
-        Duenio model = new Duenio(req.queryParams("usuario"),
-                req.queryParams("contrasenia"),
-                new DatosPersonales(req.queryParams("nombre"), req.queryParams("apellido"), fechaNac, stringToTipoDocumento(req.queryParams("tipo_doc")), Integer.parseInt(req.queryParams("num_doc")), contactos, req.queryParams("direccion")));
+        contactos.add(new Contacto("Facundo", "Pittaluga", 1138636324, "facupitta@hotmail.com")); //TODO deshardcodear
+        LocalDate fechaNac = null;
+        String usuario = "";
+        String contrasenia = "";
+        String nombre = "";
+        String apellido = "";
+        TipoDocumento tipoDoc = null;
+        Integer numDoc = null;
+        String direccion = "";
 
+        try {
+
+            usuario = req.queryParams("usuario");
+            contrasenia = req.queryParams("contrasenia");
+            nombre = req.queryParams("nombre");
+            apellido = req.queryParams("apellido");
+            direccion = req.queryParams("direccion");
+            fechaNac = stringToLocalDate(req.queryParams("nacimiento"));
+            tipoDoc = stringToTipoDocumento(req.queryParams("tipo_doc"));
+            numDoc = Integer.parseInt(req.queryParams("num_doc"));
+
+
+        } catch (Exception e) {
+            set("campos_invalidos", true);
+            hayErrores = true;
+        }
+
+        if (fechaNac == null || usuario.isEmpty() || contrasenia.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || numDoc == null || direccion.isEmpty()) {
+            set("campos_incompletos", true);
+            hayErrores = true;
+        }
+        if (!ValidadorContrasenias.esContraseniaValida(contrasenia)) {
+            set("contrasenia_invalida", true);
+            hayErrores = true;
+        }
+
+        if (hayErrores) {
+            return new ModelAndView(getDiccionario(), "registrarse.hbs");
+        }
+
+        Duenio model = new Duenio(usuario,
+                contrasenia,
+                new DatosPersonales(nombre, apellido, fechaNac, tipoDoc, numDoc, contactos, direccion));
         model.setUrlFotoPerfil("/sin_perfil.png");
 
         AdapterJPA.beginTransaction();
         model.registrarse();
         AdapterJPA.commit();
 
-        AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
         AdapterJPA.entityManager().clear();
+        AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
         AdapterJPA.entityManager().close();
 
         setModelo(model);
