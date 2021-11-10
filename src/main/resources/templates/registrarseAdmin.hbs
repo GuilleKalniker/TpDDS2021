@@ -1,13 +1,18 @@
 {{#partial "contenido"}}
-    <form action="/registrarse/admin" method="POST">
-        <label for="usuario">Usuario</label>
-        <input type="text" id="usuario" name="usuario">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="/CSS/registrarseAdmin.css">
 
-        <label for="contrasenia">Usuario</label>
-        <input type="password" id="contrasenia" name="contrasenia">
+    <div class="form">
+        <h1 class="titulo-registrarse-administrador">Registrar Administrador</h1>
+        <form action="/registrarse/admin" method="POST">
+            <label for="usuario">Usuario</label>
+            <input class="form-control formulario-registrarse-administrador" type="text" id="usuario" name="usuario">
 
-        <button type="submit">Registrarse</button>
-    </form>
+            <label for="contrasenia">Contraseña</label>
+            <input class="form-control formulario-registrarse-administrador" type="password" id="contrasenia" name="contrasenia">
+
+            <button type="submit" class="boton-registrarse-administrador">Registrarse</button>
+        </form>
+    </div>
 {{/partial}}
-
 {{>layout.hbs}}

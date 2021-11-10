@@ -1,19 +1,29 @@
 {{#partial "contenido"}}
-    <form action="/iniciarSesion" method="POST">
-      <div class="form-group">
-        <label for="usuario">Nombre de usuario</label>
-        <input type="text" class="form-control" id="usuario" placeholder="Usuario" name="usuario">
-      </div>
-      <div class="form-group">
-        <label for="constrasenia">Password</label>
-        <input type="password" class="form-control" id="contrasenia" placeholder="Contraseña" name="contrasenia">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="/CSS/login.css">
 
-      <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-      {{#if credenciales_invalidas}}
-        <p style="color: red;">Datos erróneos. Intentá de nuevo.</p>
-      {{/if}}
-      </div>
-    </form>
+    <div class="form">
+    <h1 class="titulo-iniciar-sesion">Iniciar Sesion</h1>
+        <form action="/iniciarSesion" method="POST" class="formulario-iniciar-sesion-completo">
+            <div class="container">
+                <div class="row formulario-iniciar-sesion-centrado">
+                    <div class="form-group">
+                        <label for="usuario">Nombre de usuario</label>
+                        <input type="text" class="form-control formulario-iniciar-sesion" id="usuario" placeholder="Usuario" name="usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="constrasenia">Password</label>
+                        <input type="password" class="form-control formulario-iniciar-sesion" id="contrasenia" placeholder="Contraseña" name="contrasenia">
+
+                        <button type="submit" class="btn btn-primary boton-iniciar-sesion">Iniciar Sesión</button>
+                        {{#if credenciales_invalidas}}
+                            <p style="color: red;">Datos erróneos. Intentá de nuevo.</p>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 {{/partial}}
 
 {{>layout.hbs}}

@@ -1,0 +1,40 @@
+.titulo-registrarse-administrador{
+    margin-top: 2rem;
+    height: 4rem;
+}
+
+.form{
+    width: 60%;
+    margin: 0 auto;
+}
+
+.formulario-registrarse-administrador{
+    border-radius: 4px;
+    border: none;
+    background-color: #60c4bc;
+    color: white;
+    transition: background-color 400ms;
+}
+
+.formulario-registrarse-administrador:focus{
+    background-color: #8eeee5;
+    border:none;
+    box-shadow: none;
+}
+
+.boton-registrarse-administrador{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+    margin-right: 0;
+    margin-bottom: 4rem;
+    padding: 0.5rem 1.8rem;
+    border-radius: 4px;
+    border: none;
+    background-color: #50a6e3;
+    transition: background-color 300ms;
+}
+
+.boton-registrarse-adminitrador:hover{
+    background-color: #1b9fef;
+}
