@@ -90,7 +90,26 @@ public class BaseController {
     }
 
     protected List<Caracteristica> parsearCaracteristicas(Request req) {
-        return RepositorioMascotas.getInstance().getCaracteristicasActivas().stream().filter(caracteristica -> req.queryParams(caracteristica.getValor()) != null).collect(
-            Collectors.toList());
+        return RepositorioMascotas
+                .getInstance()
+                .getTodasLasCaracteristicas()
+                .stream().filter(caracteristica -> req.queryParams(String.valueOf(caracteristica.getId())) != null)
+                .collect(Collectors.toList());
+    }
+
+    protected void actualizarCaracteristicas(Request req) {
+        RepositorioMascotas
+                .getInstance()
+                .getTodasLasCaracteristicas()
+                .forEach(caracteristica -> actualizarCaracteristica(caracteristica, req));
+    }
+
+    private void actualizarCaracteristica(Caracteristica caracteristica, Request req) {
+        String nuevoValor = req.queryParams(String.valueOf(caracteristica.getId()));
+        caracteristica.setActivo(stringToBoolean(nuevoValor));
+    }
+
+    protected Boolean stringToBoolean(String string) {
+        return string != null;
     }
 }

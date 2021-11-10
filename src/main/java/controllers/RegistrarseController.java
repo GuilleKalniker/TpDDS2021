@@ -18,17 +18,27 @@ import java.util.List;
 
 public class RegistrarseController extends BaseController {
     public ModelAndView index(Request req, Response res) {
+        AdapterJPA.cleanCache();
+
         setUsuarioLogueado(req);
         set("tipos_documento", TipoDocumento.values());
+
+        AdapterJPA.cleanCache();
         return new ModelAndView(getDiccionario(), "registrarse.hbs");
     }
 
     public ModelAndView admin(Request req, Response res) {
+        AdapterJPA.cleanCache();
+
         setUsuarioLogueado(req);
+
+        AdapterJPA.cleanCache();
         return new ModelAndView(getDiccionario(), "registrarseAdmin.hbs");
     }
 
     public ModelAndView registrar(Request req, Response res) {
+        AdapterJPA.cleanCache();
+
         setUsuarioLogueado(req);
         Boolean hayErrores = false;
 
@@ -87,11 +97,15 @@ public class RegistrarseController extends BaseController {
         AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
         AdapterJPA.entityManager().close();
 
+        AdapterJPA.cleanCache();
+
         res.redirect("/");
         return null;
     }
 
     public ModelAndView registrarAdmin(Request req, Response res) {
+        AdapterJPA.cleanCache();
+
         setUsuarioLogueado(req);
         Boolean hayErrores = false;
 
@@ -121,6 +135,8 @@ public class RegistrarseController extends BaseController {
         AdapterJPA.entityManager().clear();
         AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
         AdapterJPA.entityManager().close();
+
+        AdapterJPA.cleanCache();
 
         res.redirect("/");
         return null;

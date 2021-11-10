@@ -24,15 +24,11 @@ public class Router {
         Spark.staticFiles.externalLocation(System.getProperty("user.dir") + "/src/main/resources/public");
 
         Spark.before((req, res) -> {
-            AdapterJPA.entityManager().clear();
-            AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
-            AdapterJPA.entityManager().close();
+            AdapterJPA.cleanCache();
         });
 
         Spark.after((req, res) -> {
-            AdapterJPA.entityManager().clear();
-            AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
-            AdapterJPA.entityManager().close();
+            AdapterJPA.cleanCache();
         });
 
         Spark.get("/", homeController::index, engine);

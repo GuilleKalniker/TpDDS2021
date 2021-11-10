@@ -24,12 +24,17 @@ public class AdapterJPA {
         }
     }*/
 
+    private static EntityManager entityManager = null;
+
     public static EntityManager entityManager() {
         return getEntityManager();
     }
 
     public static EntityManager getEntityManager() {
-        return PerThreadEntityManagers.getEntityManager();
+        if (entityManager == null) {
+            entityManager = PerThreadEntityManagers.getEntityManager();
+        }
+        return entityManager;
     }
 /*
     public static void closeEntityManager() {
@@ -88,6 +93,13 @@ public class AdapterJPA {
         } catch (Throwable e) {
             rollback();
             throw e;
+        }
+    }
+
+    public static void cleanCache() {
+        if (entityManager() != null) {
+            entityManager().clear();
+            entityManager().getEntityManagerFactory().getCache().evictAll();
         }
     }
 }

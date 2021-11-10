@@ -26,6 +26,10 @@ public class Caracteristica {
     return this.valor.equalsIgnoreCase(valor);
   }
 
+  public long getId() {
+    return id;
+  }
+
   public String getValor() {
     return valor;
   }
@@ -36,6 +40,10 @@ public class Caracteristica {
 
   public Boolean getActivo() {
     return activo;
+  }
+
+  public Boolean getNoActivo() {
+    return !activo;
   }
 
   public void setActivo(Boolean activo) {

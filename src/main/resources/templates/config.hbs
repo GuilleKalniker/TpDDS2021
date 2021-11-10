@@ -2,10 +2,18 @@
    <form action="/caracteristicas" method="POST">
        <label for="crear">Nueva característica</label>
        <input type="text" id="crear" name="nueva_caracteristica">
-   {{#each caracteristicas}}
-    <input type="checkbox" id={{valor}} placeholder={{valor}} name={{valor}} value="OK">
+       <h3>Activar/Desactivar características</h3>
+   {{#each modelo}}
+       <label for={{id}}>{{valor}}</label>
+       {{#if activo}}
+           <input checked type="checkbox" id={{id}} name={{id}} value="OK">
+       {{/if}}
+       {{#if noActivo}}
+           <input type="checkbox" id={{id}} name={{id}} value="OK">
+       {{/if}}
    {{/each}}
-    <button type="submit"> Actualizar </button>
+
+       <button type="submit"> Actualizar </button>
    </form>
 {{/partial}}
 
