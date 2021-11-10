@@ -1,17 +1,10 @@
 package domain.Persona;
 
 import domain.Repositorio.AdapterJPA;
-import domain.Repositorio.RepositorioCaracteristicas;
-import domain.Repositorio.RepositorioCaracteristicasTest;
-import domain.Repositorio.RepositorioUsuarios;
-import domain.Servicios.Notificadores.Notificador;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;

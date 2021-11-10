@@ -7,6 +7,8 @@ import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Persona.Duenio;
 import domain.Persona.Usuario;
 import domain.Repositorio.RepositorioUsuarios;
+import java.util.List;
+import java.util.stream.Collectors;
 import spark.Request;
 
 import java.time.LocalDate;
@@ -88,5 +90,10 @@ public class BaseController {
 
     protected String getFormat(String s) {
         return s.substring(s.indexOf('.'));
+    }
+
+    protected List<Caracteristica> parsearCaracteristicas(Request req) {
+        return Arrays.stream(Caracteristica.values()).filter(caracteristica -> req.queryParams(caracteristica.name()) != null).collect(
+            Collectors.toList());
     }
 }

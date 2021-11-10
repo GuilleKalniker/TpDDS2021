@@ -43,8 +43,6 @@ public class MascotasController extends BaseController {
 
         Duenio d = RepositorioUsuarios.getInstance().getDuenioPorNombre(req.cookie("usuario_logueado"));
 
-
-
         MultipartConfigElement config = new MultipartConfigElement(
                 "imagenes",
                 1000000,
@@ -85,10 +83,5 @@ public class MascotasController extends BaseController {
 
         res.redirect("/");
         return null;
-    }
-
-    private List<Caracteristica> parsearCaracteristicas(Request req) {
-
-        return Arrays.stream(Caracteristica.values()).filter(caracteristica -> req.queryParams(caracteristica.name()) != null).collect(Collectors.toList());
     }
 }

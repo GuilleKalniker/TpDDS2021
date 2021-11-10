@@ -72,10 +72,10 @@ public class RepositorioMascotas {
         .collect(Collectors.toList());
   }*/
 
-  /**
-   * Boolean pasoCantidadDiasEntre(fecha1, fecha2, cantidadDias)
-   * retorna un booleano si entre la fecha1 y la fecha2 pasaron la cantidad de dias :p
-   */
+  /**************************************************************************************
+   * Boolean pasoCantidadDiasEntre(fecha1, fecha2, cantidadDias)                        *
+   * retorna un booleano si entre la fecha1 y la fecha2 pasaron la cantidad de dias :p  *
+   *************************************************************************************/
   private boolean pasoCantidadDiasEntre(LocalDate unaFecha, LocalDate otraFecha, Integer cantidadDias) {
     return ChronoUnit.DAYS.between(unaFecha, otraFecha) <= cantidadDias;
   }

@@ -13,6 +13,7 @@ import domain.Servicios.HogarTransitoAdaptado;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
 import domain.Sistema.CentroDeRescate;
+import controllers.CaracteristicasController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
@@ -53,9 +54,12 @@ public class RescatistaTest extends AbstractPersistenceTest implements WithGloba
     mascota = new MascotaRegistrada(TipoMascota.GATO, "Don Gato", "Gatokun", 46, Sexo.FEMENINO, "Lindo", new ArrayList<String>(), new ArrayList<Caracteristica>());
     mascotasPermitidas.add(TipoMascota.GATO);
     mascotasPermitidas.add(TipoMascota.PERRO);
-    hogarAdecuado = new HogarTransitoAdaptado("0001", "Lo de Roberto", "Pichula 456", new Ubicacion(100.0, 100.0), "47481564", mascotasPermitidas, 50, true, RepositorioCaracteristicas.getInstance().todasLasCaracteristicas());
-    hogarInadecuado = new HogarTransitoAdaptado("0002", "Zootopia", "Cachito 333", new Ubicacion(700.0, 700.0), "47481565", mascotasPermitidas, 50, true, RepositorioCaracteristicas.getInstance().todasLasCaracteristicas());
-
+    /*
+    hogarAdecuado = new HogarTransitoAdaptado("0001", "Lo de Roberto", "Pichula 456", new Ubicacion(100.0, 100.0), "47481564", mascotasPermitidas, 50, true, CaracteristicasController
+        .getInstance().todasLasCaracteristicas());
+    hogarInadecuado = new HogarTransitoAdaptado("0002", "Zootopia", "Cachito 333", new Ubicacion(700.0, 700.0), "47481565", mascotasPermitidas, 50, true, CaracteristicasController
+        .getInstance().todasLasCaracteristicas());
+     */
     centroDeRescate.setNotificador(notificadorMock);
     centroDeRescate.setServicioHogaresTransito(servicioHogaresMock);
 

@@ -16,6 +16,7 @@ public class Router {
         RescatarController rescatarController = new RescatarController();
         CentrosController centrosController = new CentrosController();
         MascotasController mascotasController = new MascotasController();
+        CaracteristicasController caracteristicasController = new CaracteristicasController();
 
         DebugScreen.enableDebugScreen();
 
@@ -60,5 +61,8 @@ public class Router {
 
         Spark.get("/rescatar", rescatarController::index, engine);
         Spark.post("/rescatar", rescatarController::rescatar, engine);
+
+        Spark.get("/caracteristicas", caracteristicasController::index, engine);
+        Spark.post("/caracteristicas", caracteristicasController::modificar, engine);
     }
 }

@@ -1,0 +1,10 @@
+{{#partial "contenido"}}
+   <form action="/caracteristicas" method="POST">
+   {{#each caracteristicas}}
+    <input type="checkbox" id={{this}} placeholder={{this}} name={{this}} value="OK">
+   {{/each}}
+    <button type="submit"> Actualizar </button>
+   </form>
+{{/partial}}
+
+{{>layout.hbs}}
