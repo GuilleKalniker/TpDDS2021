@@ -35,8 +35,7 @@ public class MascotaRegistrada {
   @ElementCollection
   private List<String> fotos = new ArrayList<>();
 
-  @ElementCollection
-  @Enumerated
+  @ManyToMany
   private List<Caracteristica> caracteristicas;
 
   public MascotaRegistrada(TipoMascota tipo, String nombre, String apodo, Integer edad, Sexo sexo, String descripcionFisica, ArrayList<String> fotos, List<Caracteristica> caracteristicas) {

@@ -1,7 +1,9 @@
 {{#partial "contenido"}}
    <form action="/caracteristicas" method="POST">
+       <label for="crear">Nueva característica</label>
+       <input type="text" id="crear" name="nueva_caracteristica">
    {{#each caracteristicas}}
-    <input type="checkbox" id={{this}} placeholder={{this}} name={{this}} value="OK">
+    <input type="checkbox" id={{valor}} placeholder={{valor}} name={{valor}} value="OK">
    {{/each}}
     <button type="submit"> Actualizar </button>
    </form>

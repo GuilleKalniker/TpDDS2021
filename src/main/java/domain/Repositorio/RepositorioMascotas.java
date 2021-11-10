@@ -2,6 +2,7 @@ package domain.Repositorio;
 
 import domain.Exceptions.IDInvalidoException;
 import domain.Exceptions.IDNoSeCorrespondeException;
+import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.Duenio;
@@ -36,6 +37,19 @@ public class RepositorioMascotas {
 
     TypedQuery<FormularioMascotaPerdida> query = AdapterJPA.entityManager().createQuery("select m from FormularioMascotaPerdida m", FormularioMascotaPerdida.class);
     return query.getResultList();
+  }
+
+  public List<Caracteristica> getTodasLasCaracteristicas() {
+    TypedQuery<Caracteristica> query = AdapterJPA.entityManager().createQuery("select c from Caracteristica c", Caracteristica.class);
+    return query.getResultList();
+  }
+
+  public List<Caracteristica> getCaracteristicasActivas() {
+    return getTodasLasCaracteristicas().stream().filter(caracteristica -> caracteristica.getActivo()).collect(Collectors.toList());
+  }
+
+  public void crearCaracteristica(Caracteristica caracteristica) {
+    AdapterJPA.persist(caracteristica);
   }
 
   /** MASCOTAS REGISTRADAS **/

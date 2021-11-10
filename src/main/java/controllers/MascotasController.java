@@ -6,6 +6,7 @@ import domain.Mascota.AtributosMascota.TipoMascota;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.Duenio;
 import domain.Repositorio.AdapterJPA;
+import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
@@ -21,9 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MascotasController extends BaseController {
     public ModelAndView registroMascota(Request req, Response res) {
@@ -34,7 +33,7 @@ public class MascotasController extends BaseController {
         setModelo(d);
         set("tipos_mascota", TipoMascota.values());
         set("sexos", Sexo.values());
-        set("caracteristicas", Caracteristica.values());
+        set("caracteristicas", RepositorioMascotas.getInstance().getCaracteristicasActivas());
         return new ModelAndView(getDiccionario(), "registrarMascota.hbs");
     }
 

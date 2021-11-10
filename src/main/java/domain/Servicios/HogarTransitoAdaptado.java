@@ -4,6 +4,7 @@ import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Mascota.AtributosMascota.TipoMascota;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.MascotaRegistrada;
+import domain.Repositorio.RepositorioMascotas;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class HogarTransitoAdaptado {
 
   public Boolean admiteTamanio(List<Caracteristica> caracteristicasMascota){
     if(!this.tienePatio){
-      return caracteristicasMascota.contains(Caracteristica.CHICO);
+      return caracteristicasMascota.stream().anyMatch(caracteristica -> caracteristica.tieneCaracteristica("chico"));
     }
     return true;
   }

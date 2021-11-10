@@ -70,23 +70,6 @@ public class PersistirCosasTest {
 
 
     @Test
-    public void sePersistenMascotas() {
-        ArrayList<String> fotos = new ArrayList<>();
-        fotos.add("https://foto.com.ar");
-        fotos.add("https://foto2.com.gov");
-
-
-        MascotaRegistrada m = crearMascota("Pichula", fotos);
-        //m.setID(String.valueOf(new Random().nextInt()));
-
-        m.getCaracteristicas().add(Caracteristica.RABIOSO);
-        m.getCaracteristicas().add(Caracteristica.JUGUETON);
-
-        AdapterJPA.persist(m);
-    }
-
-
-    @Test
     public void sePersistenCentros() {
         CentroDeRescate centro = new CentroDeRescate(new Ubicacion(321.04, 6542.21));
 

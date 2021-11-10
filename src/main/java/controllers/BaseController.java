@@ -6,6 +6,7 @@ import domain.Mascota.AtributosMascota.TipoMascota;
 import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Persona.Duenio;
 import domain.Persona.Usuario;
+import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,10 +64,6 @@ public class BaseController {
         return Arrays.stream(Sexo.values()).filter(tipo -> tipo.name().equals(s)).findFirst().get();
     }
 
-    protected Caracteristica stringToCaracteristica(String s) {
-        return Arrays.stream(Caracteristica.values()).filter(tipo -> tipo.name().equals(s)).findFirst().get();
-    }
-
     protected String generatePath() {
         LocalDateTime now = LocalDateTime.now();
         String nowString = String.valueOf(now.getYear())
@@ -93,7 +90,7 @@ public class BaseController {
     }
 
     protected List<Caracteristica> parsearCaracteristicas(Request req) {
-        return Arrays.stream(Caracteristica.values()).filter(caracteristica -> req.queryParams(caracteristica.name()) != null).collect(
+        return RepositorioMascotas.getInstance().getCaracteristicasActivas().stream().filter(caracteristica -> req.queryParams(caracteristica.getValor()) != null).collect(
             Collectors.toList());
     }
 }

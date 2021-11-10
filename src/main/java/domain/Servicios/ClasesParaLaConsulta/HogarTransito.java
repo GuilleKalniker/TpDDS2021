@@ -4,6 +4,7 @@ package domain.Servicios.ClasesParaLaConsulta;
 import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Mascota.AtributosMascota.TipoMascota;
 import controllers.CaracteristicasController;
+import domain.Repositorio.RepositorioMascotas;
 import domain.Servicios.HogarTransitoAdaptado;
 
 import java.lang.reflect.Array;
@@ -74,8 +75,7 @@ public class HogarTransito {
         admisionesAListaTiposMascota(admisiones),
         lugares_disponibles,
         patio,
-        Arrays.asList(Caracteristica.ARISCO) //TODO: Santi si lees esto es un pedido de ayuda
-        //stringsAListaCaracteristicas(caracteristicas)
+        stringsAListaCaracteristicas(caracteristicas)
     );
     return hogarAdaptado;
   }
@@ -88,21 +88,14 @@ public class HogarTransito {
       listaTipos.add(TipoMascota.GATO);
     return listaTipos;
   }
-/*
+
   public List<Caracteristica> stringsAListaCaracteristicas(List<String> caracteristicas) {
-    return caracteristicas.stream().map(unString -> stringACaracteristica(unString)).collect(Collectors.toList());
+    return RepositorioMascotas
+            .getInstance()
+            .getTodasLasCaracteristicas()
+            .stream()
+            .filter(caracteristica -> caracteristicas.contains(caracteristica.getValor()))
+            .collect(Collectors.toList());
   }
 
-  public Caracteristica stringACaracteristica(String caracteristica) {
-    List<Caracteristica> todasLasCaracteristicas = CaracteristicasController.getInstance().todasLasCaracteristicas();
-    Caracteristica caracteristicaObtenida;
-    for (int i = 0; i < todasLasCaracteristicas.size(); i++) {
-      caracteristicaObtenida = todasLasCaracteristicas.get(i);
-      if (caracteristicaObtenida.toString() == caracteristica.toUpperCase(Locale.ROOT)) {
-        return caracteristicaObtenida;
-      }
-    }
-    return null;
-  }
- */
 }
