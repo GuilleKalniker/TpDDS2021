@@ -1,55 +1,80 @@
 {{#partial "contenido"}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="/CSS/registrar.css">
+
+    <h1 class="titulo-registrar-mascota">Registrar mascota</h1>
     <form action="/mascotas/nueva" method="POST" enctype="multipart/form-data">
-        <label for="especie">Especie</label>
-        <select id="especie" name="especie">
-            {{#each tipos_mascota}}
-                <option value={{this}}>{{this}}</option>
-            {{/each}}
-        </select>
+    <div class="container registrar-footer-pa-bajo">
+        <div class="row align-items-start">
+            <div class="col-md-5 col-sm-12">
+                <label for="especie" class="form-label">Especie</label>
+                <select class="form-control formulario-registrar-mascota" id="especie" name="especie">
+                    {{#each tipos_mascota}}
+                        <option value={{this}}>{{this}}</option>
+                    {{/each}}
+                </select>
 
-        <div>
-            <label for="nombre">Nombre</label>
-            <input formenctype="application/x-www-form-urlencoded" type="text" id="nombre" name="nombre">
+                <div>
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input class="formulario-registrar-mascota form-control" formenctype="text/plain" type="text" id="nombre" name="nombre">
+
+                </div>
+
+                <div>
+                    <label for="apodo" class="form-label">Apodo</label>
+                    <input class="formulario-registrar-mascota form-control" formenctype="text/plain" type="text" id="apodo" name="apodo">
+                </div>
+
+                <div>
+                    <label for="edad" class="form-label">Edad</label>
+                    <input class="formulario-registrar-mascota form-control" formenctype="text/plain" type="text" id="edad" name="edad">
+                </div>
+
+                <div>
+                    <label for="sexo" class="form-label">Sexo</label>
+                    <select class="form-control formulario-registrar-mascota" id="sexo" name="sexo">
+                        {{#each sexos}}
+                            <option value={{this}}>{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div>
+                    <label for="descripcion" class="form-label">Descripción física</label>
+                    <input class="formulario-registrar-mascota form-control" formenctype="text/plain" type="text" id="descripcion" name="descripcion">
+                </div>
+
+
+            </div>
+            <div class="col-md-5 col-sm-12">
+
+                <div>
+                    <label for="foto" class="form-label">Fotos</label>
+                    <input class="form-control formulario-registrar-mascota " type="file" id="foto" name="foto" accept="image/*">
+                </div>
+
+                <h3 class="subtitulo-registrar-mascota">¿Cómo es tu mascota?</h3>
+
+                <div>
+                    {{#each caracteristicas}}
+
+                       <!-- <input  formenctype="text/plain" id= name= type="checkbox" value="si"> -->
+                        <input formenctype="text/plain" type="checkbox" class="btn-check" id={{this}} name={{this}} value="si" autocomplete="off">
+                        <label class="btn btn-outline-warning btn-caracteristicas" for={{this}}>{{this}}</label>
+                    {{/each}}
+                </div>
+
+                <div class="centrar-boton-registrar-mascota">
+                    <button type="submit" class="btn btn-primary boton-registrar-mascota justify-content-end">Registrar</button>
+                </div>
+
+
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <img src="/images/perrito.png" alt="perrito-amigable" class="img-fluid">
+            </div>
         </div>
 
-        <div>
-            <label for="apodo">Apodo</label>
-            <input formenctype="application/x-www-form-urlencoded" type="text" id="apodo" name="apodo">
-        </div>
-
-        <div>
-            <label for="edad">Edad (aproximada)</label>
-            <input formenctype="application/x-www-form-urlencoded" type="text" id="edad" name="edad">
-        </div>
-
-        <div>
-            <label for="sexo">Especie</label>
-            <select id="sexo" name="sexo">
-                {{#each sexos}}
-                    <option value={{this}}>{{this}}</option>
-                {{/each}}
-            </select>
-        </div>
-
-        <div>
-            <label for="foto">Fotos</label>
-            <input type="file" id="foto" name="foto" accept="image/*">
-        </div>
-
-        <div>
-            <label for="descripcion">Descripción física</label>
-            <input formenctype="application/x-www-form-urlencoded" type="text" id="descripcion" name="descripcion">
-        </div>
-
-        <div>
-            {{#each caracteristicas}}
-                <label for={{this}}>{{this}}</label>
-                <input formenctype="application/x-www-form-urlencoded" id={{this}} name={{this}} type="checkbox" value="si">
-            {{/each}}
-        </div>
-
-        <button type="submit">Registrar mascota</button>
+    </div>
     </form>
 {{/partial}}
-
 {{>layout.hbs}}

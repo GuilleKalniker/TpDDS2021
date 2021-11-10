@@ -1,14 +1,17 @@
 {{#partial "contenido"}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="/CSS/home.css">
+
     <section class="func-principales">
 
-        <div class="row ">
-            <div class="col col-md-6 col-12 col-img ">
+        <div class="row justify-content-center">
+            <div class="col col-md-6 col-12 col-img d-flex justify-content-center">
                 <a href="/mascotas/nueva">
                 <img src="/images/gato_y_perro.png">
                 <p>Registrá a tu mascota</p>
                 </a>
             </div>
-            <div class="col col-md-6 col-12 col-img ">
+            <div class="col col-md-6 col-12 col-img d-flex justify-content-center">
                 <a href="/rescatar">
                 <img src="/images/lost_dog.png">
                  <p>Encontré una mascota</p>
@@ -19,6 +22,7 @@
 
     <!-- Carousel-->
     <h4 class="text-center ">Algunas de las últimas mascotas encontradas...</h4>
+    <div class="carousel-home">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -48,6 +52,7 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
+    </div>
     </div>
 
 {{/partial}}
