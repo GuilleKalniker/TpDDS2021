@@ -1,6 +1,4 @@
-*{
-    font-family: "Mongolian Baiti", "Arial Rounded MT Bold";
-}
+
 .func-principales{
     margin-top: 20px;
 
@@ -10,29 +8,31 @@
 }
 
 .func-principales p{
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: #5DEFE6;
+    text-align: center;
 }
 .func-principales p:hover{
     color: #00d5c8;
 }
 .row{
     margin: 10px auto;
-    display: flex;
+
+   /* display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    justify-content: center;
+    justify-content: center;*/
 
 }
 .func-principales .col-img{
-    display: flex;
-    justify-items: center;
-    justify-content: center;
     width: 300px;
     margin: 40px;
     transition: transform 0.75s;
 
+}
+.func-principales img{
+    margin: auto;
 }
 .func-principales .col-img:hover {
     transform: scale(1.1,1.1);
@@ -49,4 +49,9 @@
 h4{
     color: #5DEFE6;
     font-weight: bold;
+    height: 30px;
+}
+.carousel-home{
+    padding-top: 3rem;
+    padding-bottom: 3.5rem;
 }

@@ -7,17 +7,22 @@
     font-weight: 700;
     scroll-behavior: smooth ;
 }
+
+
 body{
     background-color: #fdffe3 !important;
 }
+main{
+    font-family: 'Poppins', sans-serif;
+}
  .nav-link{
      font-family: "Mongolian Baiti", "Arial Rounded MT Bold";
-     color: #0b0947;
+     color: #0b0947 !important;
      font-size: 1.5rem;
      transition: opacity 1s;
 }
 .nav-link:hover{
-    font-family: "Mongolian Baiti", "Arial Rounded MT Bold";
+    color: #171776 !important;
     opacity: 0.9;
 
 }
