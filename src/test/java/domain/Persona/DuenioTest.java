@@ -6,6 +6,9 @@ import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
+import domain.Pregunta.Booleana;
+import domain.Pregunta.Pregunta;
+import domain.Pregunta.PreguntaResuelta;
 import domain.Repositorio.AdapterJPA;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
@@ -22,6 +25,8 @@ import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class DuenioTest {
 
@@ -80,7 +85,7 @@ public class DuenioTest {
   public void seGeneranLasPublicacionesDeAdopcion() {
     registrarleMascotaADuenio(duenioDePruebaUno);
     MascotaRegistrada mascota = duenioDePruebaUno.getMascotas().get(0);
-    //duenioDePruebaUno.darEnAdopcionA(mascota, centroDeRescateDePrueba);
+    duenioDePruebaUno.darEnAdopcionA(mascota, centroDeRescateDePrueba, listaPreguntas);
 
     assertEquals(1, centroDeRescateDePrueba.getPublicacionesAdopcion().size());
   }
@@ -110,8 +115,8 @@ public class DuenioTest {
   public void noRecibeNingunaNotificacionAlNoEspecificarPreferencias() {
     duenioDePruebaUno.mostrarIntencionDeAdopcion(centroDeRescateDePrueba);
     assertThrows(NoHayPublicacionAptaException.class, () -> {centroDeRescateDePrueba.notificacionSemanal();});
-  }
-  */
+  }*/
+
 
   /** FUNCIONES **/
 
@@ -135,4 +140,6 @@ public class DuenioTest {
     contactos.add(contacto);
     return contactos;
   }
+
+  public List<PreguntaResuelta> listaPreguntas = Arrays.asList((new PreguntaResuelta(new Booleana("Algo?"), "No")));
 }

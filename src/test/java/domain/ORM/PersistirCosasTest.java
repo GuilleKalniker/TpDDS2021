@@ -59,7 +59,7 @@ public class PersistirCosasTest {
 
     @Test
     public void sePersistenDuenios() {
-        Duenio d = crearDuenio("Ricardo", "Arjona", "Coso 1234");
+        Duenio d = crearDuenio("Palito", "Arjona", "Coso 1234");
         d.getDatosPersonales().getContactos().get(0).setDuenio(d);
 
         AdapterJPA.persist(d);
