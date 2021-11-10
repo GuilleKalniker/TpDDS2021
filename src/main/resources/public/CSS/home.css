@@ -41,17 +41,21 @@
     width: 15rem;
     height: 15rem;
 }
-.carousel-item img{
-    width: 500px;
-    height: 250px;
+.tarjetas-home{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+}
+.tarjetas-home img{
+    width: 270px;
+    height: 270px;
+}
+.card .card-title{
+    height: 30px;
 }
 
 h4{
     color: #5DEFE6;
     font-weight: bold;
     height: 30px;
-}
-.carousel-home{
-    padding-top: 3rem;
-    padding-bottom: 3.5rem;
 }

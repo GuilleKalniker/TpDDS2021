@@ -16,9 +16,9 @@ main{
     font-family: 'Poppins', sans-serif;
 }
  .nav-link{
-     font-family: "Mongolian Baiti", "Arial Rounded MT Bold";
+     font-family: 'Poppins', sans-serif;
      color: #0b0947 !important;
-     font-size: 1.5rem;
+     font-size: 1.2rem;
      transition: opacity 1s;
 }
 .nav-link:hover{
@@ -50,6 +50,6 @@ ion-icon{
     font-size: 30px;
 }
 .navbar-toggler:focus{
-    outline: none;
-    box-shadow: none;
+    outline: none !important;
+    box-shadow: none !important;
 }

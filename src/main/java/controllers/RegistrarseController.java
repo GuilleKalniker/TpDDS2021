@@ -93,10 +93,6 @@ public class RegistrarseController extends BaseController {
         model.registrarse();
         AdapterJPA.commit();
 
-        AdapterJPA.entityManager().clear();
-        AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
-        AdapterJPA.entityManager().close();
-
         AdapterJPA.cleanCache();
 
         res.redirect("/");
@@ -131,10 +127,6 @@ public class RegistrarseController extends BaseController {
         AdapterJPA.beginTransaction();
         RepositorioUsuarios.getInstance().registrarUsuario(admin);
         AdapterJPA.commit();
-
-        AdapterJPA.entityManager().clear();
-        AdapterJPA.entityManager().getEntityManagerFactory().getCache().evictAll();
-        AdapterJPA.entityManager().close();
 
         AdapterJPA.cleanCache();
 

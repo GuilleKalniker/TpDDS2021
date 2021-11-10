@@ -48,6 +48,13 @@ public class RepositorioMascotas {
     return getTodasLasCaracteristicas().stream().filter(caracteristica -> caracteristica.getActivo()).collect(Collectors.toList());
   }
 
+
+
+  public void eliminarCaracteristica(long id){
+    Caracteristica caracteristica = AdapterJPA.entityManager().find(Caracteristica.class, id);
+    AdapterJPA.entityManager().remove(caracteristica);
+  }
+
   public void crearCaracteristica(Caracteristica caracteristica) {
     AdapterJPA.persist(caracteristica);
   }

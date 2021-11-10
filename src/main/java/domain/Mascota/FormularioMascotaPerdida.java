@@ -1,5 +1,6 @@
 package domain.Mascota;
 
+import Funciones.Utils;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Persona.AtributosPersona.DatosPersonales;
 
@@ -18,7 +19,7 @@ public class FormularioMascotaPerdida {
   private DatosPersonales datosRescastista;
   private String descripcionEstado;
 
-  @ElementCollection
+  @ElementCollection (fetch = FetchType.EAGER)
   private List<String> fotosEncuentro;
 
   @Embedded
@@ -55,12 +56,19 @@ public class FormularioMascotaPerdida {
     return this.mascotaID;
   }
 
-  public LocalDate getFechaEncuentro() {
-    return fechaEncuentro;
+  public String getFechaEncuentro() {
+    return Utils.localDateToString(fechaEncuentro);
   }
 
   public Ubicacion getLugarEncuentro() {
     return lugarEncuentro;
   }
 
+  public String getFoto() {
+    return fotosEncuentro.get(0);
+  }
+
+  public String getDescripcion() {
+    return descripcionEstado;
+  }
 }

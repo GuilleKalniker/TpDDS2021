@@ -46,6 +46,20 @@ public class RepositorioCentroDeRescate {
     AdapterJPA.persist(centroMasCercano.generarSolicitud(new PublicacionMascotaPerdida(formulario)));
   }
 
+  public List<PublicacionMascotaPerdida> getPublicaciones(){
+    TypedQuery<PublicacionMascotaPerdida> query = AdapterJPA.entityManager().createQuery("select c from PublicacionMascotaPerdida c",PublicacionMascotaPerdida .class);
+    query.setMaxResults(3);
+
+    return query.getResultList();
+  }
+
+  public List<FormularioMascotaPerdida> getFormularios(){
+    TypedQuery<FormularioMascotaPerdida> query = AdapterJPA.entityManager().createQuery("select c from FormularioMascotaPerdida c order by c.id desc ",FormularioMascotaPerdida .class);
+    query.setMaxResults(3);
+
+    return query.getResultList();
+  }
+
   public void registrarPublicacionAdopcion(PublicacionAdopcion publicacion){
     AdapterJPA.persist(publicacion);
   }

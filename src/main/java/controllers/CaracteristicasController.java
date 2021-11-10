@@ -9,6 +9,7 @@ import java.util.Set;
 
 import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioMascotas;
+import org.apache.maven.model.Model;
 import org.eclipse.jetty.util.Promise;
 import spark.ModelAndView;
 import spark.Request;
@@ -24,6 +25,21 @@ public class CaracteristicasController extends BaseController {
 
     AdapterJPA.cleanCache();
     return new ModelAndView(getDiccionario(), "config.hbs");
+  }
+  public ModelAndView eliminar(Request req, Response res) {
+    AdapterJPA.cleanCache();
+    setUsuarioLogueado(req);
+
+    long idCaracteristica = Long.parseLong(req.params("id"));
+    AdapterJPA.beginTransaction();
+
+    RepositorioMascotas.getInstance().eliminarCaracteristica(idCaracteristica);
+
+    AdapterJPA.commit();
+    AdapterJPA.cleanCache();
+
+    res.redirect("/caracteristicas");
+    return null;
   }
 
   public ModelAndView modificar(Request req, Response res) {

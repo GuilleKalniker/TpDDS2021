@@ -60,5 +60,7 @@ public class Router {
 
         Spark.get("/caracteristicas", caracteristicasController::index, engine);
         Spark.post("/caracteristicas", caracteristicasController::modificar, engine);
+        Spark.post("/caracteristicas/:id", caracteristicasController::eliminar, engine);
+
     }
 }

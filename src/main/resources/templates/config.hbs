@@ -1,19 +1,55 @@
 {{#partial "contenido"}}
-   <form action="/caracteristicas" method="POST">
-       <label for="crear">Nueva característica</label>
-       <input type="text" id="crear" name="nueva_caracteristica">
-       <h3>Activar/Desactivar características</h3>
-   {{#each modelo}}
-       <label for={{id}}>{{valor}}</label>
-       {{#if activo}}
-           <input checked type="checkbox" id={{id}} name={{id}} value="OK">
-       {{/if}}
-       {{#if noActivo}}
-           <input type="checkbox" id={{id}} name={{id}} value="OK">
-       {{/if}}
-   {{/each}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="/CSS/config.css">
+    <h1 class="titulo-registrar-mascota">Configurar características</h1>
 
-       <button type="submit"> Actualizar </button>
+   <form action="/caracteristicas" method="POST">
+       <div class="container registrar-footer-pa-bajo">
+           <div class="row align-items-start">
+               <div class="col-md-6 col-sm-12 ">
+                   <h3 class="subtitulo-caracteristicas">Activar/Desactivar características</h3>
+                   <div class="listado-caracteristicas">
+
+                       {{#each modelo}}
+                         <div class="container-caracteristica">
+                           {{#if activo}}
+                               <div class="form-check form-switch">
+                                   <label class="form-check-label" for={{id}}>{{valor}}</label>
+                                   <input class="form-check-input caracteristica" type="checkbox" id={{id}} name={{id}}  value="OK" checked>
+                               </div>
+                           {{/if}}
+                           {{#if noActivo}}
+                               <div class="form-check form-switch">
+                                   <label class="form-check-label" for={{id}} >{{valor}}</label>
+                                   <input class="form-check-input caracteristica" type="checkbox" id={{id}}   name={{id}} value="OK">
+                               </div>
+                           {{/if}}
+                           <form action="/caracteristicas/{{id}}" class="borrar-caracteristica" method="POST">
+                               <button type="submit" class="btn btn-secondary boton-borrar-caracteristicas justify-content-end">Eliminar</button>
+                           </form>
+                         </div>
+                       {{/each}}
+                   </div>
+                   <div class="centrar-boton-guardar-caracteristicas">
+                       <button type="submit" class="btn btn-primary boton-guardar-caracteristicas justify-content-center">Guardar cambios</button>
+                   </div>
+               </div>
+
+               <div class="col-md-4 col-sm-12 agregar-caracteristicas">
+                   <h3 class="subtitulo-caracteristicas">Agregar caracteristica</h3>
+                   <label for="crear">Nueva característica</label>
+                   <input type="text" id="crear" name="nueva_caracteristica" class="formulario-agregar-caracteristica form-control" formenctype="text/plain">
+
+                   <div class="centrar-boton-configurar-caracteristicas">
+                       <button type="submit" class="btn btn-primary boton-config-caracteristicas justify-content-end">Agregar</button>
+                   </div>
+               </div>
+               <div class="col-md-2 col-sm-12">
+                   <img src="/images/perrito.png" alt="perrito-amigable" class="img-fluid">
+               </div>
+           </div>
+       </div>
+
    </form>
 {{/partial}}
 
