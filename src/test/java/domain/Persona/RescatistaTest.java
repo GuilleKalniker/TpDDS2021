@@ -13,7 +13,6 @@ import domain.Servicios.HogarTransitoAdaptado;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Servicios.ServicioHogaresTransito;
 import domain.Sistema.CentroDeRescate;
-import controllers.CaracteristicasController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
@@ -51,7 +50,7 @@ public class RescatistaTest extends AbstractPersistenceTest implements WithGloba
     rescatistaPrueba = new Rescatista();
     formulario = new FormularioMascotaPerdida(new DatosPersonales("Pablo", "Perez", LocalDate.now(), TipoDocumento.DNI, 1, contactoDePrueba("Pablo", "Perez", 47483233, "pablop@shimeil.com"), "nose 123"), "Re loco", new ArrayList<String>(), new Ubicacion(0.0, 0.0), LocalDate.now(), 1);
     duenioDePruebaUno = new Duenio("juancitoGomez123", "xXpanchito94Xx",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("MCQueen", "Rodriguez", 1138475426, "elrayomcqueen@hotmail.com"), "nose 123"));
-    mascota = new MascotaRegistrada(TipoMascota.GATO, "Don Gato", "Gatokun", 46, Sexo.FEMENINO, "Lindo", new ArrayList<String>(), new ArrayList<Caracteristica>());
+    mascota = new MascotaRegistrada(TipoMascota.GATO, "Don Gato", "Gatokun", 46, Sexo.HEMBRA, "Lindo", new ArrayList<String>(), new ArrayList<Caracteristica>());
     mascotasPermitidas.add(TipoMascota.GATO);
     mascotasPermitidas.add(TipoMascota.PERRO);
     /*

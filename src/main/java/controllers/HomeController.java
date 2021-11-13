@@ -14,13 +14,11 @@ import java.util.List;
 public class HomeController extends BaseController {
 
     public ModelAndView index(Request req, Response res) {
-        AdapterJPA.cleanCache();
+        init(req);
 
-        setUsuarioLogueado(req);
         List<FormularioMascotaPerdida> formularios = RepositorioCentroDeRescate.getInstance().getFormularios();
         setModelo(formularios);
 
-        AdapterJPA.cleanCache();
         return new ModelAndView(getDiccionario(), "home.hbs");
     }
 

@@ -20,20 +20,17 @@ import java.util.List;
 public class UsuarioController extends BaseController {
 
     public ModelAndView todos(Request req, Response res) {
-        AdapterJPA.cleanCache();
+        init(req);
 
-        setUsuarioLogueado(req);
         List<Duenio> model = RepositorioUsuarios.getInstance().getDueniosRegistrados();
         setModelo(model);
 
-        AdapterJPA.cleanCache();
         return new ModelAndView(getDiccionario(), "puto.hbs");
     }
 
     public ModelAndView contactos(Request req, Response res) {
-        AdapterJPA.cleanCache();
+        init(req);
 
-        setUsuarioLogueado(req);
         long id = Long.parseLong(req.params("id"));
         Duenio duenio =  RepositorioUsuarios.getInstance().getDuenio(id);
         if (duenio == null)
@@ -42,25 +39,22 @@ public class UsuarioController extends BaseController {
 
         setModelo(contactos);
 
-        AdapterJPA.cleanCache();
         return new ModelAndView(getDiccionario(), "contactos.hbs");
     }
 
     public ModelAndView me(Request req, Response res) {
-        AdapterJPA.cleanCache();
+        init(req);
 
-        setUsuarioLogueado(req);
         if (getDiccionario().get("usuario_logueado") == null) {
             res.redirect("/");
         }
         setModelo(null);
 
-        AdapterJPA.cleanCache();
         return new ModelAndView(getDiccionario(), "usuario.hbs");
     }
 
     public ModelAndView cambiarFotoPerfil(Request req, Response res) throws ServletException, IOException {
-        AdapterJPA.cleanCache();
+        init(req);
 
         MultipartConfigElement config = new MultipartConfigElement(
                 "imagenes",
@@ -91,7 +85,6 @@ public class UsuarioController extends BaseController {
 
         setModelo(d);
 
-        AdapterJPA.cleanCache();
         return new ModelAndView(getDiccionario(), "usuario.hbs");
     }
 }

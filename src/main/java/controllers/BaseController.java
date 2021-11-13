@@ -6,6 +6,7 @@ import domain.Mascota.AtributosMascota.TipoMascota;
 import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Persona.Duenio;
 import domain.Persona.Usuario;
+import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
 import java.util.List;
@@ -24,8 +25,10 @@ public class BaseController {
 
     protected Boolean hayErrores = false;
 
-    public void init() {
+    public void init(Request req) {
         diccionario = new HashMap<>();
+        AdapterJPA.cleanCache();
+        setUsuarioLogueado(req);
     }
 
     public void setModelo(Object value) {

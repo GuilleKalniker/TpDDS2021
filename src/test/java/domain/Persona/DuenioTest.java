@@ -7,7 +7,6 @@ import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.AtributosPersona.DatosPersonales;
 import domain.Persona.AtributosPersona.TipoDocumento;
 import domain.Pregunta.Booleana;
-import domain.Pregunta.Pregunta;
 import domain.Pregunta.PreguntaResuelta;
 import domain.Repositorio.AdapterJPA;
 import domain.Servicios.Notificadores.Notificador;
@@ -100,7 +99,7 @@ public class DuenioTest {
   @Test
   public void tieneUnaMascota() {
 
-    MascotaRegistrada pepito = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<String>(),new ArrayList<>());
+    MascotaRegistrada pepito = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MACHO, "Perro salchicha muy lindo", new ArrayList<String>(),new ArrayList<>());
 
     duenioDePruebaUno.registrarMascota(pepito);
 
@@ -125,12 +124,12 @@ public class DuenioTest {
   public CentroDeRescate centroDeRescateDePrueba = new CentroDeRescate(new Ubicacion(0.0, 0.0));
 
   public void registrarleMascotaADuenio(Duenio unDuenio) {
-    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MASCULINO, "Perro salchicha muy lindo", new ArrayList<String>(),new ArrayList<>());
+    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Pepito", "Pepisaurio", 10, Sexo.MACHO, "Perro salchicha muy lindo", new ArrayList<String>(),new ArrayList<>());
     unDuenio.registrarMascota(mascota);
   }
 
   public void registrarleOtraMascotaADuenio(Duenio unDuenio) {
-    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Jorgito", "Alfajor", 10, Sexo.MASCULINO, "Perro labrador muy lindo", new ArrayList<String>(), new ArrayList<>());
+    MascotaRegistrada mascota = new MascotaRegistrada(TipoMascota.PERRO, "Jorgito", "Alfajor", 10, Sexo.MACHO, "Perro labrador muy lindo", new ArrayList<String>(), new ArrayList<>());
     unDuenio.registrarMascota(mascota);
   }
 

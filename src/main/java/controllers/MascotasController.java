@@ -27,10 +27,7 @@ import java.util.List;
 
 public class MascotasController extends BaseController {
     public ModelAndView registroMascota(Request req, Response res) {
-        AdapterJPA.cleanCache();
-        setUsuarioLogueado(req);
-
-        init();
+        init(req);
 
         Duenio d = RepositorioUsuarios.getInstance().getDuenioPorNombre(req.cookie("usuario_logueado"));
         if (d == null)
@@ -40,17 +37,12 @@ public class MascotasController extends BaseController {
         set("sexos", Sexo.values());
         set("caracteristicas", RepositorioMascotas.getInstance().getCaracteristicasActivas());
 
-        AdapterJPA.cleanCache();
         return new ModelAndView(getDiccionario(), "registrarMascota.hbs");
     }
 
     public ModelAndView registrarMascota(Request req, Response res) throws ServletException, IOException {
-        AdapterJPA.cleanCache();
+        init(req);
         setUsuarioLogueado(req);
-
-        set("campos_erroneos", false);
-        set("campos_incompletos", false);
-        set("sin_foto", false);
 
 
         Duenio d = RepositorioUsuarios.getInstance().getDuenioPorNombre(req.cookie("usuario_logueado"));
@@ -97,7 +89,7 @@ public class MascotasController extends BaseController {
         }
 
         String nuevaUrl = null;
-        Path out = null;
+        Path out;
 
         try {
             nuevaUrl = generatePath() + getFormat(uploadedFile.getSubmittedFileName());
@@ -113,8 +105,13 @@ public class MascotasController extends BaseController {
             setError("sin_foto");
         }
 
-        if (hayErrores)
+        if (hayErrores) {
+            set("tipos_mascota", TipoMascota.values());
+            set("sexos", Sexo.values());
+            set("caracteristicas", RepositorioMascotas.getInstance().getCaracteristicasActivas());
+
             return new ModelAndView(getDiccionario(), "registrarMascota.hbs");
+        }
 
         fotos.add(nuevaUrl);
         MascotaRegistrada mascota = new MascotaRegistrada(especie, nombre, apodo, edad, sexo, descripcion, fotos, caracteristicas);
@@ -123,7 +120,6 @@ public class MascotasController extends BaseController {
         d.registrarMascota(mascota);
         AdapterJPA.commit();
 
-        AdapterJPA.cleanCache();
 
         res.redirect("/");
         return null;

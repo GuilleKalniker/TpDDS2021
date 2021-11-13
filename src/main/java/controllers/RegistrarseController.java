@@ -18,38 +18,21 @@ import java.util.List;
 
 public class RegistrarseController extends BaseController {
     public ModelAndView index(Request req, Response res) {
-        AdapterJPA.cleanCache();
+        init(req);
 
-        setUsuarioLogueado(req);
         set("tipos_documento", TipoDocumento.values());
 
-        set("campos_invalidos", false);
-        set("campos_incompletos", false);
-        set("contrasenia_invalida", false);
-
-        AdapterJPA.cleanCache();
         return new ModelAndView(getDiccionario(), "registrarse.hbs");
     }
 
     public ModelAndView admin(Request req, Response res) {
-        AdapterJPA.cleanCache();
+        init(req);
 
-        setUsuarioLogueado(req);
-
-        AdapterJPA.cleanCache();
         return new ModelAndView(getDiccionario(), "registrarseAdmin.hbs");
     }
 
     public ModelAndView registrar(Request req, Response res) {
-        AdapterJPA.cleanCache();
-
-        setUsuarioLogueado(req);
-        Boolean hayErrores = false;
-
-        set("campos_invalidos", false);
-        set("campos_incompletos", false);
-        set("contrasenia_invalida", false);
-
+        init(req);
 
         List<Contacto> contactos = new ArrayList<>();
         contactos.add(new Contacto("Facundo", "Pittaluga", 1138636324, "facupitta@hotmail.com")); //TODO deshardcodear
@@ -75,20 +58,18 @@ public class RegistrarseController extends BaseController {
 
 
         } catch (Exception e) {
-            set("campos_invalidos", true);
-            hayErrores = true;
+            setError("campos_invalidos");
         }
 
         if (fechaNac == null || usuario.isEmpty() || contrasenia.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || numDoc == null || direccion.isEmpty()) {
-            set("campos_incompletos", true);
-            hayErrores = true;
+            setError("campos_incompletos");
         }
         if (!ValidadorContrasenias.esContraseniaValida(contrasenia)) {
-            set("contrasenia_invalida", true);
-            hayErrores = true;
+            setError("contrasenia_invalida");
         }
 
         if (hayErrores) {
+            set("tipos_documento", TipoDocumento.values());
             return new ModelAndView(getDiccionario(), "registrarse.hbs");
         }
 
@@ -101,29 +82,22 @@ public class RegistrarseController extends BaseController {
         model.registrarse();
         AdapterJPA.commit();
 
-        AdapterJPA.cleanCache();
-
         res.redirect("/");
         return null;
     }
 
     public ModelAndView registrarAdmin(Request req, Response res) {
-        AdapterJPA.cleanCache();
-
-        setUsuarioLogueado(req);
-        Boolean hayErrores = false;
+        init(req);
 
         String usuario = req.queryParams("usuario");
         String contrasenia = req.queryParams("contrasenia");
 
 
         if (usuario.isEmpty() || contrasenia.isEmpty()) {
-            set("campos_incompletos", true);
-            hayErrores = true;
+            setError("campos_incompletos");
         }
         if (!ValidadorContrasenias.esContraseniaValida(contrasenia)) {
-            set("contrasenia_invalida", true);
-            hayErrores = true;
+            setError("contrasenia_invalida");
         }
 
         if (hayErrores) {
@@ -136,7 +110,6 @@ public class RegistrarseController extends BaseController {
         RepositorioUsuarios.getInstance().registrarUsuario(admin);
         AdapterJPA.commit();
 
-        AdapterJPA.cleanCache();
 
         res.redirect("/");
         return null;

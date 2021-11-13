@@ -42,7 +42,7 @@ public class PersistirCosasTest {
     }
 
     public MascotaRegistrada crearMascota(String nombre, ArrayList<String> fotos) {
-        return new MascotaRegistrada(TipoMascota.PERRO, nombre, nombre.substring(0, 2) + nombre.substring(0, 2).toLowerCase(),4, Sexo.FEMENINO, "Muerta de hambre", fotos, new ArrayList<Caracteristica>());
+        return new MascotaRegistrada(TipoMascota.PERRO, nombre, nombre.substring(0, 2) + nombre.substring(0, 2).toLowerCase(),4, Sexo.HEMBRA, "Muerta de hambre", fotos, new ArrayList<Caracteristica>());
     }
 
     public PublicacionMascotaPerdida crearPublicacion() {

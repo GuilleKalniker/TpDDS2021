@@ -24,9 +24,8 @@ import java.util.List;
 
 public class AdopcionController extends BaseController {
     public ModelAndView index(Request req, Response res) {
-        AdapterJPA.cleanCache();
+        init(req);
 
-        setUsuarioLogueado(req);
         CentroDeRescate model;
         if (RepositorioCentroDeRescate.getInstance().getCentrosDeRescateRegistrados().isEmpty()) {
 
@@ -48,17 +47,11 @@ public class AdopcionController extends BaseController {
 
         setModelo(model);
 
-        AdapterJPA.cleanCache();
-
         return new ModelAndView(getDiccionario(), "ponerEnAdopcion.hbs");
     }
 
     public ModelAndView publicar(Request req, Response res) {
-        AdapterJPA.cleanCache();
-
-        setUsuarioLogueado(req);
-
-        AdapterJPA.cleanCache();
+        init(req);
 
         return new ModelAndView(getDiccionario(),"home.hbs");
     }

@@ -5,14 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import domain.Exceptions.RespuestaInvalidaException;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import domain.Mascota.AtributosMascota.Sexo;
 import domain.Mascota.AtributosMascota.TipoMascota;
-import org.junit.jupiter.api.Test;
 
 public class MascotaTest {
 
@@ -24,6 +20,6 @@ public class MascotaTest {
   }*/
 
 
-  private MascotaRegistrada pepita = new MascotaRegistrada(TipoMascota.PERRO, "Pepita", "Pepisauria", 9, Sexo.FEMENINO, "Perra corgi muy linda", new ArrayList<String>(),new ArrayList<>());
+  private MascotaRegistrada pepita = new MascotaRegistrada(TipoMascota.PERRO, "Pepita", "Pepisauria", 9, Sexo.HEMBRA, "Perra corgi muy linda", new ArrayList<String>(),new ArrayList<>());
 
 }

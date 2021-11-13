@@ -25,17 +25,15 @@ import java.util.Arrays;
 
 public class RescatarController extends BaseController{
   public ModelAndView index(Request req, Response res) {
-    AdapterJPA.cleanCache();
+    init(req);
 
-    setUsuarioLogueado(req);
     set("tipos_documento", TipoDocumento.values());
 
-    AdapterJPA.cleanCache();
     return new ModelAndView(getDiccionario(), "rescatar.hbs");
   }
 
   public ModelAndView rescatar(Request req, Response res) throws ServletException, IOException {
-    AdapterJPA.cleanCache();
+    init(req);
 
     MultipartConfigElement config = new MultipartConfigElement(
             "imagenes",
@@ -85,8 +83,6 @@ public class RescatarController extends BaseController{
     AdapterJPA.beginTransaction();
     (new Rescatista()).generarSolicitudPublicacion(formulario);
     AdapterJPA.commit();
-
-    AdapterJPA.cleanCache();
 
     return new ModelAndView(null,"rescatar.hbs");
   }

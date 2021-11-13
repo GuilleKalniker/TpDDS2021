@@ -20,9 +20,7 @@ import spark.Response;
 public class CaracteristicasController extends BaseController {
 
   public ModelAndView index(Request req, Response res) {
-    AdapterJPA.cleanCache();
-
-    setUsuarioLogueado(req);
+    init(req);
 
     Administrador admin = RepositorioUsuarios.getInstance().getAdministradorPorNombre(req.cookie("usuario_logueado"));
     if (admin == null) {
@@ -31,12 +29,10 @@ public class CaracteristicasController extends BaseController {
 
     setModelo(RepositorioMascotas.getInstance().getTodasLasCaracteristicas());
 
-    AdapterJPA.cleanCache();
     return new ModelAndView(getDiccionario(), "config.hbs");
   }
   public ModelAndView eliminar(Request req, Response res) {
-    AdapterJPA.cleanCache();
-    setUsuarioLogueado(req);
+    init(req);
 
     Administrador admin = RepositorioUsuarios.getInstance().getAdministradorPorNombre(req.cookie("usuario_logueado"));
     if (admin == null) {
@@ -56,10 +52,9 @@ public class CaracteristicasController extends BaseController {
   }
 
   public ModelAndView modificar(Request req, Response res) {
-    AdapterJPA.cleanCache();
-    setUsuarioLogueado(req);
+    init(req);
 
-    Administrador admin = RepositorioUsuarios.getInstance().getAdministradorPorNombre(req.queryParams("usuario_logueado"));
+    Administrador admin = RepositorioUsuarios.getInstance().getAdministradorPorNombre(req.cookie("usuario_logueado"));
     if (admin == null) {
       res.redirect("/");
     }
@@ -75,7 +70,6 @@ public class CaracteristicasController extends BaseController {
 
     setModelo(RepositorioMascotas.getInstance().getTodasLasCaracteristicas());
 
-    AdapterJPA.cleanCache();
 
     res.redirect("/caracteristicas");
     return null;

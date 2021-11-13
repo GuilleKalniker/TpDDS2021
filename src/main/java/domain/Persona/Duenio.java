@@ -5,7 +5,6 @@ import Funciones.Utils;
 import domain.Exceptions.IDNoSeCorrespondeException;
 import domain.Mascota.MascotaRegistrada;
 import domain.Persona.AtributosPersona.DatosPersonales;
-import domain.Pregunta.Pregunta;
 import domain.Pregunta.PreguntaResuelta;
 import domain.Publicacion.PublicacionAdoptante;
 import domain.Repositorio.RepositorioMascotas;
@@ -15,7 +14,6 @@ import domain.Servicios.Notificadores.Notificador;
 import domain.Sistema.CentroDeRescate;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -130,11 +128,6 @@ public class Duenio extends Usuario {
     }
 
     centroDeRescate.generarPublicacionAdopcion(preguntasResueltas, mascota);
-  }
-
-  public void contestarPregunta(Pregunta pregunta) {
-    // TODO: Conseguir la respuesta (GUI)
-    // pregunta.setRespuesta(respuesta);
   }
 
   public void mostrarIntencionDeAdopcion(CentroDeRescate centroDeRescate) {
