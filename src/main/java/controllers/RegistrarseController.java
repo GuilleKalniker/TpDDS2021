@@ -23,6 +23,10 @@ public class RegistrarseController extends BaseController {
         setUsuarioLogueado(req);
         set("tipos_documento", TipoDocumento.values());
 
+        set("campos_invalidos", false);
+        set("campos_incompletos", false);
+        set("contrasenia_invalida", false);
+
         AdapterJPA.cleanCache();
         return new ModelAndView(getDiccionario(), "registrarse.hbs");
     }
@@ -41,6 +45,10 @@ public class RegistrarseController extends BaseController {
 
         setUsuarioLogueado(req);
         Boolean hayErrores = false;
+
+        set("campos_invalidos", false);
+        set("campos_incompletos", false);
+        set("contrasenia_invalida", false);
 
 
         List<Contacto> contactos = new ArrayList<>();

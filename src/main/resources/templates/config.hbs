@@ -21,11 +21,11 @@
                            {{#if noActivo}}
                                <div class="form-check form-switch">
                                    <label class="form-check-label" for={{id}} >{{valor}}</label>
-                                   <input class="form-check-input caracteristica" type="checkbox" id={{id}}   name={{id}} value="OK">
+                                   <input class="form-check-input caracteristica" type="checkbox" id={{id}} name={{id}} value="OK">
                                </div>
                            {{/if}}
                            <form action="/caracteristicas/{{id}}" class="borrar-caracteristica" method="POST">
-                               <button type="submit" class="btn btn-secondary boton-borrar-caracteristicas justify-content-end">Eliminar</button>
+                               <button type="submit" class="btn btn-secondary boton-borrar-caracteristicas justify-content-end">Eliminar {{id}}</button>
                            </form>
                          </div>
                        {{/each}}

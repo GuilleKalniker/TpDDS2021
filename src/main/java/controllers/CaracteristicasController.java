@@ -7,8 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import domain.Persona.Administrador;
 import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioMascotas;
+import domain.Repositorio.RepositorioUsuarios;
 import org.apache.maven.model.Model;
 import org.eclipse.jetty.util.Promise;
 import spark.ModelAndView;
@@ -21,6 +23,12 @@ public class CaracteristicasController extends BaseController {
     AdapterJPA.cleanCache();
 
     setUsuarioLogueado(req);
+
+    Administrador admin = RepositorioUsuarios.getInstance().getAdministradorPorNombre(req.cookie("usuario_logueado"));
+    if (admin == null) {
+      res.redirect("/");
+    }
+
     setModelo(RepositorioMascotas.getInstance().getTodasLasCaracteristicas());
 
     AdapterJPA.cleanCache();
@@ -29,6 +37,11 @@ public class CaracteristicasController extends BaseController {
   public ModelAndView eliminar(Request req, Response res) {
     AdapterJPA.cleanCache();
     setUsuarioLogueado(req);
+
+    Administrador admin = RepositorioUsuarios.getInstance().getAdministradorPorNombre(req.cookie("usuario_logueado"));
+    if (admin == null) {
+      res.redirect("/");
+    }
 
     long idCaracteristica = Long.parseLong(req.params("id"));
     AdapterJPA.beginTransaction();
@@ -44,8 +57,13 @@ public class CaracteristicasController extends BaseController {
 
   public ModelAndView modificar(Request req, Response res) {
     AdapterJPA.cleanCache();
-
     setUsuarioLogueado(req);
+
+    Administrador admin = RepositorioUsuarios.getInstance().getAdministradorPorNombre(req.queryParams("usuario_logueado"));
+    if (admin == null) {
+      res.redirect("/");
+    }
+
     String nuevaCaracteristica = req.queryParams("nueva_caracteristica");
 
     AdapterJPA.beginTransaction();

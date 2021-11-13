@@ -22,6 +22,12 @@ import java.util.Map;
 public class BaseController {
     protected Map<String, Object> diccionario = new HashMap<>();
 
+    protected Boolean hayErrores = false;
+
+    public void init() {
+        diccionario = new HashMap<>();
+    }
+
     public void setModelo(Object value) {
         diccionario.put("modelo", value);
     }
@@ -32,12 +38,16 @@ public class BaseController {
 
     public void setUsuarioLogueado(Request req) {
         Usuario usuario = RepositorioUsuarios.getInstance().getUsuarioPorNombre(req.cookie("usuario_logueado"));
-        System.out.println("Usuario logueado: " + (usuario!=null?usuario.getNombreUsuario():"undefined"));
         diccionario.put("usuario_logueado", usuario);
     }
 
     public Map<String, Object> getDiccionario() {
         return diccionario;
+    }
+
+    public void setError(String error) {
+        hayErrores = true;
+        set(error, true);
     }
 
     //--------------utils-----------------

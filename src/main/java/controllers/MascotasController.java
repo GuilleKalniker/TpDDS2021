@@ -28,8 +28,10 @@ import java.util.List;
 public class MascotasController extends BaseController {
     public ModelAndView registroMascota(Request req, Response res) {
         AdapterJPA.cleanCache();
-
         setUsuarioLogueado(req);
+
+        init();
+
         Duenio d = RepositorioUsuarios.getInstance().getDuenioPorNombre(req.cookie("usuario_logueado"));
         if (d == null)
             res.redirect("/iniciarSesion");
@@ -44,8 +46,12 @@ public class MascotasController extends BaseController {
 
     public ModelAndView registrarMascota(Request req, Response res) throws ServletException, IOException {
         AdapterJPA.cleanCache();
-
         setUsuarioLogueado(req);
+
+        set("campos_erroneos", false);
+        set("campos_incompletos", false);
+        set("sin_foto", false);
+
 
         Duenio d = RepositorioUsuarios.getInstance().getDuenioPorNombre(req.cookie("usuario_logueado"));
 
@@ -59,25 +65,56 @@ public class MascotasController extends BaseController {
 
         Part uploadedFile = req.raw().getPart("foto");
 
-        String nombre = req.queryParams("nombre");
-        String apodo = req.queryParams("apodo");
-        TipoMascota especie = stringToTipoMascota(req.queryParams("especie"));
-        Integer edad = Integer.parseInt(req.queryParams("edad"));
-        String descripcion = req.queryParams("descripcion");
-        Sexo sexo = stringToSexo(req.queryParams("sexo"));
+        String nombre = "";
+        String apodo = "";
+        TipoMascota especie = null;
+        Integer edad = 0;
+        String descripcion = "";
+        Sexo sexo = null;
         ArrayList<String> fotos = new ArrayList<>();
-        List<Caracteristica> caracteristicas = parsearCaracteristicas(req);
+        List<Caracteristica> caracteristicas = null;
 
-        String nuevaUrl = generatePath() + getFormat(uploadedFile.getSubmittedFileName());
-
-        Path out = Paths.get(getPublicPath() + nuevaUrl);
-
-        try (final InputStream in = uploadedFile.getInputStream()) {
-            Files.copy(in, out);
-            uploadedFile.delete();
-        } catch (IOException e) {
-            e.printStackTrace();
+        try {
+            nombre = req.queryParams("nombre");
+            apodo = req.queryParams("apodo");
+            especie = stringToTipoMascota(req.queryParams("especie"));
+            edad = Integer.parseInt(req.queryParams("edad"));
+            descripcion = req.queryParams("descripcion");
+            sexo = stringToSexo(req.queryParams("sexo"));
+            caracteristicas = parsearCaracteristicas(req);
+        } catch (Exception e) {
+            setError("campos_erroneos");
         }
+
+        if (nombre.isEmpty()
+                || apodo.isEmpty()
+                || descripcion.isEmpty()
+                || especie == null
+                || edad <= 0
+                || sexo == null
+                || caracteristicas == null) {
+            setError("campos_incompletos");
+        }
+
+        String nuevaUrl = null;
+        Path out = null;
+
+        try {
+            nuevaUrl = generatePath() + getFormat(uploadedFile.getSubmittedFileName());
+            out = Paths.get(getPublicPath() + nuevaUrl);
+
+            try (final InputStream in = uploadedFile.getInputStream()) {
+                Files.copy(in, out);
+                uploadedFile.delete();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            setError("sin_foto");
+        }
+
+        if (hayErrores)
+            return new ModelAndView(getDiccionario(), "registrarMascota.hbs");
 
         fotos.add(nuevaUrl);
         MascotaRegistrada mascota = new MascotaRegistrada(especie, nombre, apodo, edad, sexo, descripcion, fotos, caracteristicas);

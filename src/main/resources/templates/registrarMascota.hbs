@@ -73,6 +73,18 @@
             </div>
         </div>
 
+        <div style="color: red;">
+            {{#if campos_erroneos}}
+                <p>Algunos campos están mal completados.</p>
+            {{/if}}
+            {{#if sin_foto}}
+                <p>Elegí una foto correcta para tu mascota.</p>
+            {{/if}}
+            {{#if campos_incompletos}}
+                <p>Faltan completar algunos campos.</p>
+            {{/if}}
+        </div>
+
     </div>
     </form>
 {{/partial}}
