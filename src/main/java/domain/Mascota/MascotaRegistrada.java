@@ -1,6 +1,5 @@
 package domain.Mascota;
 
-import Funciones.ManejoQR;
 import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Mascota.AtributosMascota.Sexo;
 import domain.Mascota.AtributosMascota.TipoMascota;

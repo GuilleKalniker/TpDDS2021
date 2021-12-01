@@ -63,4 +63,12 @@ public class DatosPersonales {
   public String getApellido() {
     return apellido;
   }
+
+  public Integer getNroDocumento() {
+    return nroDocumento;
+  }
+
+  public String getDireccion() {
+    return direccion;
+  }
 }

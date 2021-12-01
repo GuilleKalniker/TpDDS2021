@@ -36,7 +36,7 @@ public class JavaMailApi implements Notificador{
       t.sendMessage(message, message.getAllRecipients());
       t.close();
     }
-    catch (Exception e) {
+    catch (MessagingException e) {
       throw new RuntimeException("no se pudo armar al Transport");
     }
   }
@@ -56,7 +56,7 @@ public class JavaMailApi implements Notificador{
 
       return message;
     }
-    catch (Exception e){
+    catch (MessagingException e){
       throw new RuntimeException("No se pudo armar el mensaje.");
     }
   }
@@ -99,7 +99,7 @@ public class JavaMailApi implements Notificador{
       message.setText(mensaje.getTexto());
       return message;
     }
-    catch (Exception e){
+    catch (MessagingException e){
       throw new RuntimeException("No se pudo armar el mensaje.");
     }
   }

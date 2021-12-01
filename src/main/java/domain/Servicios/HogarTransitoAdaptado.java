@@ -66,4 +66,15 @@ public class HogarTransitoAdaptado {
     return ubicacion.calcularDistanciaA(this.ubicacion) < radio;
   }
 
+  public String getDireccion() {
+    return direccion;
+  }
+
+  public String getTelefono() {
+    return telefono;
+  }
+
+  public String getId() {
+    return id;
+  }
 }

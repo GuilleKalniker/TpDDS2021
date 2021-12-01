@@ -58,7 +58,7 @@ public class RescatarController extends BaseController{
     String chapitaOpcional = req.queryParams("chapita");
 
     String descripcion = req.queryParams("descripcion");
-    String lugarEncuentro = req.queryParams("lugarEncuentro");
+    //String lugarEncuentro = req.queryParams("lugarEncuentro");
 
     LocalDate fechaEncuentro = stringToLocalDate(req.queryParams("fecha_encuentro"));
 

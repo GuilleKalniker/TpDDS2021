@@ -1,7 +1,6 @@
 package domain.Servicios;
 
-//import com.google.gson.Gson;
-//import com.google.gson.stream.JsonReader;
+
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
 import domain.Repositorio.RepositorioMascotas;
@@ -12,7 +11,7 @@ import domain.Servicios.ClasesParaLaConsulta.UsuariosResponse;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-//import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,18 +21,18 @@ import java.util.stream.Collectors;
 public class ServicioHogaresTransito {
 
   private static ServicioHogaresTransito instancia = null;
-  private static int maximaCantidadRegistrosDefault = 200;
+  //private static int maximaCantidadRegistrosDefault = 200;
   private static final String urlApi = "https://api.refugiosdds.com.ar/api/";
   private Retrofit retrofit;
 
   private String token;
 
   private ServicioHogaresTransito() {
-    /*this.retrofit = new Retrofit.Builder()
+    this.retrofit = new Retrofit.Builder()
         .baseUrl(urlApi)
         .addConverterFactory(GsonConverterFactory.create())
         .build();
-    this.token = getToken("src/lista_contraseñas_no_seguras/bearer_token.json");*/
+    this.token = getToken("src/lista_contraseñas_no_seguras/bearer_token.json");
   }
 
   public static ServicioHogaresTransito getInstance() {
@@ -46,13 +45,11 @@ public class ServicioHogaresTransito {
   public List<HogarTransitoAdaptado> solicitarTodosLosHogares() {
     List<HogarTransito> listaHogares = new ArrayList<>();
 
-    for(Integer i = 1; i <= Math.ceil(this.cantidadHogaresTotales() / 10); i++){
-      listaHogares.addAll(listaHogaresTransito(i).hogares);
+    for(int i = 1; i <= Math.ceil((double) this.cantidadHogaresTotales() / 10); i++){
+      listaHogares.addAll(listaHogaresTransito(i).getHogares());
     }
 
-    List<HogarTransitoAdaptado> listaHogaresAdaptados = listaHogares.stream().map(HogarTransito::adaptarHogar).collect(Collectors.toList());
-
-    return listaHogaresAdaptados;
+    return listaHogares.stream().map(HogarTransito::adaptarHogar).collect(Collectors.toList());
   }
 
   public ListadoHogaresTransito listaHogaresTransito(Integer numeroDePagina) {
@@ -68,7 +65,7 @@ public class ServicioHogaresTransito {
   }
 
   public Integer cantidadHogaresTotales() {
-    return this.listaHogaresTransito(1).total;
+    return this.listaHogaresTransito(1).getTotal();
   }
 
   private String requestToken(String email) {
@@ -92,9 +89,9 @@ public class ServicioHogaresTransito {
       return token.getToken();
     } catch (Exception e) {
       throw new RuntimeException("No se encontro el archivo");
-    }*/
-
-    return "Cerro el server :(";
+    }
+*/
+    return "dCm9AbjKBVE65pf4NcofQA8H8HZcv5dL04H7W1zlSUTnTPWkrnarWOf391LG";
   }
 
   public List<HogarTransitoAdaptado> filtrarHogaresPara(FormularioMascotaPerdida formularioMascotaPerdida, Double radio){

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class RepositorioUsuariosTest {
@@ -39,12 +40,12 @@ public class RepositorioUsuariosTest {
   }
 
   @Test
-  public void contraseñaEsInvalidaPorPertenecerAListaContraseñas() {
+  public void contraseñaEsInvalidaPorPertenecerAListaContraseñas() throws IOException {
     assertTrue(ValidadorContrasenias.existeContraseniaEnListaContraseniasNoSeguras("123456789"));
   }
 
   @Test
-  public void contraseñaEsvalidaPorNoPertenecerAListaContraseñas() {
+  public void contraseñaEsvalidaPorNoPertenecerAListaContraseñas() throws IOException {
     assertFalse(ValidadorContrasenias.existeContraseniaEnListaContraseniasNoSeguras("tpanual2021"));
   }
 

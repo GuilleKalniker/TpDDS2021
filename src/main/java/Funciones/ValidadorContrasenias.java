@@ -4,9 +4,7 @@ import domain.Exceptions.ContraseniaInvalidaException;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -28,13 +26,14 @@ public class ValidadorContrasenias {
     return contrasenia.length() >= LONGITUDMINIMA;
   }
 
-  public static Boolean existeContraseniaEnListaContraseniasNoSeguras(String contrasenia) {
+  public static Boolean existeContraseniaEnListaContraseniasNoSeguras(String contrasenia)  {
 
     File archivoListaContrasenias = new File(PATH);
-    Boolean resultadoBusqueda = false;
+    boolean resultadoBusqueda = false;
     try {
-      FileReader fr = new FileReader(archivoListaContrasenias);
-      BufferedReader br = new BufferedReader(fr);
+      FileInputStream fr = new FileInputStream(archivoListaContrasenias);
+      Reader fileReader = new InputStreamReader(fr, StandardCharsets.UTF_8);
+      BufferedReader br = new BufferedReader(fileReader);
 
       String contraseniaEnLista;
 
@@ -46,9 +45,10 @@ public class ValidadorContrasenias {
       fr.close();
       br.close();
     }
-    catch (Exception e) {
+    catch (IOException e) {
       throw new ContraseniaInvalidaException("Error al cargar el archivo de contraseñas.");
     }
+
     return resultadoBusqueda;
   }
 

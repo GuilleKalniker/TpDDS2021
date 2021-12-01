@@ -8,11 +8,9 @@ import domain.Persona.Duenio;
 import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
-import org.eclipse.jetty.util.Promise;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.Spark;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
@@ -91,19 +89,16 @@ public class MascotasController extends BaseController {
         String nuevaUrl = null;
         Path out;
 
-        try {
+
+        try (final InputStream in = uploadedFile.getInputStream()) {
             nuevaUrl = generatePath() + getFormat(uploadedFile.getSubmittedFileName());
             out = Paths.get(getPublicPath() + nuevaUrl);
-
-            try (final InputStream in = uploadedFile.getInputStream()) {
-                Files.copy(in, out);
-                uploadedFile.delete();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            setError("sin_foto");
+            Files.copy(in, out);
+            uploadedFile.delete();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
 
         if (hayErrores) {
             set("tipos_mascota", TipoMascota.values());

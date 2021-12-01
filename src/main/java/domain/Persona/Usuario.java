@@ -33,15 +33,15 @@ public class Usuario {
 
     public Usuario() {}
 
-    public byte[] getSalt() {
+    /*public byte[] getSalt() {
         return salt;
-    };
+    }; */
 
     public String getNombreUsuario() {
         return nombreUsuario;
     }
 
-    public byte[] getContraseniaHasheada() { return contraseniaHasheada; }
+    //public byte[] getContraseniaHasheada() { return contraseniaHasheada; }
 
     public long getId() {
         return id;
@@ -56,7 +56,7 @@ public class Usuario {
 
     public Boolean matcheaContrasenia(String contrasenia) {
 
-        return Arrays.equals(ValidadorContrasenias.passwordToHash(contrasenia, getSalt()), contraseniaHasheada);
+        return Arrays.equals(ValidadorContrasenias.passwordToHash(contrasenia, salt /*getSalt()*/), contraseniaHasheada);
     }
 
     public void registrarse() {

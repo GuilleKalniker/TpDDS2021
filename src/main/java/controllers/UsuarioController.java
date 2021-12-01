@@ -33,8 +33,10 @@ public class UsuarioController extends BaseController {
 
         long id = Long.parseLong(req.params("id"));
         Duenio duenio =  RepositorioUsuarios.getInstance().getDuenio(id);
-        if (duenio == null)
+        if (duenio == null) {
             res.redirect("/404");
+        }
+
         List<Contacto> contactos = duenio.getDatosPersonales().getContactos();
 
         setModelo(contactos);

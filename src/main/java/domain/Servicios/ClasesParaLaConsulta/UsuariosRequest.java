@@ -7,4 +7,8 @@ public class UsuariosRequest {
   public UsuariosRequest(String email){
     this.email = email;
   }
+
+  public String getEmail() {
+    return email;
+  }
 }

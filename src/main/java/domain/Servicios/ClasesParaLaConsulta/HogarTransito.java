@@ -39,7 +39,7 @@ public class HogarTransito {
     }
   }
 
-  private class Admisiones {
+  static private class Admisiones {
     public Boolean perros;
     public Boolean gatos;
 
@@ -98,4 +98,7 @@ public class HogarTransito {
             .collect(Collectors.toList());
   }
 
+  public Integer getCapacidad() {
+    return capacidad;
+  }
 }
