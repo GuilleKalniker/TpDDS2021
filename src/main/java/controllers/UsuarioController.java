@@ -37,6 +37,7 @@ public class UsuarioController extends BaseController {
             res.redirect("/404");
         }
 
+        assert duenio != null;
         List<Contacto> contactos = duenio.getDatosPersonales().getContactos();
 
         setModelo(contactos);
