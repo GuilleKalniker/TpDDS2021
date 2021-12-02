@@ -20,10 +20,12 @@
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
 
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/rescate_de_patitas?serverTimezone=UTC" />
-            <property name="hibernate.connection.username" value="root" />
-            <property name="hibernate.connection.password" value="12345" />
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://e629ja6vfqc0x7wr:flepggjw456p2zn4@w3epjhex7h2ccjxx.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/z3cpx0wco8vpl5h6"/>
+            <property name="hibernate.connection.username" value="e629ja6vfqc0x7wr"/>
+            <property name="hibernate.connection.password" value="flepggjw456p2zn4"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+
 
             <property name="hibernate.show_sql" value="false" />
             <!-- Enable the logging of all the generated SQL statements to the console -->
