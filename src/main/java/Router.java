@@ -33,8 +33,8 @@ public class Router {
 
         Spark.get("/", homeController::index, engine);
         Spark.get("/usuarios", usuarioController::todos, engine);
-        Spark.get("/usuarios/me", usuarioController::me, engine);
-        Spark.post("/usuarios/me", usuarioController::cambiarFotoPerfil, engine);
+        Spark.get("/usuarios/:id", usuarioController::me, engine);
+        Spark.post("/usuarios/:id", usuarioController::cambiarFotoPerfil, engine);
         Spark.get("/usuarios/:id/contactos", usuarioController::contactos, engine);
 
         Spark.get("/mascotas/nueva", mascotasController::registroMascota, engine);

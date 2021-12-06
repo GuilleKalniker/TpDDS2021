@@ -10,6 +10,7 @@ public class ActivadorSemanal {
   }
 
   public static void enviarRecomendiacionesSemanales() {
+
     RepositorioCentroDeRescate.getInstance().getCentrosDeRescateRegistrados().forEach(centro -> centro.notificacionSemanal());
   }
 }

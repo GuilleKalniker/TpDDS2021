@@ -98,6 +98,10 @@ public class BaseController {
         return "src/main/resources/public/";
     }
 
+    protected String getPublicPathImages() {
+        return "src/main/resources/public/images/";
+    }
+
     protected String getFormat(String s) {
         return s.substring(s.indexOf('.'));
     }

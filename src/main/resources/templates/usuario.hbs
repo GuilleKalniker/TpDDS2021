@@ -1,16 +1,25 @@
 {{#partial "contenido"}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{usuario_logueado.urlFotoPerfil}}" alt="{{usuarios_logueado.urlFotoPerfil}}">
+        <img class="card-img-top" src="{{usuario_param.urlFotoPerfil}}" alt="{{usuario_param.urlFotoPerfil}}">
         <div class="card-body">
-            <h5 class="card-title">{{usuario_logueado.nombre}} {{usuario_logueado.apellido}}</h5>
-            <p class="card-text">{{usuario_logueado.nombreUsuario}}</p>
-            <p class="card-text">{{usuario_logueado.fechaNacimiento}}</p>
+            <h5 class="card-title">{{usuario_param.nombre}} {{usuario_param.apellido}}</h5>
+            <p class="card-text">{{usuario_param.nombreUsuario}}</p>
+            <p class="card-text">{{usuario_param.fechaNacimiento}}</p>
         </div>
-        <form action="/usuarios/me" method="POST" enctype="multipart/form-data">
+
+        {{#if mismo_usuario}}
+        <form action="/usuarios/{{usuario_param.id}}" method="POST" enctype="multipart/form-data">
             <input type="file" class="form-control" name="foto" accept="image/*">Elegir foto de perfil</input>>
             <button type="submit">Guardar</button>
         </form>
+        {{/if}}
+        <div id="qrcode"></div>
     </div>
+
+    <script>
+        let qrc = new QRCode(document.getElementById("qrcode"), "rescate-de-patitas-grupo5.herokuapp.com/usuario/{{usuario_param.id}}");
+    </script>
 {{/partial}}
 
 {{>layout.hbs}}

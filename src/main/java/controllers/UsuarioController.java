@@ -1,5 +1,6 @@
 package controllers;
 
+import com.github.jknack.handlebars.Handlebars;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.Duenio;
 import domain.Repositorio.AdapterJPA;
@@ -29,6 +30,7 @@ public class UsuarioController extends BaseController {
     }
 
     public ModelAndView contactos(Request req, Response res) {
+
         init(req);
 
         long id = Long.parseLong(req.params("id"));
@@ -48,10 +50,10 @@ public class UsuarioController extends BaseController {
     public ModelAndView me(Request req, Response res) {
         init(req);
 
-        if (getDiccionario().get("usuario_logueado") == null) {
-            res.redirect("/");
-        }
-        setModelo(null);
+        Duenio duenio = RepositorioUsuarios.getInstance().getDuenio(Long.parseLong(req.params("id")));
+
+        set("mismo_usuario", req.cookie("usuario_logueado") == duenio.getNombreUsuario());
+        set("usuario_param", duenio);
 
         return new ModelAndView(getDiccionario(), "usuario.hbs");
     }

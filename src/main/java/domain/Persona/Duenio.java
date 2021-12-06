@@ -1,6 +1,5 @@
 package domain.Persona;
 
-
 import Funciones.Utils;
 import domain.Exceptions.IDNoSeCorrespondeException;
 import domain.Mascota.MascotaRegistrada;
@@ -54,9 +53,13 @@ public class Duenio extends Usuario {
 
   public String getApellido() { return getDatosPersonales().getApellido();}
 
+  public String getDatosPersonalesEnteros() {return (getDatosPersonales().getNombre() + ' ' + getDatosPersonales().getApellido() + ' ' + getDatosPersonales().getDireccion()); }
+
   public String getFechaNacimiento() {
     return Utils.localDateToString(datosPersonales.getFechaDeNacimiento());
   }
+
+  public Integer getNroDocumento() {return getDatosPersonales().getNroDocumento(); }
 
   public List<MascotaRegistrada> getMascotas() {
     return mascotas;
