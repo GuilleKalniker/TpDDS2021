@@ -28,4 +28,4 @@ target/**
 # IJ files
 *.iml
 .idea/**
-src/lista_contraseñas_no_seguras/QRs
+src/lista_contrasenias_no_seguras/QRs

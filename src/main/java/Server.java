@@ -3,9 +3,9 @@ import spark.Spark;
 
 public class Server {
     public static void main(String[] args) {
-        Spark.port(9000);
-        //Spark.staticFileLocation("public");
-        //Spark.port(getHerokuAssignedPort());
+        //Spark.port(9000);
+        Spark.staticFileLocation("public");
+        Spark.port(getHerokuAssignedPort());
         Router.configure();
 
     }

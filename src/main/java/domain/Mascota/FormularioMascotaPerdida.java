@@ -49,9 +49,11 @@ public class FormularioMascotaPerdida {
     this.lugarEncuentro = lugarEncuentro;
     this.fechaEncuentro = fechaEncuentro;
   }
+
   public DatosPersonales getDatosRescastista() {
     return datosRescastista;
   }
+
   public long getIDMascotaPerdida() {
     return this.mascotaID;
   }

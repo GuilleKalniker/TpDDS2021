@@ -1,9 +1,11 @@
 package Funciones;
 
 import domain.Exceptions.ContraseniaInvalidaException;
+import domain.Repositorio.AdapterJPA;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.persistence.Query;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
@@ -15,7 +17,7 @@ import java.util.Arrays;
 public class ValidadorContrasenias {
 
   private static final Integer LONGITUDMINIMA = 8;
-  private static final String PATH = "src/lista_contraseñas_no_seguras/lista_contraseñas_no_seguras.txt";
+  private static final String PATH = "src/resources/lista_contrasenias_no_seguras.txt";
 
 
   public static Boolean esContraseniaValida(String contrasenia) {
@@ -27,7 +29,7 @@ public class ValidadorContrasenias {
   }
 
   public static Boolean existeContraseniaEnListaContraseniasNoSeguras(String contrasenia)  {
-
+/*
     File archivoListaContrasenias = new File(PATH);
     boolean resultadoBusqueda = false;
     try {
@@ -43,13 +45,16 @@ public class ValidadorContrasenias {
         }
       }
       fr.close();
-      br.close();
-    }
-    catch (IOException e) {
-      throw new ContraseniaInvalidaException("Error al cargar el archivo de contraseñas.");
-    }
+      br.close(); */
+/*
+    Query q = AdapterJPA.entityManager().createNativeQuery("select contrasenia from lista_contrasenias_no_seguras where contrasenia = :pw");
+    q.setParameter("pw", contrasenia);
 
-    return resultadoBusqueda;
+    if(q.getSingleResult() != null) {
+      throw new ContraseniaInvalidaException("Error al cargar el archivo de contraseñas.");
+    } */
+
+    return false; //resultadoBusqueda;
   }
 
   public static byte[] generarSalt() {

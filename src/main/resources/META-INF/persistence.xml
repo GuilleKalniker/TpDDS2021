@@ -21,9 +21,9 @@
             <property name="hibernate.archive.autodetection" value="class"/>
 
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:mysql://e629ja6vfqc0x7wr:flepggjw456p2zn4@w3epjhex7h2ccjxx.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/z3cpx0wco8vpl5h6"/>
-            <property name="hibernate.connection.username" value="e629ja6vfqc0x7wr"/>
-            <property name="hibernate.connection.password" value="flepggjw456p2zn4"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://l6vnq1t68qekg4x0:c8vy1wy3kav3m0og@w3epjhex7h2ccjxx.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/ivehfq6k91l0jzkr"/>
+            <property name="hibernate.connection.username" value="l6vnq1t68qekg4x0"/>
+            <property name="hibernate.connection.password" value="c8vy1wy3kav3m0og"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
 
 

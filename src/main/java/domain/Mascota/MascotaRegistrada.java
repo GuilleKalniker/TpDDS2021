@@ -66,6 +66,21 @@ public class MascotaRegistrada {
     fotos.add(url);
   }
 
+  public String getApodo() {
+    return apodo;
+  }
+
+  public Integer getEdad() {
+    return edad;
+  }
+
+  public Sexo getSexo() {
+    return sexo;
+  }
+
+  public String getDescripcionFisica() {
+    return descripcionFisica;
+  }
 
   public long getID(){
     return this.id;

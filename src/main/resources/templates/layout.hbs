@@ -34,7 +34,7 @@
                         {{#if usuario_logueado}}
                             {{#if usuario_logueado.esDuenio}}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/usuarios/me">{{usuario_logueado.nombreUsuario}}</a>
+                                    <a class="nav-link" href="/usuarios/{{usuario_logueado.id}}">{{usuario_logueado.nombreUsuario}}</a>
                                 </li>
 
                                 <li class="nav-item">

@@ -17,6 +17,12 @@
         <div id="qrcode"></div>
     </div>
 
+    <ul>
+        {{#each usuario_param.mascotas}}
+        <li>{{ nombre }} ({{ apodo }}) de {{ edad }} años. Es un {{ tipo }} {{ sexo }}, {{ descripcionFisica }}</li>
+        {{/each}}
+    </ul>
+
     <script>
         let qrc = new QRCode(document.getElementById("qrcode"), "rescate-de-patitas-grupo5.herokuapp.com/usuario/{{usuario_param.id}}");
     </script>
