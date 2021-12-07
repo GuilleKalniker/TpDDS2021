@@ -1,0 +1,24 @@
+.titulo-card{
+    height: 4rem !important;
+    width: 18rem;
+}
+
+.usuario{
+    margin: 3rem 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.titulo{
+    height: 4rem !important;
+}
+
+.lista-mascotas{
+    list-style: disc;
+}
+
+.item-mascota{
+    font-size: 1rem;
+    line-height: 2rem;
+}

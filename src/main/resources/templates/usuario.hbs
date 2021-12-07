@@ -1,27 +1,44 @@
 {{#partial "contenido"}}
+    <link type="text/css" rel="stylesheet" href="/CSS/usuario.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{usuario_param.urlFotoPerfil}}" alt="{{usuario_param.urlFotoPerfil}}">
-        <div class="card-body">
-            <h5 class="card-title">{{usuario_param.nombre}} {{usuario_param.apellido}}</h5>
-            <p class="card-text">{{usuario_param.nombreUsuario}}</p>
-            <p class="card-text">{{usuario_param.fechaNacimiento}}</p>
+
+    <div class="usuario">
+        <div class="card-con-qr">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{usuario_param.urlFotoPerfil}}" alt="{{usuario_param.urlFotoPerfil}}">
+                <div class="card-body">
+                    <h5 class="card-title titulo-card">{{usuario_param.nombre}} {{usuario_param.apellido}}</h5>
+                    <p class="card-text">{{usuario_param.nombreUsuario}}</p>
+                    <p class="card-text">{{usuario_param.fechaNacimiento}}</p>
+                </div>
+
+                {{#if mismo_usuario}}
+                    <form action="/usuarios/{{usuario_param.id}}" method="POST" enctype="multipart/form-data">
+                        <input type="file" class="form-control" name="foto" accept="image/*">Elegir foto de perfil</input>>
+                        <button type="submit">Guardar</button>
+                    </form>
+                {{/if}}
+            </div>
         </div>
 
         {{#if mismo_usuario}}
-        <form action="/usuarios/{{usuario_param.id}}" method="POST" enctype="multipart/form-data">
-            <input type="file" class="form-control" name="foto" accept="image/*">Elegir foto de perfil</input>>
-            <button type="submit">Guardar</button>
-        </form>
+            <div class="qr">
+                <h3 class="titulo">QR a tus datos: </h3>
+                <p>Imprimila y pegala en la chapita de tu mascota!</p>
+                <div id="qrcode"></div>
+            </div>
         {{/if}}
-        <div id="qrcode"></div>
+
+        <div class="lista-de-mascotas">
+            <h3 class="titulo">Lista de mascotas registradas: </h3>
+            <ul class="lista-mascotas">
+                {{#each usuario_param.mascotas}}
+                    <li class="item-mascota">{{ nombre }} ({{ apodo }}) de {{ edad }} años. Es un {{ tipo }} {{ sexo }}, {{ descripcionFisica }}.</li>
+                {{/each}}
+            </ul>
+        </div>
     </div>
 
-    <ul>
-        {{#each usuario_param.mascotas}}
-        <li>{{ nombre }} ({{ apodo }}) de {{ edad }} años. Es un {{ tipo }} {{ sexo }}, {{ descripcionFisica }}</li>
-        {{/each}}
-    </ul>
 
     <script>
         let qrc = new QRCode(document.getElementById("qrcode"), "rescate-de-patitas-grupo5.herokuapp.com/usuario/{{usuario_param.id}}");
