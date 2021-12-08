@@ -31,11 +31,20 @@
 
         <div class="lista-de-mascotas">
             <h3 class="titulo">Lista de mascotas registradas: </h3>
-            <ul class="lista-mascotas">
-                {{#each usuario_param.mascotas}}
-                    <li class="item-mascota">{{ nombre }} ({{ apodo }}) de {{ edad }} años. Es un {{ tipo }} {{ sexo }}, {{ descripcionFisica }}.</li>
-                {{/each}}
-            </ul>
+            {{#if tiene_mascotas}}
+                {{#if mismo_usuario}}
+                    <p>Todavia no tenes ninguna mascota registrada.</p>
+                    <a href="/mascotas/nueva">Registrar una mascota</a>
+                {{else}}
+                    <p>{{usuario_param.nombre}} todavia no tiene ninguna mascota registrada.</p>
+                {{/if}}
+            {{else}}
+                <ul class="lista-mascotas">
+                    {{#each usuario_param.mascotas}}
+                        <li class="item-mascota">{{ nombre }} ({{ apodo }}) de {{ edad }} años. Es un {{ tipo }} {{ sexo }}, {{ descripcionFisica }}.</li>
+                    {{/each}}
+                </ul>
+            {{/if}}
         </div>
     </div>
 

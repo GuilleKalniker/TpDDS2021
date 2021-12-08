@@ -52,8 +52,10 @@ public class UsuarioController extends BaseController {
 
         Duenio duenio = RepositorioUsuarios.getInstance().getDuenio(Long.parseLong(req.params("id")));
 
-        set("mismo_usuario", req.cookie("usuario_logueado") == duenio.getNombreUsuario());
         set("usuario_param", duenio);
+        set("mismo_usuario", req.cookie("usuario_logueado").equals(duenio.getNombreUsuario()));
+
+        set("tiene_mascotas", duenio.getMascotas().isEmpty());
 
         return new ModelAndView(getDiccionario(), "usuario.hbs");
     }
