@@ -44,15 +44,8 @@ public class RescatarController extends BaseController{
     req.raw().setAttribute("org.eclipse.jetty.multipartConfig", config);
 
     Part uploadedFile = req.raw().getPart("fotos");
-    String URL = generatePath() + getFormat(uploadedFile.getSubmittedFileName());
 
-    Path out = Paths.get("src/main/resources/public/"+URL);
-    try (final InputStream in = uploadedFile.getInputStream()) {
-      Files.copy(in, out);
-      uploadedFile.delete();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    String url = subirFoto(uploadedFile, "rescues/" + generatePath());
 
     setUsuarioLogueado(req);
     String chapitaOpcional = req.queryParams("chapita");
@@ -76,7 +69,7 @@ public class RescatarController extends BaseController{
 
     FormularioMascotaPerdida formulario;
     if (chapitaOpcional == null || chapitaOpcional.isEmpty())
-      formulario = new FormularioMascotaPerdida(dp, descripcion, Arrays.asList(URL), new Ubicacion(0.0,0.0), fechaEncuentro);
+      formulario = new FormularioMascotaPerdida(dp, descripcion, Arrays.asList(url), new Ubicacion(0.0,0.0), fechaEncuentro);
     else
       formulario = new FormularioMascotaPerdida(dp, descripcion, null, new Ubicacion(0.0,0.0), fechaEncuentro, Long.parseLong(chapitaOpcional));
 

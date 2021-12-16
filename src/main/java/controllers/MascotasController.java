@@ -85,21 +85,7 @@ public class MascotasController extends BaseController {
                 || caracteristicas == null) {
             setError("campos_incompletos");
         }
-
-        String nuevaUrl = null;
-        Path out;
-
-
-        try (final InputStream in = uploadedFile.getInputStream()) {
-            nuevaUrl = generatePath() + getFormat(uploadedFile.getSubmittedFileName());
-            out = Paths.get(getPublicPath() + nuevaUrl);
-            Files.copy(in, out);
-            uploadedFile.delete();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+        
         if (hayErrores) {
             set("tipos_mascota", TipoMascota.values());
             set("sexos", Sexo.values());
@@ -108,11 +94,12 @@ public class MascotasController extends BaseController {
             return new ModelAndView(getDiccionario(), "registrarMascota.hbs");
         }
 
-        fotos.add(nuevaUrl);
         MascotaRegistrada mascota = new MascotaRegistrada(especie, nombre, apodo, edad, sexo, descripcion, fotos, caracteristicas);
 
         AdapterJPA.beginTransaction();
         d.registrarMascota(mascota);
+        String url = subirFoto(uploadedFile, "pets/" + mascota.getId());
+        fotos.add(url);
         AdapterJPA.commit();
 
 

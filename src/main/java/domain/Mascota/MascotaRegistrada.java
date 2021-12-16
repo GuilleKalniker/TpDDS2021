@@ -50,6 +50,10 @@ public class MascotaRegistrada {
 
   public MascotaRegistrada() {}
 
+  public long getId() {
+    return id;
+  }
+
   public TipoMascota getTipo() {
     return tipo;
   }
