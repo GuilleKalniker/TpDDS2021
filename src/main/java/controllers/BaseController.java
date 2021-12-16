@@ -1,5 +1,7 @@
 package controllers;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Mascota.AtributosMascota.Sexo;
 import domain.Mascota.AtributosMascota.TipoMascota;
@@ -9,10 +11,18 @@ import domain.Persona.Usuario;
 import domain.Repositorio.AdapterJPA;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import spark.Request;
 
+import javax.servlet.http.Part;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -75,6 +85,34 @@ public class BaseController {
 
     protected Sexo stringToSexo(String s) {
         return Arrays.stream(Sexo.values()).filter(tipo -> tipo.name().equals(s)).findFirst().get();
+    }
+
+    protected String subirFoto(Part file, String publicId) {
+        Cloudinary cloud = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "utn-frba",
+                "api_key", "355873193365885",
+                "api_secret", "rnpw29IVXy0XQf2iiZIKIyZPHS8"));
+
+        Map params = ObjectUtils.asMap(
+                "public_id", publicId,
+                "overwrite", true,
+                "resource_type", "image"
+        );
+
+        Map resultado = null;
+
+        Path out = Paths.get(file.getSubmittedFileName());
+
+        try (final InputStream in = file.getInputStream()) {
+            Files.copy(in, out);
+            resultado = cloud.uploader().upload(new File(out.toUri()), params);
+
+            Files.delete(out);
+            file.delete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return (String) resultado.get("secure_url");
     }
 
     protected String generatePath() {

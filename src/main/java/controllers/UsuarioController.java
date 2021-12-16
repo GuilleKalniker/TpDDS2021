@@ -79,37 +79,10 @@ public class UsuarioController extends BaseController {
 
         Duenio d = RepositorioUsuarios.getInstance().getDuenioPorNombre(req.cookie("usuario_logueado"));
 
-        String nuevaUrl = generateProfilePath(d) + getFormat(uploadedFile.getSubmittedFileName());
-
-
-        Cloudinary cloud = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "utn-frba",
-                "api_key", "355873193365885",
-                "api_secret", "rnpw29IVXy0XQf2iiZIKIyZPHS8"));
-
-        Map params = ObjectUtils.asMap(
-                "public_id", "fotos/1",
-                "overwrite", true,
-                "resource_type", "image"
-        );
-
-        Map resultado = null;
-
-        //Path out = Paths.get(getPublicPath() + nuevaUrl);
-        Path out = Paths.get("panchito.jpg");
-
-        try (final InputStream in = uploadedFile.getInputStream()) {
-            Files.copy(in, out);
-            resultado = cloud.uploader().upload(new File(out.toUri()), params);
-
-            Files.delete(out);
-            uploadedFile.delete();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String url = subirFoto(uploadedFile, "users/" + d.getId());
 
         AdapterJPA.beginTransaction();
-        d.setUrlFotoPerfil((String) resultado.get("secure_url"));
+        d.setUrlFotoPerfil(url);
         AdapterJPA.commit();
 
         setModelo(d);
