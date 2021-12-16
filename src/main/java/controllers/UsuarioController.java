@@ -1,5 +1,7 @@
 package controllers;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.github.jknack.handlebars.Handlebars;
 import domain.Persona.AtributosPersona.Contacto;
 import domain.Persona.Duenio;
@@ -13,10 +15,12 @@ import spark.Response;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
 import java.util.List;
+import java.util.Map;
 
 public class UsuarioController extends BaseController {
 
@@ -77,17 +81,35 @@ public class UsuarioController extends BaseController {
 
         String nuevaUrl = generateProfilePath(d) + getFormat(uploadedFile.getSubmittedFileName());
 
-        Path out = Paths.get(getPublicPath() + nuevaUrl);
+
+        Cloudinary cloud = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "utn-frba",
+                "api_key", "355873193365885",
+                "api_secret", "rnpw29IVXy0XQf2iiZIKIyZPHS8"));
+
+        Map params = ObjectUtils.asMap(
+                "public_id", "fotos/1",
+                "overwrite", true,
+                "resource_type", "image"
+        );
+
+        Map resultado = null;
+
+        //Path out = Paths.get(getPublicPath() + nuevaUrl);
+        Path out = Paths.get("panchito.jpg");
 
         try (final InputStream in = uploadedFile.getInputStream()) {
             Files.copy(in, out);
+            resultado = cloud.uploader().upload(new File(out.toUri()), params);
+
+            Files.delete(out);
             uploadedFile.delete();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         AdapterJPA.beginTransaction();
-        d.setUrlFotoPerfil("/" + nuevaUrl);
+        d.setUrlFotoPerfil((String) resultado.get("secure_url"));
         AdapterJPA.commit();
 
         setModelo(d);
