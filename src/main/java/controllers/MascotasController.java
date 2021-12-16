@@ -85,7 +85,7 @@ public class MascotasController extends BaseController {
                 || caracteristicas == null) {
             setError("campos_incompletos");
         }
-        
+
         if (hayErrores) {
             set("tipos_mascota", TipoMascota.values());
             set("sexos", Sexo.values());
