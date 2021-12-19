@@ -1,5 +1,6 @@
 package domain.Sistema;
 
+import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Mascota.AtributosMascota.Ubicacion;
 import domain.Mascota.FormularioMascotaPerdida;
 import domain.Mascota.MascotaRegistrada;
@@ -46,10 +47,12 @@ public class CentroDeRescate {
   private List<Pregunta> preguntasDeAdopcion = new ArrayList<>();
 
   //@OneToMany(mappedBy = "centro")
-  @Transient
+  @OneToMany
+  @JoinColumn(name="centro_id")
   private List<PublicacionAdopcion> publicacionesAdopcion = new ArrayList<>(); // Podrian estar en repo si son independientes de centro
 
-  @Transient
+  @OneToMany
+  @JoinColumn(name="centro_id")
   private List<PublicacionAdoptante> interesadosEnAdoptar = new ArrayList<>(); // Observers
 
   @Transient
@@ -199,7 +202,7 @@ public class CentroDeRescate {
     });
   }
 
-  public List<PublicacionAdopcion> filtrarPublicaciones(List<String> filtros) {
+  public List<PublicacionAdopcion> filtrarPublicaciones(List<Caracteristica> filtros) {
     return this.publicacionesAdopcion.stream()
         .filter(publicacionAdopcion -> publicacionAdopcion.matcheaConTodosFiltros(filtros))
         .collect(Collectors.toList());

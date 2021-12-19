@@ -194,4 +194,18 @@ public class CentroDeRescateTest {
   }
 
   */
+
+  @Test
+  public void test(){
+    Duenio duenio =  new Duenio("juanito123", "guilloteelmaskpo",new DatosPersonales("Juan", "Gomez", LocalDate.now(), TipoDocumento.DNI, 20123456, contactoDePrueba("Jesus", "DeNazareth"), "nose 123"));
+    duenio.notificar("asd", "asd");
+  }
+
+  private ArrayList<Contacto> contactoDePrueba(String nombre, String apellido){
+    ArrayList<Contacto> contactos = new ArrayList<>();
+    Contacto contacto = new Contacto(nombre, apellido, 1145686431 , "myogui99@gmail.com");
+    contactos.add(contacto);
+    return contactos;
+  }
+
 }

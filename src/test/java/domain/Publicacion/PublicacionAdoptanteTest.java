@@ -37,11 +37,11 @@ public class PublicacionAdoptanteTest {
   @Test
   public void seAgregaYseQuitaCaractOK(){
     PublicacionAdoptante publicacion = new PublicacionAdoptante(crearDuenio( "matiReCapoo123", "algoRePicante", "calle falsa123") );
-    publicacion.agregarPreferencia("le gustan los raviole");
+    publicacion.agregarPreferencia(new Caracteristica("le gustan los raviole"));
 
     Assertions.assertEquals(publicacion.getPreferencias().size(),1);
 
-    publicacion.quitarPreferencia("le gustan los raviole");
+    publicacion.quitarPreferencia(new Caracteristica("le gustan los raviole"));
     Assertions.assertEquals(publicacion.getPreferencias().size(),0);
 
   }

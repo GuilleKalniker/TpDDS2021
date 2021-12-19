@@ -35,7 +35,6 @@ public class RegistrarseController extends BaseController {
         init(req);
 
         List<Contacto> contactos = new ArrayList<>();
-        contactos.add(new Contacto("Facundo", "Pittaluga", 1138636324, "facupitta@hotmail.com")); //TODO deshardcodear
         LocalDate fechaNac = null;
         String usuario = "";
         String contrasenia = "";
@@ -44,6 +43,8 @@ public class RegistrarseController extends BaseController {
         TipoDocumento tipoDoc = null;
         Integer numDoc = null;
         String direccion = "";
+        Integer telefono = null;
+        String email = "";
 
         try {
 
@@ -55,13 +56,18 @@ public class RegistrarseController extends BaseController {
             fechaNac = stringToLocalDate(req.queryParams("nacimiento"));
             tipoDoc = stringToTipoDocumento(req.queryParams("tipo_doc"));
             numDoc = Integer.parseInt(req.queryParams("num_doc"));
+            telefono = Integer.parseInt(req.queryParams("telefono"));
+            email = req.queryParams("email");
+
+            contactos.add(new Contacto(nombre, apellido, telefono, email));
 
 
         } catch (Exception e) {
+            set("errorcito", e.getMessage());
             setError("campos_invalidos");
         }
 
-        if (fechaNac == null || usuario.isEmpty() || contrasenia.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || numDoc == null || direccion.isEmpty()) {
+        if (fechaNac == null || usuario.isEmpty() || contrasenia.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || numDoc == null || direccion.isEmpty() || telefono == null || email.isEmpty()) {
             setError("campos_incompletos");
         }
         if (!ValidadorContrasenias.esContraseniaValida(contrasenia)) {

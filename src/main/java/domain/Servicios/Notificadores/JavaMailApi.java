@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class JavaMailApi implements Notificador{
 
-  private String correo_envio = "centrodemascotasdds@gmail.com";
+  private String correo_envio = "centrodemascotasdds2@gmail.com";
   private String contraseña = "tpdds2021";
   private Properties props;
   private Session session;
@@ -23,6 +23,7 @@ public class JavaMailApi implements Notificador{
     props.setProperty("mail.smtp.port","587");
     props.setProperty("mail.smtp.user", this.correo_envio);
     props.setProperty("mail.smtp.auth", "true");
+    props.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
 
     this.session = Session.getDefaultInstance(this.props);
   }
@@ -73,6 +74,7 @@ public class JavaMailApi implements Notificador{
 
   public void notificar(Mensaje mensaje){
     MimeMessage message = armarMail(mensaje);
+    System.out.println(mensaje.getContacto().getEmail() + mensaje.getAsunto() + mensaje.getTexto());
 
     try {
       Transport t = session.getTransport("smtp");;

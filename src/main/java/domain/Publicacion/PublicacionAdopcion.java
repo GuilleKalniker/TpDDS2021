@@ -2,6 +2,7 @@ package domain.Publicacion;
 
 import domain.Exceptions.PublicacionAdopcionInvalidaException;
 import domain.Exceptions.SinContactosException;
+import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Mascota.MascotaRegistrada;
 import domain.Pregunta.Pregunta;
 import domain.Pregunta.PreguntaResuelta;
@@ -35,6 +36,10 @@ public class PublicacionAdopcion {
     this.mascota = mascota;
   }
 
+  public PublicacionAdopcion() {
+
+  }
+
   public MascotaRegistrada getMascota() {
     return mascota;
   }
@@ -45,15 +50,16 @@ public class PublicacionAdopcion {
     return preguntasResueltas;
   }
 
-  public Boolean matcheaConRespuesta(String respuesta) {
+/*  public Boolean matcheaConRespuesta(String respuesta) {
     return this.getPreguntas().stream()
         .anyMatch(pregunta ->
             pregunta.getRespuesta().equals(respuesta.toLowerCase())
         );
-  }
+  } */
 
-  public Boolean matcheaConTodosFiltros(List<String> filtros) {
-    return filtros.stream().allMatch(filtro -> this.matcheaConRespuesta(filtro));
+  public Boolean matcheaConTodosFiltros(List<Caracteristica> filtros) {
+    return mascota.getCaracteristicas().containsAll(filtros);
+    //return filtros.stream().allMatch(filtro -> this.mascota.getCaracteristicas().contains(filtro));
   }
 
   public List<String> obtenerRespuestas() {

@@ -11,7 +11,7 @@ public class ActivadorSemanal {
   //Envia las recomendaciones semanales a los usuarios, se ejecuta con crontabs
   public static void main(String[] args) {
     System.out.println("activador");
-    //enviarRecomendiacionesSemanales();
+    enviarRecomendiacionesSemanales();
   }
 
   public static void enviarRecomendiacionesSemanales() {

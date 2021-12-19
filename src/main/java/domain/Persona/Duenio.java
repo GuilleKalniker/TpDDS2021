@@ -8,12 +8,14 @@ import domain.Pregunta.PreguntaResuelta;
 import domain.Publicacion.PublicacionAdoptante;
 import domain.Repositorio.RepositorioMascotas;
 import domain.Repositorio.RepositorioUsuarios;
+import domain.Servicios.Notificadores.JavaMailApi;
 import domain.Servicios.Notificadores.Mail.Mensaje;
 import domain.Servicios.Notificadores.Notificador;
 import domain.Sistema.CentroDeRescate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +30,7 @@ public class Duenio extends Usuario {
   private String urlFotoPerfil;
 
   @Transient
-  private List<Notificador> notificadores = new ArrayList<>();
+  private List<Notificador> notificadores = Arrays.asList(new JavaMailApi());
 
   public Duenio(String usuario, String contrasenia, DatosPersonales datosPersonales) {
     super(usuario, contrasenia);
@@ -60,6 +62,10 @@ public class Duenio extends Usuario {
   }
 
   public Integer getNroDocumento() {return getDatosPersonales().getNroDocumento(); }
+
+  public Integer getTelefono() {return getDatosPersonales().getContactos().get(0).getTelefono(); }
+
+  public String getEmail() {return getDatosPersonales().getContactos().get(0).getEmail(); }
 
   public List<MascotaRegistrada> getMascotas() {
     return mascotas;

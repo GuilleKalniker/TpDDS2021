@@ -7,12 +7,16 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.persistence.Query;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class ValidadorContrasenias {
 
@@ -29,31 +33,22 @@ public class ValidadorContrasenias {
   }
 
   public static Boolean existeContraseniaEnListaContraseniasNoSeguras(String contrasenia) {
-
-    File archivoListaContrasenias = new File(PATH);
     boolean resultadoBusqueda = false;
     try {
-      FileInputStream fr = new FileInputStream(archivoListaContrasenias);
-      Reader fileReader = new InputStreamReader(fr, StandardCharsets.UTF_8);
-      BufferedReader br = new BufferedReader(fileReader);
+      URL archivoListaContrasenias = new URL(PATH);
+      Scanner s = new Scanner(archivoListaContrasenias.openStream());
 
-      String contraseniaEnLista;
-
-      while ((contraseniaEnLista = br.readLine()) != null) {
-        if ((resultadoBusqueda = contrasenia.equals(contraseniaEnLista))) {
-          resultadoBusqueda = true;
+      while (s.hasNextLine()) {
+        if ((resultadoBusqueda = contrasenia.equals(s.nextLine()))) {
           break;
         }
       }
-      fr.close();
-      br.close();
-
+      s.close();
       }
       catch (IOException e) {
         throw new ContraseniaInvalidaException("Error al cargar el archivo de contraseñas.");
       }
-
-      return resultadoBusqueda;
+    return resultadoBusqueda;
     }
 
   public static byte[] generarSalt() {

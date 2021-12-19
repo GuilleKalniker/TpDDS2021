@@ -39,6 +39,7 @@ public class BaseController {
         diccionario = new HashMap<>();
         AdapterJPA.cleanCache();
         setUsuarioLogueado(req);
+        hayErrores = false;
     }
 
     public void setModelo(Object value) {

@@ -1,16 +1,12 @@
 package domain.Publicacion;
 
+import domain.Mascota.AtributosMascota.Caracteristica;
 import domain.Persona.Duenio;
 import domain.Sistema.CentroDeRescate;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "publicacionAdoptante")
@@ -22,8 +18,9 @@ public class PublicacionAdoptante {
 
   @ManyToOne
   private Duenio duenioAsociado;
-  @ElementCollection
-  private List<String> preferencias = new ArrayList<>();
+
+  @ManyToMany
+  private List<Caracteristica> preferencias = new ArrayList<>();
 
   public PublicacionAdoptante(Duenio duenioAsociado) {
     this.duenioAsociado = duenioAsociado;
@@ -31,14 +28,14 @@ public class PublicacionAdoptante {
   }
   public PublicacionAdoptante(){}
 
-  public List<String> getPreferencias() {
+  public List<Caracteristica> getPreferencias() {
     return preferencias;
   }
 
-  public void agregarPreferencia(String preferencia) {
+  public void agregarPreferencia(Caracteristica preferencia) {
     preferencias.add(preferencia);
   }
-  public void quitarPreferencia(String preferencia) {
+  public void quitarPreferencia(Caracteristica preferencia) {
     preferencias.remove(preferencia);
   }
 
@@ -48,16 +45,4 @@ public class PublicacionAdoptante {
     }
     duenioAsociado.notificar("Nueva sugerencia semanal", "Aca tenes una mascota que podrias estar interesado en adoptar");
   }
-  /*
-  public void revisarSugerenciasRecibidas() {
-    // TODO: Implementar, ciclaria por las sugerenciasAdopcion (GUI)
-    // Si le gusto alguna, centroDeRescate.publicacionAdopcionMatcheada(duenioAsociado.getDatosPersonales(), publicacion)
-  }
-
-  public void revisarPublicacionesCentro() {
-    centroDeRescate.getPublicacionesAdopcion();
-    // TODO: Revisarlas
-    // Si le gusto alguna, centroDeRescate.publicacionAdopcionMatcheada(duenioAsociado.getDatosPersonales(), publicacion)
-  }
-  */
 }
