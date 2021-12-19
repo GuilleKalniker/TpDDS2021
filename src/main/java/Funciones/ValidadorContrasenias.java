@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class ValidadorContrasenias {
 
   private static final Integer LONGITUDMINIMA = 8;
-  private static final String PATH = "src/resources/lista_contrasenias_no_seguras.txt";
+  private static final String PATH = "https://res.cloudinary.com/utn-frba/raw/upload/v1639879936/lista_contrasenias_no_seguras_h316qd.txt";
 
 
   public static Boolean esContraseniaValida(String contrasenia) {
@@ -28,8 +28,8 @@ public class ValidadorContrasenias {
     return contrasenia.length() >= LONGITUDMINIMA;
   }
 
-  public static Boolean existeContraseniaEnListaContraseniasNoSeguras(String contrasenia)  {
-/*
+  public static Boolean existeContraseniaEnListaContraseniasNoSeguras(String contrasenia) {
+
     File archivoListaContrasenias = new File(PATH);
     boolean resultadoBusqueda = false;
     try {
@@ -39,23 +39,22 @@ public class ValidadorContrasenias {
 
       String contraseniaEnLista;
 
-      while((contraseniaEnLista=br.readLine()) != null) {
+      while ((contraseniaEnLista = br.readLine()) != null) {
         if ((resultadoBusqueda = contrasenia.equals(contraseniaEnLista))) {
+          resultadoBusqueda = true;
           break;
         }
       }
       fr.close();
-      br.close(); */
-/*
-    Query q = AdapterJPA.entityManager().createNativeQuery("select contrasenia from lista_contrasenias_no_seguras where contrasenia = :pw");
-    q.setParameter("pw", contrasenia);
+      br.close();
 
-    if(q.getSingleResult() != null) {
-      throw new ContraseniaInvalidaException("Error al cargar el archivo de contraseñas.");
-    } */
+      }
+      catch (IOException e) {
+        throw new ContraseniaInvalidaException("Error al cargar el archivo de contraseñas.");
+      }
 
-    return false; //resultadoBusqueda;
-  }
+      return resultadoBusqueda;
+    }
 
   public static byte[] generarSalt() {
     SecureRandom random = new SecureRandom();
